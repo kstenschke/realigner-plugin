@@ -1,0 +1,5 @@
+h1. Realigner Plugin
+
+Source code of the intelij IDEA Realigner plugin.
+
+Please see the file META-INF/plugin.xml for general information about the plugin and version history.
