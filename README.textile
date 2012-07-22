@@ -5,7 +5,7 @@ This is a plugin for the various intellij IDEs, working in IDEA, PhpStorm, AppCo
 
 
 
-h2 Description
+h2. Description
 
 The Realigner plugin is helpful e.g. to quickly convert lines to comma separated lists and vice versa.<br><br>
 
@@ -17,10 +17,24 @@ Realigner adds the following editing tools:
 
 
 
-Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-
-
-h2 Credits
+h2. Credits
 
 The icons used in this plugin are part of the "Fugue iconset by p.yusukekamiyamane":http://p.yusukekamiyamane.com/
+
+
+
+h2. License
+
+Copyright 2012 Kay Stenschke
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+"http://www.apache.org/licenses/LICENSE-2.0":http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
