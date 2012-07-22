@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d899376-02cf-4559-924a-91d894b759f2" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/license.txt" afterPath="$PROJECT_DIR$/license.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.textile" afterPath="$PROJECT_DIR$/README.textile" />
     </list>
     <ignored path="Realigner.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,13 +61,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TextualHelper.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TextualHelper.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="40" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.6870229">
+            <state line="33" column="40" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#2958#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.textile" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.textile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,9 +107,9 @@
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
         <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
-        <option value="$PROJECT_DIR$/README.textile" />
         <option value="$PROJECT_DIR$/src/license.txt" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" />
+        <option value="$PROJECT_DIR$/README.textile" />
       </list>
     </option>
   </component>
@@ -408,7 +417,11 @@
       <created>1342974587283</created>
       <updated>1342974587283</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="moved license to root">
+      <created>1342974809785</created>
+      <updated>1342974809785</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -474,7 +487,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved license to root" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -490,6 +503,7 @@
     <MESSAGE value="added readme" />
     <MESSAGE value="added license" />
     <MESSAGE value="added comments" />
+    <MESSAGE value="moved license to root" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -574,13 +588,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.textile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="1" selection-start="23" selection-end="23" vertical-scroll-proportion="0.045801528">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/license.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="21" selection-start="489" selection-end="489" vertical-scroll-proportion="0.2977099">
@@ -590,10 +597,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="40" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.6870229">
+        <state line="33" column="40" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#2958#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.textile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
