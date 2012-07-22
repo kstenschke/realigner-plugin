@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Kay Stenschke
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.kstenschke.realigner.helpers;
 
 import com.intellij.openapi.editor.Document;
@@ -13,12 +29,12 @@ public class TextualHelper {
 	/**
 	 * Returns amount of occurrences of sub string in string
 	 *
-	 * @param str
-	 * @param subStr
-	 * @return
+	 * @param haystack   String to be searched in
+	 * @param needle     Sub string
+	 * @return           Amount of occurrences
 	 */
-	public static int substrCount(String str, String subStr) {
-		if(str.equals("") || subStr.equals("")) {
+	public static int substrCount(String haystack, String needle) {
+		if(haystack.equals("") || needle.equals("")) {
 			return 0;
 		}
 
@@ -26,11 +42,11 @@ public class TextualHelper {
 		int count =0;
 
 		while(lastIndex != -1){
-			lastIndex = str.indexOf(subStr,lastIndex);
+			lastIndex = haystack.indexOf(needle,lastIndex);
 
 			if( lastIndex != -1){
 				count ++;
-				lastIndex+=subStr.length();
+				lastIndex+=needle.length();
 			}
 		}
 
@@ -40,25 +56,25 @@ public class TextualHelper {
 
 
 	/**
-	 * Get sub sequence
+	 * Get sub sequence from given offset region
 	 *
-	 * @param text
-	 * @param offsetStart
-	 * @param offsetEnd
+	 * @param haystack         Text from which the sub string is to be extracted
+	 * @param offsetStart      Starting offset
+	 * @param offsetEnd        Ending offset
 	 * @return
 	 */
-	public static String getSubString(CharSequence text, int offsetStart, int offsetEnd) {
-		if (text.length() == 0) return null;
+	public static String getSubString(CharSequence haystack, int offsetStart, int offsetEnd) {
+		if (haystack.length() == 0) return null;
 
-		return text.subSequence(offsetStart, offsetEnd).toString();
+		return haystack.subSequence(offsetStart, offsetEnd).toString();
 	}
 
 
 
 	/**
-	 * @param doc
-	 * @param startLine
-	 * @param endLine
+	 * @param doc           The full document
+	 * @param startLine     Starting line number
+	 * @param endLine       Ending line number
 	 * @return
 	 */
 	public static List<String> extractLines(Document doc, int startLine, int endLine) {
