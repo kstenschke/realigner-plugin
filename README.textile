@@ -1,6 +1,6 @@
 h1. Realigner Plugin
 
-Source code of the intellij IDEA Realigner plugin.
+Source code of the intellij IDEA "Realigner plugin":http://plugins.intellij.net/plugin/index?pr=&pluginId=7082
 This is a plugin for the various intellij IDEs, working in IDEA, PhpStorm, AppCode, etc.
 
 
