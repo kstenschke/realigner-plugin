@@ -65,7 +65,7 @@ public class WrapAction extends AnAction {
 				if (editor != null) {
 					String wrap = Messages.showInputDialog(
 						currentProject, "Wrap with:", "Wrap",
-						IconLoader.getIcon("/com/kstenschke/realigner/icons/wrap-tight.png"),
+						IconLoader.getIcon("/com/kstenschke/realigner/resources/wrap-tight.png"),
 					   "\"|\"", null
 					);
 

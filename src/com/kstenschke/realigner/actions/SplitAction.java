@@ -18,7 +18,6 @@ package com.kstenschke.realigner.actions;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataConstants;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
@@ -27,9 +26,8 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.IconLoader;
 import com.kstenschke.realigner.helpers.TextualHelper;
+import com.kstenschke.realigner.resources.SplitOptionsDialog;
 
 import javax.swing.*;
 
@@ -45,7 +43,7 @@ public class SplitAction extends AnAction {
 
 
 	/**
-	 * Perform implode / explode
+	 * Perform split into lines
 	 *
 	 * @param event
 	 * @return void.
@@ -66,55 +64,58 @@ public class SplitAction extends AnAction {
 					if (editor != null) {
 						final Document document = editor.getDocument();
 						SelectionModel selectionModel = editor.getSelectionModel();
-					boolean hasSelection = selectionModel.hasSelection();
+						boolean hasSelection = selectionModel.hasSelection();
 
-					String delimiter = Messages.showInputDialog(
-						currentProject,
-						"Enter Delimiter (to be converted into newline)", "Split into Lines",
-						IconLoader.getIcon("/com/kstenschke/realigner/icons/arrow-split.png"),
-						",", null
-					);
+						SplitOptionsDialog splitOptionsDialog  = new SplitOptionsDialog();
+						splitOptionsDialog.pack();
+						splitOptionsDialog.setLocationRelativeTo(null); // center to screen
+						splitOptionsDialog.setVisible(true);
 
-					if( delimiter != null && delimiter.length() > 0 ) {
-						if (hasSelection) {
-							int offsetStart   = selectionModel.getSelectionStart();
-							int offsetEnd     = selectionModel.getSelectionEnd();
+						if( splitOptionsDialog.clickedOk ) {
+							String delimiter = splitOptionsDialog.getDelimiter();
+							Integer delimiterDisposalMethod = splitOptionsDialog.getDelimiterDisposalMethod();
 
-								// Explode all selected lines by delimiter
-							CharSequence editorText = document.getCharsSequence();
-							String selectedText     = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+							if( delimiter != null && delimiter.length() > 0 ) {
+							if (hasSelection) {
+								int offsetStart   = selectionModel.getSelectionStart();
+								int offsetEnd     = selectionModel.getSelectionEnd();
 
-							if( !selectedText.contains(delimiter) ) {
-								JOptionPane.showMessageDialog(null, "Delimiter not found.");
+									// Explode all selected lines by delimiter
+								CharSequence editorText = document.getCharsSequence();
+								String selectedText     = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+
+								if( !selectedText.contains(delimiter) ) {
+									JOptionPane.showMessageDialog(null, "Delimiter not found.");
+								} else {
+									int lineStart  = document.getLineNumber( selectionModel.getSelectionStart() );
+									int lineEnd    = document.getLineNumber( selectionModel.getSelectionEnd() );
+
+									for( int lineNumber = lineEnd; lineNumber >= lineStart; lineNumber--) {
+										int offsetLineStart  = document.getLineStartOffset(lineNumber);
+										String lineText      = TextualHelper.extractLine(document, lineNumber);
+										int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+
+										String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
+										String explodedText  = lineText.replace(delimiter, replacement);
+										document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
+									}
+								}
 							} else {
-								int lineStart  = document.getLineNumber( selectionModel.getSelectionStart() );
-								int lineEnd    = document.getLineNumber( selectionModel.getSelectionEnd() );
+									// Explode line containing the caret by delimiter
+								int caretOffset   = editor.getCaretModel().getOffset();
+								int lineNumber     = document.getLineNumber(caretOffset);
 
-								for( int lineNumber = lineEnd; lineNumber >= lineStart; lineNumber--) {
-									int offsetLineStart  = document.getLineStartOffset(lineNumber);
-									String lineText      = TextualHelper.extractLine(document, lineNumber);
-									int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+								int offsetLineStart  = document.getLineStartOffset(lineNumber);
+								String lineText      = TextualHelper.extractLine(document, lineNumber);
+								int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
 
-									String explodedText  = lineText.replace(delimiter, "\n");
-
+								if( !lineText.contains(delimiter) ) {
+									JOptionPane.showMessageDialog(null, "Delimiter not found.");
+								} else {
+									String replacement   = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
+									String explodedText  = lineText.replace(delimiter, replacement);
 									document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
 								}
-							}
-						} else {
-								// Explode line containing the caret by delimiter
-							int caretOffset   = editor.getCaretModel().getOffset();
-							int lineNumber     = document.getLineNumber(caretOffset);
-
-							int offsetLineStart  = document.getLineStartOffset(lineNumber);
-							String lineText      = TextualHelper.extractLine(document, lineNumber);
-							int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
-
-							if( !lineText.contains(delimiter) ) {
-								JOptionPane.showMessageDialog(null, "Delimiter not found.");
-							} else {
-								String explodedText  = lineText.replace(delimiter, "\n");
-
-								document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
 							}
 						}
 					}
@@ -123,6 +124,25 @@ public class SplitAction extends AnAction {
 		});
 
       }}, "Split into Lines", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+	}
+
+
+
+	/**
+	 * Get split replacement string, according to given delimiter and delimiter disposal method
+	 *
+	 * @param delimiter
+	 * @param disposalMethod
+	 * @return
+	 */
+	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
+		if( disposalMethod == SplitOptionsDialog.METHOD_DELIMITERDISPOSAL_BEFORE ) {
+			return "\n" + delimiter;
+		} else if( disposalMethod == SplitOptionsDialog.METHOD_DELIMITERDISPOSAL_AFTER ) {
+				return delimiter + "\n";
+		}
+
+		return "\n";
 	}
 
 }

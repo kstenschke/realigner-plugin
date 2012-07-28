@@ -86,7 +86,7 @@ public class JoinAction extends AnAction {
 							String glue = Messages.showInputDialog(
 								currentProject,
 								"Enter Glue (Optional)", "Join Lines with Glue",
-								IconLoader.getIcon("/com/kstenschke/realigner/icons/arrow-join.png"),
+								IconLoader.getIcon("/com/kstenschke/realigner/resources/arrow-join.png"),
 								", ", null
 							);
 
