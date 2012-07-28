@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d899376-02cf-4559-924a-91d894b759f2" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/icons/arrow-join.png" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/arrow-join.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/icons/arrow-split.png" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/arrow-split.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/icons/wrap-tight.png" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/wrap-tight.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/icons/arrow-join.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/icons/arrow-split.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/icons/wrap-tight.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Realigner.jar" afterPath="$PROJECT_DIR$/Realigner.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.textile" afterPath="$PROJECT_DIR$/README.textile" />
     </list>
     <ignored path="Realigner.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,10 +76,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plugin.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="33" selection-start="1894" selection-end="1894" vertical-scroll-proportion="0.68115944">
+            <state line="23" column="126" selection-start="1028" selection-end="1123" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.textile" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.textile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="93" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.6884058">
               <folding />
             </state>
           </provider>
@@ -120,12 +126,12 @@
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
         <option value="$PROJECT_DIR$/src/license.txt" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" />
-        <option value="$PROJECT_DIR$/README.textile" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitOptionsDialog.form" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.form" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.java" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
         <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
+        <option value="$PROJECT_DIR$/README.textile" />
       </list>
     </option>
   </component>
@@ -466,7 +472,11 @@
       <created>1342976514671</created>
       <updated>1342976514671</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added splitting options: split at / before / after delimiter">
+      <created>1343504091434</created>
+      <updated>1343504091434</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -533,7 +543,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added link to related plugin page in intellij.net plugins repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added splitting options: split at / before / after delimiter" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -553,6 +563,7 @@
     <MESSAGE value="improved readme" />
     <MESSAGE value="textile formatting fixes" />
     <MESSAGE value="added link to related plugin page in intellij.net plugins repository" />
+    <MESSAGE value="Added splitting options: split at / before / after delimiter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -590,11 +601,6 @@
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="3" selection-start="6" selection-end="588" vertical-scroll-proportion="0.023364486" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.textile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="99" selection-start="790" selection-end="790" vertical-scroll-proportion="0.41588786" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java">
@@ -653,7 +659,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="33" selection-start="1894" selection-end="1894" vertical-scroll-proportion="0.68115944">
+        <state line="23" column="126" selection-start="1028" selection-end="1123" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.textile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="93" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.6884058">
           <folding />
         </state>
       </provider>

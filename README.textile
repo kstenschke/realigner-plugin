@@ -12,7 +12,7 @@ The Realigner plugin is helpful e.g. to quickly convert lines to comma separated
 Realigner adds the following editing tools:
 
 * Ctrl+Shift+Alt+J - Joins selected lines by removing linefeeds. Optionally, a "gluing" string can be used as delimiter
-* Ctrl+Shift+Alt+L - Splits current line or selection into multiple lines by replacing an arbitrary delimiter by linefeeds
+* Ctrl+Shift+Alt+L - Splits current line or selection into multiple lines at, before or after an arbitrary delimiter
 * Ctrl+Shift+Alt+W - Wraps current line / selection / each of multiple selected lines with an arbitrary prefix and/or postfix string
 
 
