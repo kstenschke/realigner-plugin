@@ -27,7 +27,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.helpers.TextualHelper;
-import com.kstenschke.realigner.resources.SplitOptionsDialog;
+import com.kstenschke.realigner.resources.SplitOptions;
 
 import javax.swing.*;
 
@@ -66,7 +66,7 @@ public class SplitAction extends AnAction {
 						SelectionModel selectionModel = editor.getSelectionModel();
 						boolean hasSelection = selectionModel.hasSelection();
 
-						SplitOptionsDialog splitOptionsDialog  = new SplitOptionsDialog();
+						SplitOptions splitOptionsDialog  = new SplitOptions();
 						splitOptionsDialog.pack();
 						splitOptionsDialog.setLocationRelativeTo(null); // center to screen
 						splitOptionsDialog.setVisible(true);
@@ -136,9 +136,9 @@ public class SplitAction extends AnAction {
 	 * @return
 	 */
 	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
-		if( disposalMethod == SplitOptionsDialog.METHOD_DELIMITERDISPOSAL_BEFORE ) {
+		if( disposalMethod == SplitOptions.METHOD_DELIMITERDISPOSAL_BEFORE ) {
 			return "\n" + delimiter;
-		} else if( disposalMethod == SplitOptionsDialog.METHOD_DELIMITERDISPOSAL_AFTER ) {
+		} else if( disposalMethod == SplitOptions.METHOD_DELIMITERDISPOSAL_AFTER ) {
 				return delimiter + "\n";
 		}
 

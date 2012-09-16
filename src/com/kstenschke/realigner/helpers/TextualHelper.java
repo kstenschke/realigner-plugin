@@ -27,41 +27,12 @@ import java.util.List;
 public class TextualHelper {
 
 	/**
-	 * Returns amount of occurrences of sub string in string
-	 *
-	 * @param haystack   String to be searched in
-	 * @param needle     Sub string
-	 * @return           Amount of occurrences
-	 */
-	public static int substrCount(String haystack, String needle) {
-		if(haystack.equals("") || needle.equals("")) {
-			return 0;
-		}
-
-		int lastIndex = 0;
-		int count =0;
-
-		while(lastIndex != -1){
-			lastIndex = haystack.indexOf(needle,lastIndex);
-
-			if( lastIndex != -1){
-				count ++;
-				lastIndex+=needle.length();
-			}
-		}
-
-		return count;
-	}
-
-
-
-	/**
 	 * Get sub sequence from given offset region
 	 *
-	 * @param haystack         Text from which the sub string is to be extracted
-	 * @param offsetStart      Starting offset
-	 * @param offsetEnd        Ending offset
-	 * @return
+	 * @param	haystack		Text from which the sub string is to be extracted
+	 * @param	offsetStart		Starting offset
+	 * @param	offsetEnd		Ending offset
+	 * @return					String
 	 */
 	public static String getSubString(CharSequence haystack, int offsetStart, int offsetEnd) {
 		if (haystack.length() == 0) return null;
@@ -72,10 +43,10 @@ public class TextualHelper {
 
 
 	/**
-	 * @param doc           The full document
-	 * @param startLine     Starting line number
-	 * @param endLine       Ending line number
-	 * @return
+	 * @param	doc				The full document
+	 * @param	startLine		Starting line number
+	 * @param	endLine			Ending line number
+	 * @return	List<String>
 	 */
 	public static List<String> extractLines(Document doc, int startLine, int endLine) {
 		List<String> lines = new ArrayList<String>(endLine - startLine);
@@ -92,9 +63,9 @@ public class TextualHelper {
 
 
 	/**
-	 * @param doc
-	 * @param lineNumber
-	 * @return
+	 * @param	doc				The full document
+	 * @param	lineNumber		Number of line to be extracted
+	 * @return	String			The extracted line
 	 */
 	public static String extractLine(Document doc, int lineNumber) {
 		int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
@@ -113,4 +84,31 @@ public class TextualHelper {
 		return line;
 	}
 
+
+
+	/**
+	 * @param str					String with special chars to be escaped
+	 * @param escapeSingleQuotes	' to \' ?
+	 * @param escapeDoubleQuotes    " to \" ?
+	 * @param escapeBackslashes     \ to \\ ?
+	 * @return						The escaped string
+	 */
+	public static String escapeSelectively(String str, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
+			// Escape backslashes - important: must be done before quotes, as their escaping adds more backslashes!
+		if( escapeBackslashes ) {
+			str	= str.replaceAll("\\\\", "\\\\\\\\");
+		}
+
+			// Escape single quotes
+		if( escapeSingleQuotes ) {
+			str = str.replaceAll("'", "\\\\\'");
+		}
+
+			// Escape double quotes
+		if( escapeDoubleQuotes ) {
+			str = str.replaceAll("\"", "\\\\\\\"");
+		}
+
+		return str;
+	}
 }

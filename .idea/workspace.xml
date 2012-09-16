@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d899376-02cf-4559-924a-91d894b759f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.form" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Realigner.jar" afterPath="$PROJECT_DIR$/Realigner.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/JoinAction$1$1.class" afterPath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/JoinAction$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/SplitAction$1$1.class" afterPath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/SplitAction$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/SplitAction$1.class" afterPath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/SplitAction$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/SplitAction.class" afterPath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/SplitAction.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/WrapAction$1$1.class" afterPath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/actions/WrapAction$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/helpers/TextualHelper.class" afterPath="$PROJECT_DIR$/out/production/Realigner/com/kstenschke/realigner/helpers/TextualHelper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/WrapOptions.form" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/WrapOptions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.form" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.form" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" />
     </list>
     <ignored path="Realigner.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,37 +70,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SplitAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java">
+      <file leaf-file-name="WrapAction.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="53" selection-start="1334" selection-end="1334" vertical-scroll-proportion="0.0">
+            <state line="40" column="18" selection-start="1479" selection-end="1479" vertical-scroll-proportion="0.28301886">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
+      <file leaf-file-name="test.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="66" selection-start="1343" selection-end="1343" vertical-scroll-proportion="0.023364486">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.textile" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.textile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="93" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SplitOptionsDialog.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="31" selection-start="106" selection-end="124" vertical-scroll-proportion="0.0">
+            <state line="14" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -118,22 +101,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/kstenschke/aligner/actions/ExplodeAction.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/aligner/actions/JoinAction.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/aligner/actions/WrapAction.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/aligner/helpers/ArrayHelper.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/aligner/helpers/TextualHelper.java" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/aligner/actions/SplitAction.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
         <option value="$PROJECT_DIR$/src/license.txt" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitOptionsDialog.form" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.form" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.java" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
-        <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
         <option value="$PROJECT_DIR$/README.textile" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/WrapOptions.form" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.java" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/WrapOptions.form" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/WrapOptions.java" />
+        <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" />
+        <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" />
       </list>
     </option>
   </component>
@@ -169,6 +152,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -179,34 +172,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Realigner" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Realigner">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Realigner">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -226,46 +191,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Realigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Realigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Realigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="realigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Realigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Realigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="realigner" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -290,6 +215,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="87" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="82" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="MemberChooser.showClasses" value="true" />
@@ -344,6 +270,7 @@
       </method>
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -394,6 +321,7 @@
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
@@ -413,6 +341,7 @@
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -522,33 +451,40 @@
       <created>1343504511255</created>
       <updated>1343504511255</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add new split dialog form and java source">
+      <created>1343505156913</created>
+      <updated>1343505156913</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="48" y="-4" width="1233" height="805" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28188464" sideWeight="0.8678414" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32599118" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22025317" sideWeight="0.86850154" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32568806" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22664501" sideWeight="0.8678414" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13215859" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22569738" sideWeight="0.8700306" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12996942" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32320675" sideWeight="0.86850154" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32412672" sideWeight="0.8678414" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -589,7 +525,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated textile for 1.0.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new split dialog form and java source" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -611,6 +547,7 @@
     <MESSAGE value="added link to related plugin page in intellij.net plugins repository" />
     <MESSAGE value="Added splitting options: split at / before / after delimiter" />
     <MESSAGE value="Updated textile for 1.0.1" />
+    <MESSAGE value="add new split dialog form and java source" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -620,39 +557,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/jdk1.6.0_32/src.zip!/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="13" selection-start="6240" selection-end="6240" vertical-scroll-proportion="0.33282444" />
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.6.0_32/src.zip!/java/lang/Object.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="217" column="18" selection-start="10329" selection-end="10329" vertical-scroll-proportion="-10.3109045" />
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.6.0_32/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2205" column="18" selection-start="84262" selection-end="84262" vertical-scroll-proportion="0.33333334" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="30" selection-start="3089" selection-end="3089" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/license.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="21" selection-start="489" selection-end="489" vertical-scroll-proportion="0.2977099" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="3" selection-start="6" selection-end="588" vertical-scroll-proportion="0.023364486" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="40" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.022900764" />
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/ui/components/JBRadioButton.class">
@@ -665,11 +572,6 @@
         <state line="5" column="13" selection-start="171" selection-end="171" vertical-scroll-proportion="-0.039694656" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/ui/Messages.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="130" column="34" selection-start="11954" selection-end="11954" vertical-scroll-proportion="0.33333334" />
@@ -680,24 +582,65 @@
         <state line="299" column="11" selection-start="11153" selection-end="11165" vertical-scroll-proportion="0.33333334" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="53" selection-start="1334" selection-end="1334" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.textile">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="93" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.0" />
+        <state line="30" column="93" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.64953274" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptionsDialog.java">
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="31" selection-start="106" selection-end="124" vertical-scroll-proportion="0.0" />
+        <state line="74" column="61" selection-start="2688" selection-end="2688" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="32" selection-start="1311" selection-end="1311" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/WrapOptions.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/WrapOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="135" column="5" selection-start="2861" selection-end="2861" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.6.0_32/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2187" column="18" selection-start="83457" selection-end="83457" vertical-scroll-proportion="0.3327032" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="66" selection-start="1343" selection-end="1343" vertical-scroll-proportion="0.023364486">
+        <state line="27" column="30" selection-start="1420" selection-end="1420" vertical-scroll-proportion="0.7641509">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="0" selection-start="2484" selection-end="2484" vertical-scroll-proportion="1.9018868">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="18" selection-start="1479" selection-end="1479" vertical-scroll-proportion="0.28301886">
           <folding />
         </state>
       </provider>

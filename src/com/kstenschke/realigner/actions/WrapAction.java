@@ -29,6 +29,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.IconLoader;
 import com.kstenschke.realigner.helpers.TextualHelper;
+import com.kstenschke.realigner.resources.SplitOptions;
+import com.kstenschke.realigner.resources.WrapOptions;
 
 import javax.swing.*;
 
@@ -38,16 +40,19 @@ import javax.swing.*;
  */
 public class WrapAction extends AnAction {
 
+	/**
+	 * @param	event	Action system event
+	 */
 	public void update(AnAction event) {
 //        event.getPresentation().setEnabled(event.getDataContext().getData(DataConstants.EDITOR) != null);
 	}
 
 
+
 	/**
-	 * Perform wrap
+	 * Perform wrap: show options dialog, than wrap current selection or line of caret or each of the selected lines
 	 *
-	 * @param event
-	 * @return void.
+	 * @param	event	Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 
@@ -63,65 +68,82 @@ public class WrapAction extends AnAction {
 						//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
 
 				if (editor != null) {
-					String wrap = Messages.showInputDialog(
-						currentProject, "Wrap with:", "Wrap",
-						IconLoader.getIcon("/com/kstenschke/realigner/resources/wrap-tight.png"),
-					   "\"|\"", null
-					);
 
-					if( wrap != null && wrap.length() > 0 ) {
-						if( TextualHelper.substrCount(wrap, "|") > 1 ) {
-							JOptionPane.showMessageDialog(null, "Illegal Wrap: More than one pipe character is not allowed.");
-						} else {
-							String[] wrapParts   = wrap.split("\\|");
-							String prefix        = wrapParts[0];
-							String postfix       = wrapParts.length > 1 ? wrapParts[1] : "";
+					WrapOptions wrapOptionsDialog  = new WrapOptions();
+					wrapOptionsDialog.pack();
+					wrapOptionsDialog.setLocationRelativeTo(null); // center to screen
+					wrapOptionsDialog.setVisible(true);
 
-							final Document document = editor.getDocument();
-							CharSequence editorText = document.getCharsSequence();
-							SelectionModel selectionModel = editor.getSelectionModel();
-							boolean hasSelection = selectionModel.hasSelection();
+					//String wrap = Messages.showInputDialog(
+					//	currentProject, "Wrap with:", "Wrap",
+					//	IconLoader.getIcon("/com/kstenschke/realigner/resources/wrap-tight.png"),
+					//   "\"|\"", null
+					//);
 
-							if (hasSelection) {
-								int offsetStart   = selectionModel.getSelectionStart();
-								int offsetEnd     = selectionModel.getSelectionEnd();
+					//if( wrap != null && wrap.length() > 0 ) {
+					if( wrapOptionsDialog.clickedOk ) {
+						String prefix	= wrapOptionsDialog.getTextFieldPrefix();
+						String postfix	= wrapOptionsDialog.getTextFieldPostfix();
+						int prefixLen	= prefix.length();
+						int postfixLen	= postfix.length();
 
-								int lineNumberSelStart = document.getLineNumber(offsetStart);
-								int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+						Boolean escapeSingleQuotes	= wrapOptionsDialog.isSelectedEscapeSingleQuotes();
+						Boolean escapeDoubleQuotes	= wrapOptionsDialog.isSelectedEscapeDoubleQuotes();
+						Boolean escapeBackslashes	= wrapOptionsDialog.isSelectedEscapeBackslashes();
 
-								if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
-									lineNumberSelEnd--;
-								}
+						final Document document = editor.getDocument();
+						CharSequence editorText = document.getCharsSequence();
+						SelectionModel selectionModel = editor.getSelectionModel();
+						boolean hasSelection = selectionModel.hasSelection();
 
-									// Selection within same line: wrap it
-								if( lineNumberSelStart == lineNumberSelEnd ) {
-									String selectedText  = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+						if (hasSelection) {
+							int offsetStart   = selectionModel.getSelectionStart();
+							int offsetEnd     = selectionModel.getSelectionEnd();
 
-									String wrappedString = prefix + selectedText + postfix;
-									document.replaceString(offsetStart, offsetEnd, wrappedString);
-								} else {
-									// Selection of multiple lines: wrap each line, begin/end at selection offsets
-									for(int lineNumber = lineNumberSelEnd; lineNumber >= lineNumberSelStart; lineNumber--) {
-										int offsetLineStart  = document.getLineStartOffset(lineNumber);
-										String lineText      = TextualHelper.extractLine(document, lineNumber);
-										int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+							int lineNumberSelStart = document.getLineNumber(offsetStart);
+							int lineNumberSelEnd = document.getLineNumber(offsetEnd);
 
-										document.insertString(offsetLineEnd, postfix);
-										document.insertString(offsetLineStart, prefix);
-									}
-								}
-							} else {
-								// No selection: wrap the line where the caret is
-								int caretOffset   = editor.getCaretModel().getOffset();
-								int lineNumber     = document.getLineNumber(caretOffset);
-
-								int offsetLineStart  = document.getLineStartOffset(lineNumber);
-								String lineText      = TextualHelper.extractLine(document, lineNumber);
-								int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
-
-								document.insertString(offsetLineEnd, postfix);
-								document.insertString(offsetLineStart, prefix);
+							if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+								lineNumberSelEnd--;
 							}
+
+								// Selection within same line: wrap it
+							if( lineNumberSelStart == lineNumberSelEnd ) {
+								String selectedText	= TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+								selectedText		= TextualHelper.escapeSelectively(selectedText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+
+								String wrappedString = prefix + selectedText + postfix;
+								document.replaceString(offsetStart, offsetEnd, wrappedString);
+							} else {
+								// Selection of multiple lines: wrap each line, begin/end at selection offsets
+								for(int lineNumber = lineNumberSelEnd; lineNumber >= lineNumberSelStart; lineNumber--) {
+									int offsetLineStart  = document.getLineStartOffset(lineNumber);
+									String lineText      = TextualHelper.extractLine(document, lineNumber);
+									int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+
+									document.insertString(offsetLineEnd, postfix);
+									document.insertString(offsetLineStart, prefix);
+
+									lineText	= lineText.replaceAll("\n", "");
+									lineText	= TextualHelper.escapeSelectively(lineText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+									document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
+								}
+							}
+						} else {
+							// No selection: wrap the line where the caret is
+							int caretOffset   = editor.getCaretModel().getOffset();
+							int lineNumber     = document.getLineNumber(caretOffset);
+
+							int offsetLineStart  = document.getLineStartOffset(lineNumber);
+							String lineText      = TextualHelper.extractLine(document, lineNumber);
+							int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+
+							document.insertString(offsetLineEnd, postfix);
+							document.insertString(offsetLineStart, prefix);
+
+							lineText	= lineText.replaceAll("\n", "");
+							lineText	= TextualHelper.escapeSelectively(lineText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+							document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
 						}
 					}
 				}

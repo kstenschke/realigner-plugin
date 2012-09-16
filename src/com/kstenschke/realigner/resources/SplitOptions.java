@@ -1,9 +1,25 @@
+/*
+ * Copyright 2012 Kay Stenschke
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.kstenschke.realigner.resources;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class SplitOptionsDialog extends JDialog {
+public class SplitOptions extends JDialog {
 	private JPanel contentPane;
 	private JButton buttonOK;
 	private JButton buttonCancel;
@@ -19,7 +35,12 @@ public class SplitOptionsDialog extends JDialog {
 
 	public Boolean clickedOk   = false;
 
-	public SplitOptionsDialog() {
+
+
+	/**
+	 * Split options constructor
+	 */
+	public SplitOptions() {
 		clickedOk   = false;
 
 		setContentPane(contentPane);
@@ -54,18 +75,35 @@ public class SplitOptionsDialog extends JDialog {
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
 
+
+
+	/**
+	 * Handle click ok event
+	 */
 	private void onOK() {
 		clickedOk   = true;
 		dispose();
 	}
 
+
+
+	/**
+	 * Handle click cancel event
+	 */
 	private void onCancel() {
 		clickedOk   = false;
 		dispose();
 	}
 
+
+
+	/**
+	 * Split options main
+	 *
+	 * @param	args
+	 */
 	public static void main(String[] args) {
-		SplitOptionsDialog dialog = new SplitOptionsDialog();
+		SplitOptions dialog = new SplitOptions();
 		dialog.pack();
 		dialog.setVisible(true);
 		System.exit(0);
