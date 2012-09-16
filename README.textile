@@ -7,7 +7,11 @@ This is a plugin for the various intellij IDEs, working in IDEA, PhpStorm, AppCo
 
 h2. Description
 
-The Realigner plugin is helpful e.g. to quickly convert lines to comma separated lists and vice versa.<br><br>
+The Realigner plugin is helpful e.g. to quickly convert lines to comma separated lists and vice versa.
+Additionally the plugin adds a tool to wrap a selection, the current line or each of multiple selected lines
+with surrounding strings. The wrap tool of the plugin also provides options for escaping single, double quote
+and backslash characters.
+
 
 Realigner adds the following editing tools:
 
