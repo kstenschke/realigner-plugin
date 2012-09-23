@@ -72,6 +72,7 @@ public class WrapAction extends AnAction {
 					WrapOptions wrapOptionsDialog  = new WrapOptions();
 					wrapOptionsDialog.pack();
 					wrapOptionsDialog.setLocationRelativeTo(null); // center to screen
+					wrapOptionsDialog.setTitle("Wrap");
 					wrapOptionsDialog.setVisible(true);
 
 					//String wrap = Messages.showInputDialog(

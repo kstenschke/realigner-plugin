@@ -69,6 +69,7 @@ public class SplitAction extends AnAction {
 						SplitOptions splitOptionsDialog  = new SplitOptions();
 						splitOptionsDialog.pack();
 						splitOptionsDialog.setLocationRelativeTo(null); // center to screen
+						splitOptionsDialog.setTitle("Split by Delimiter");
 						splitOptionsDialog.setVisible(true);
 
 						if( splitOptionsDialog.clickedOk ) {

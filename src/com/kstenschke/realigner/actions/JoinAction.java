@@ -30,6 +30,7 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.IconLoader;
 import com.kstenschke.realigner.helpers.TextualHelper;
 
+import javax.swing.*;
 import java.util.List;
 
 
@@ -63,6 +64,8 @@ public class JoinAction extends AnAction {
 					//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
 
 				if (editor != null) {
+					boolean cannotJoin = false;
+
 					SelectionModel selectionModel = editor.getSelectionModel();
 					boolean hasSelection = selectionModel.hasSelection();
 
@@ -107,11 +110,18 @@ public class JoinAction extends AnAction {
 
 								document.replaceString(offsetStart, offsetEnd, joinedLines);
 							}
+						} else {
+							cannotJoin = true;
 						}
-						// Don't join if there's no selection or only one line of selection
+					} else {
+						cannotJoin	= true;
+					}
+
+						// No selection or only one line of selection? Display resp. message
+					if( cannotJoin ) {
+						JOptionPane.showMessageDialog(editor.getComponent(), "Please select lines to be joined.");
 					}
 				}
-
 			}
 		});
 
