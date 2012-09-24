@@ -1,4 +1,8 @@
-'foo', 'bar', 'baz', 'qux'
+"\'foo\'",
+"\'bar\'",
+"\'baz\'",
+"\'qux\'",
+
 'What do you mean by that?' said the Caterpillar sternly. 'Explain yourself!'
 'I can't explain MYSELF, I'null afraid, sir' said Alice
 'because I'm or myself, you see.'

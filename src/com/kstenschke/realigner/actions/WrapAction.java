@@ -41,10 +41,12 @@ import javax.swing.*;
 public class WrapAction extends AnAction {
 
 	/**
+	 * Disable when no project open
+	 *
 	 * @param	event	Action system event
 	 */
-	public void update(AnAction event) {
-//        event.getPresentation().setEnabled(event.getDataContext().getData(DataConstants.EDITOR) != null);
+	public void update( AnActionEvent event ) {
+		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
 
 

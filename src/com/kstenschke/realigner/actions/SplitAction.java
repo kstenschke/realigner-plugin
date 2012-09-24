@@ -16,9 +16,7 @@
 
 package com.kstenschke.realigner.actions;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
@@ -37,8 +35,13 @@ import javax.swing.*;
  */
 public class SplitAction extends AnAction {
 
-	public void update(AnAction event) {
-//        event.getPresentation().setEnabled(event.getDataContext().getData(DataConstants.EDITOR) != null);
+	/**
+	 * Disable when no project open
+	 *
+	 * @param event		Action system event
+	 */
+	public void update( AnActionEvent event ) {
+		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
 
 

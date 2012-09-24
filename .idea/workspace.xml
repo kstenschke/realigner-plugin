@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d899376-02cf-4559-924a-91d894b759f2" name="Default" comment="">
+    <list default="true" id="4d899376-02cf-4559-924a-91d894b759f2" name="Default" comment="Added disabling of options when no project, editor or necessary selection given">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Realigner.jar" afterPath="$PROJECT_DIR$/Realigner.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" afterPath="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
@@ -70,7 +69,7 @@
       <file leaf-file-name="plugin.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="83" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.42601627">
+            <state line="41" column="69" selection-start="2082" selection-end="2082" vertical-scroll-proportion="0.42125237">
               <folding />
             </state>
           </provider>
@@ -100,10 +99,10 @@
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/helpers/TextualHelper.java" />
         <option value="$PROJECT_DIR$/README.textile" />
         <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" />
-        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
         <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java" />
+        <option value="$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java" />
         <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
       </list>
     </option>
@@ -183,6 +182,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="realigner" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Realigner" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Realigner" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="realigner" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="actions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -480,7 +505,11 @@
       <created>1347830649948</created>
       <updated>1347830649948</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Added missing title text to dialog window of split and wrap option&#10;Added error message when trying to join w/o multiple lines of selection">
+      <created>1348409937165</created>
+      <updated>1348409937165</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -503,8 +532,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22569738" sideWeight="0.8700306" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12996942" sideWeight="0.49704143" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22569738" sideWeight="0.8654434" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13455658" sideWeight="0.49704143" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32320675" sideWeight="0.86850154" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -550,7 +579,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* updated textile readme for v1.0.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added missing title text to dialog window of split and wrap option&#10;Added error message when trying to join w/o multiple lines of selection" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -575,6 +604,7 @@
     <MESSAGE value="add new split dialog form and java source" />
     <MESSAGE value="* added new wrap dialog&#10;* added escaping options" />
     <MESSAGE value="* updated textile readme for v1.0.2" />
+    <MESSAGE value="Added missing title text to dialog window of split and wrap option&#10;Added error message when trying to join w/o multiple lines of selection" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -636,46 +666,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/resources/SplitOptions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="30" selection-start="1307" selection-end="1307" vertical-scroll-proportion="0.19337016">
-          <folding />
-        </state>
+        <state line="40" column="30" selection-start="1307" selection-end="1307" vertical-scroll-proportion="0.19337016" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="21" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/WrapAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="24" selection-start="2987" selection-end="2987" vertical-scroll-proportion="0.9150943">
+        <state line="45" column="43" selection-start="1564" selection-end="1583" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/SplitAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="63" selection-start="2606" selection-end="2606" vertical-scroll-proportion="0.2264151">
+        <state line="40" column="43" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kstenschke/realigner/actions/JoinAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="24" selection-start="4268" selection-end="4268" vertical-scroll-proportion="0.74150944">
-          <folding>
-            <element signature="e#0#4483#0" expanded="true" />
-            <element signature="e#2048#4380#0" expanded="true" />
-            <element signature="e#4375#4376#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="21" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+        <state line="47" column="10" selection-start="1474" selection-end="1474" vertical-scroll-proportion="0.22390892">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="83" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.42601627">
+        <state line="41" column="69" selection-start="2082" selection-end="2082" vertical-scroll-proportion="0.42125237">
           <folding />
         </state>
       </provider>

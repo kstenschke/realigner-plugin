@@ -37,6 +37,10 @@
 
     <change-notes><![CDATA[
     <br>
+    1.0.4<br>
+    <ul>
+        <li>Added disabling of options when no project, editor or necessary selection given</li>
+    </ul>
     1.0.3<br>
     <ul>
         <li>Added missing title text to dialog window of split and wrap option</li>

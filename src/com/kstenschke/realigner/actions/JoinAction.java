@@ -16,9 +16,7 @@
 
 package com.kstenschke.realigner.actions;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
@@ -39,9 +37,34 @@ import java.util.List;
  */
 public class JoinAction extends AnAction {
 
-	public void update(AnAction event) {
-//        event.getPresentation().setEnabled(event.getDataContext().getData(DataConstants.EDITOR) != null);
+	/**
+	 * Disable when no project open
+	 *
+	 * @param event     Action system event
+	 */
+	public void update( AnActionEvent event ) {
+		boolean  enabled = false;
+
+		final Project project = event.getData(PlatformDataKeys.PROJECT);
+		Editor editor = event.getData(PlatformDataKeys.EDITOR);
+		if (project != null && editor != null) {
+			SelectionModel selectionModel = editor.getSelectionModel();
+			boolean hasSelection = selectionModel.hasSelection();
+			if (hasSelection) {
+				final Document document = editor.getDocument();
+
+				int lineNumberSelStart	= document.getLineNumber(selectionModel.getSelectionStart());
+				int lineNumberSelEnd	= document.getLineNumber(selectionModel.getSelectionEnd());
+
+				if (lineNumberSelEnd > lineNumberSelStart) {
+					enabled	= true;
+				}
+			}
+		}
+
+		event.getPresentation().setEnabled(enabled);
 	}
+
 
 
 	/**
