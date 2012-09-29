@@ -39,6 +39,7 @@
     <br>
     1.0.4<br>
     <ul>
+        <li>Added retaining of options preferences (application level)</li>
         <li>Added disabling of options when no project, editor or necessary selection given</li>
     </ul>
     1.0.3<br>

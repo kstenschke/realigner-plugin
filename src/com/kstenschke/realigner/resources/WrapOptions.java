@@ -28,7 +28,7 @@ public class WrapOptions extends JDialog {
 	private JCheckBox escapeDoubleQuotesCheckBox;
 	private JCheckBox escapeBackslashesCheckBox;
 
-	public Boolean clickedOk   = false;
+	public Boolean clickedOk	= false;
 
 
 
@@ -36,7 +36,7 @@ public class WrapOptions extends JDialog {
 	 * Wrap Options constructor
 	 */
 	public WrapOptions() {
-		clickedOk   = false;
+		clickedOk	= false;
 
 		setContentPane(contentPane);
 		setModal(true);
@@ -77,7 +77,7 @@ public class WrapOptions extends JDialog {
 	 * Handle click ok event
 	 */
 	private void onOK() {
-		clickedOk   = true;
+		clickedOk	= true;
 		dispose();
 	}
 
@@ -87,7 +87,7 @@ public class WrapOptions extends JDialog {
 	 * Handle click cancel event
 	 */
 	private void onCancel() {
-		clickedOk   = false;
+		clickedOk	= false;
 		dispose();
 	}
 
@@ -100,6 +100,14 @@ public class WrapOptions extends JDialog {
 	 */
 	public String getTextFieldPrefix() {
 		return textFieldPrefix.getText();
+	}
+
+
+	/**
+	 * Set wrap LHS
+	 */
+	public void setTextFieldPrefix(String prefix) {
+		textFieldPrefix.setText(prefix);
 	}
 
 
@@ -116,6 +124,15 @@ public class WrapOptions extends JDialog {
 
 
 	/**
+	 * Set wrap LHS
+	 */
+	public void setTextFieldPostfix(String postfix) {
+		textFieldPostfix.setText(postfix);
+	}
+
+
+
+	/**
 	 * Check whether wrapped single quotes are selected to be escaped
 	 *
 	 * @return	Boolean.
@@ -123,6 +140,11 @@ public class WrapOptions extends JDialog {
 	public Boolean isSelectedEscapeSingleQuotes() {
 		return escapeSingleQuotesCheckBox.isSelected();
 	}
+
+	public void setSelectedEscapeSingleQuotes(Boolean setSelected) {
+		escapeSingleQuotesCheckBox.setSelected(setSelected);
+	}
+
 
 
 
@@ -133,6 +155,10 @@ public class WrapOptions extends JDialog {
 	 */
 	public Boolean isSelectedEscapeDoubleQuotes() {
 		return escapeDoubleQuotesCheckBox.isSelected();
+	}
+
+	public void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
+		escapeDoubleQuotesCheckBox.setSelected(setSelected);
 	}
 
 
@@ -146,10 +172,14 @@ public class WrapOptions extends JDialog {
 		return escapeBackslashesCheckBox.isSelected();
 	}
 
+	public void setSelectedEscapeBackslashes(Boolean setSelected) {
+		escapeBackslashesCheckBox.setSelected(setSelected);
+	}
+
 
 
 	/**
-	 * @param	args
+	 * @param	args	Arguments
 	 */
 	public static void main(String[] args) {
 		WrapOptions dialog = new WrapOptions();

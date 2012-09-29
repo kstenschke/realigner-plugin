@@ -26,13 +26,9 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.IconLoader;
 import com.kstenschke.realigner.helpers.TextualHelper;
-import com.kstenschke.realigner.resources.SplitOptions;
+import com.kstenschke.realigner.helpers.Preferences;
 import com.kstenschke.realigner.resources.WrapOptions;
-
-import javax.swing.*;
 
 
 /**
@@ -70,29 +66,32 @@ public class WrapAction extends AnAction {
 						//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
 
 				if (editor != null) {
-
-					WrapOptions wrapOptionsDialog  = new WrapOptions();
+					WrapOptions wrapOptionsDialog	= new WrapOptions();
 					wrapOptionsDialog.pack();
-					wrapOptionsDialog.setLocationRelativeTo(null); // center to screen
+					wrapOptionsDialog.setLocationRelativeTo(null); // Center to screen
 					wrapOptionsDialog.setTitle("Wrap");
+
+						// Load and init from preferences
+					wrapOptionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
+					wrapOptionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
+					wrapOptionsDialog.setSelectedEscapeSingleQuotes(Preferences.getWrapEscapeSingleQuotes());
+					wrapOptionsDialog.setSelectedEscapeDoubleQuotes(Preferences.getWrapEscapeDoubleQuotes());
+					wrapOptionsDialog.setSelectedEscapeBackslashes(Preferences.getWrapEscapeBackslashes());
+
 					wrapOptionsDialog.setVisible(true);
 
-					//String wrap = Messages.showInputDialog(
-					//	currentProject, "Wrap with:", "Wrap",
-					//	IconLoader.getIcon("/com/kstenschke/realigner/resources/wrap-tight.png"),
-					//   "\"|\"", null
-					//);
-
-					//if( wrap != null && wrap.length() > 0 ) {
 					if( wrapOptionsDialog.clickedOk ) {
 						String prefix	= wrapOptionsDialog.getTextFieldPrefix();
 						String postfix	= wrapOptionsDialog.getTextFieldPostfix();
-						int prefixLen	= prefix.length();
-						int postfixLen	= postfix.length();
 
 						Boolean escapeSingleQuotes	= wrapOptionsDialog.isSelectedEscapeSingleQuotes();
 						Boolean escapeDoubleQuotes	= wrapOptionsDialog.isSelectedEscapeDoubleQuotes();
 						Boolean escapeBackslashes	= wrapOptionsDialog.isSelectedEscapeBackslashes();
+
+							// Store preferences
+						Preferences.saveWrapProperties(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+
+						int prefixLen	= prefix.length();
 
 						final Document document = editor.getDocument();
 						CharSequence editorText = document.getCharsSequence();
@@ -100,11 +99,11 @@ public class WrapAction extends AnAction {
 						boolean hasSelection = selectionModel.hasSelection();
 
 						if (hasSelection) {
-							int offsetStart   = selectionModel.getSelectionStart();
-							int offsetEnd     = selectionModel.getSelectionEnd();
+							int offsetStart	= selectionModel.getSelectionStart();
+							int offsetEnd	= selectionModel.getSelectionEnd();
 
-							int lineNumberSelStart = document.getLineNumber(offsetStart);
-							int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+							int lineNumberSelStart	= document.getLineNumber(offsetStart);
+							int lineNumberSelEnd	= document.getLineNumber(offsetEnd);
 
 							if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
 								lineNumberSelEnd--;
@@ -120,9 +119,9 @@ public class WrapAction extends AnAction {
 							} else {
 								// Selection of multiple lines: wrap each line, begin/end at selection offsets
 								for(int lineNumber = lineNumberSelEnd; lineNumber >= lineNumberSelStart; lineNumber--) {
-									int offsetLineStart  = document.getLineStartOffset(lineNumber);
-									String lineText      = TextualHelper.extractLine(document, lineNumber);
-									int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+									int offsetLineStart	= document.getLineStartOffset(lineNumber);
+									String lineText		= TextualHelper.extractLine(document, lineNumber);
+									int offsetLineEnd	= offsetLineStart + lineText.length() - 1;
 
 									document.insertString(offsetLineEnd, postfix);
 									document.insertString(offsetLineStart, prefix);
@@ -133,13 +132,13 @@ public class WrapAction extends AnAction {
 								}
 							}
 						} else {
-							// No selection: wrap the line where the caret is
-							int caretOffset   = editor.getCaretModel().getOffset();
-							int lineNumber     = document.getLineNumber(caretOffset);
+								// No selection: wrap the line where the caret is
+							int caretOffset	= editor.getCaretModel().getOffset();
+							int lineNumber	= document.getLineNumber(caretOffset);
 
-							int offsetLineStart  = document.getLineStartOffset(lineNumber);
-							String lineText      = TextualHelper.extractLine(document, lineNumber);
-							int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+							int offsetLineStart	= document.getLineStartOffset(lineNumber);
+							String lineText		= TextualHelper.extractLine(document, lineNumber);
+							int offsetLineEnd	= offsetLineStart + lineText.length() - 1;
 
 							document.insertString(offsetLineEnd, postfix);
 							document.insertString(offsetLineStart, prefix);
@@ -153,7 +152,7 @@ public class WrapAction extends AnAction {
 			}
 		});
 
-      }}, "Wrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+		}}, "Wrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
 
 }

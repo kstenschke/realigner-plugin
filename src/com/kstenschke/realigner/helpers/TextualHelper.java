@@ -87,11 +87,11 @@ public class TextualHelper {
 
 
 	/**
-	 * @param str					String with special chars to be escaped
-	 * @param escapeSingleQuotes	' to \' ?
-	 * @param escapeDoubleQuotes    " to \" ?
-	 * @param escapeBackslashes     \ to \\ ?
-	 * @return						The escaped string
+	 * @param	str						String with special chars to be escaped
+	 * @param	escapeSingleQuotes		' to \' ?
+	 * @param	escapeDoubleQuotes		" to \" ?
+	 * @param	escapeBackslashes		\ to \\ ?
+	 * @return							The escaped string
 	 */
 	public static String escapeSelectively(String str, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
 			// Escape backslashes - important: must be done before quotes, as their escaping adds more backslashes!

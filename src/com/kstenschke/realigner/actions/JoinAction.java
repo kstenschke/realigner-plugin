@@ -26,6 +26,7 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.IconLoader;
+import com.kstenschke.realigner.helpers.Preferences;
 import com.kstenschke.realigner.helpers.TextualHelper;
 
 import javax.swing.*;
@@ -40,7 +41,7 @@ public class JoinAction extends AnAction {
 	/**
 	 * Disable when no project open
 	 *
-	 * @param event     Action system event
+	 * @param	event	Action system event
 	 */
 	public void update( AnActionEvent event ) {
 		boolean  enabled = false;
@@ -70,8 +71,7 @@ public class JoinAction extends AnAction {
 	/**
 	 * Perform implode / explode
 	 *
-	 * @param event
-	 * @return void.
+	 * @param	event	Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 
@@ -93,8 +93,8 @@ public class JoinAction extends AnAction {
 					boolean hasSelection = selectionModel.hasSelection();
 
 					if (hasSelection) {
-						int offsetStart   = selectionModel.getSelectionStart();
-						int offsetEnd     = selectionModel.getSelectionEnd();
+						int offsetStart	= selectionModel.getSelectionStart();
+						int offsetEnd	= selectionModel.getSelectionEnd();
 
 						final Document document = editor.getDocument();
 						//CharSequence editorText = document.getCharsSequence();
@@ -111,25 +111,27 @@ public class JoinAction extends AnAction {
 								// Join selected lines
 							String glue = Messages.showInputDialog(
 								currentProject,
-								"Enter Glue (Optional)", "Join Lines with Glue",
+								"Enter Glue (Optional)", "Join Lines With Glue",
 								IconLoader.getIcon("/com/kstenschke/realigner/resources/arrow-join.png"),
-								", ", null
+									Preferences.getJoinGlue(), null
 							);
 
 							if( glue != null ) {
-								List<String> linesList   = TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-								String linesStr   =  "";
-								int amountLines   = linesList.size();
+								Preferences.saveJoinProperties(glue);
+
+								List<String> linesList	= TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+								String linesStr	= "";
+								int amountLines	= linesList.size();
 								for(int i = 0; i < amountLines; i++) {
 									linesStr = linesStr + linesList.get(i) + ( i < (amountLines -1) ? glue : "");
 								}
 
 									// Remove newlines
-								String joinedLines   = linesStr.replaceAll("(\\n)+", "" );
+								String joinedLines	= linesStr.replaceAll("(\\n)+", "" );
 
 									// Replace the full lines with themselves joined
-								offsetStart          = document.getLineStartOffset(lineNumberSelStart);
-								offsetEnd            = document.getLineEndOffset(lineNumberSelEnd);
+								offsetStart	= document.getLineStartOffset(lineNumberSelStart);
+								offsetEnd	= document.getLineEndOffset(lineNumberSelEnd);
 
 								document.replaceString(offsetStart, offsetEnd, joinedLines);
 							}
@@ -148,7 +150,7 @@ public class JoinAction extends AnAction {
 			}
 		});
 
-            }}, "Join Lines with Glue", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+			}}, "Join Lines with Glue", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
 
 }

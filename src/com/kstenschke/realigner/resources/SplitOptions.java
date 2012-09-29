@@ -29,9 +29,9 @@ public class SplitOptions extends JDialog {
 	private JTextField textFieldDelimiter;
 
 	// Delimiter disposal methods
-	public static final int METHOD_DELIMITERDISPOSAL_AT = 0;
-	public static final int METHOD_DELIMITERDISPOSAL_BEFORE = 1;
-	public static final int METHOD_DELIMITERDISPOSAL_AFTER = 2;
+	public static final int METHOD_DELIMITERDISPOSAL_AT		= 0;
+	public static final int METHOD_DELIMITERDISPOSAL_BEFORE	= 1;
+	public static final int METHOD_DELIMITERDISPOSAL_AFTER	= 2;
 
 	public Boolean clickedOk   = false;
 
@@ -100,7 +100,7 @@ public class SplitOptions extends JDialog {
 	/**
 	 * Split options main
 	 *
-	 * @param	args
+	 * @param	args	Arguments
 	 */
 	public static void main(String[] args) {
 		SplitOptions dialog = new SplitOptions();

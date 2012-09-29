@@ -48,8 +48,7 @@ public class SplitAction extends AnAction {
 	/**
 	 * Perform split into lines
 	 *
-	 * @param event
-	 * @return void.
+	 * @param	event	Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 
@@ -81,23 +80,23 @@ public class SplitAction extends AnAction {
 
 							if( delimiter != null && delimiter.length() > 0 ) {
 							if (hasSelection) {
-								int offsetStart   = selectionModel.getSelectionStart();
-								int offsetEnd     = selectionModel.getSelectionEnd();
+								int offsetStart	= selectionModel.getSelectionStart();
+								int offsetEnd	= selectionModel.getSelectionEnd();
 
 									// Explode all selected lines by delimiter
-								CharSequence editorText = document.getCharsSequence();
-								String selectedText     = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+								CharSequence editorText	= document.getCharsSequence();
+								String selectedText		= TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
 
 								if( !selectedText.contains(delimiter) ) {
 									JOptionPane.showMessageDialog(null, "Delimiter not found.");
 								} else {
-									int lineStart  = document.getLineNumber( selectionModel.getSelectionStart() );
-									int lineEnd    = document.getLineNumber( selectionModel.getSelectionEnd() );
+									int lineStart	= document.getLineNumber( selectionModel.getSelectionStart() );
+									int lineEnd		= document.getLineNumber( selectionModel.getSelectionEnd() );
 
 									for( int lineNumber = lineEnd; lineNumber >= lineStart; lineNumber--) {
-										int offsetLineStart  = document.getLineStartOffset(lineNumber);
-										String lineText      = TextualHelper.extractLine(document, lineNumber);
-										int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+										int offsetLineStart	= document.getLineStartOffset(lineNumber);
+										String lineText		= TextualHelper.extractLine(document, lineNumber);
+										int offsetLineEnd	= offsetLineStart + lineText.length() - 1;
 
 										String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
 										String explodedText  = lineText.replace(delimiter, replacement);
@@ -106,18 +105,18 @@ public class SplitAction extends AnAction {
 								}
 							} else {
 									// Explode line containing the caret by delimiter
-								int caretOffset   = editor.getCaretModel().getOffset();
-								int lineNumber     = document.getLineNumber(caretOffset);
+								int caretOffset	= editor.getCaretModel().getOffset();
+								int lineNumber	= document.getLineNumber(caretOffset);
 
-								int offsetLineStart  = document.getLineStartOffset(lineNumber);
-								String lineText      = TextualHelper.extractLine(document, lineNumber);
-								int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+								int offsetLineStart	= document.getLineStartOffset(lineNumber);
+								String lineText		= TextualHelper.extractLine(document, lineNumber);
+								int offsetLineEnd	= offsetLineStart + lineText.length() - 1;
 
 								if( !lineText.contains(delimiter) ) {
 									JOptionPane.showMessageDialog(null, "Delimiter not found.");
 								} else {
-									String replacement   = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
-									String explodedText  = lineText.replace(delimiter, replacement);
+									String replacement	= getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
+									String explodedText	= lineText.replace(delimiter, replacement);
 									document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
 								}
 							}
@@ -127,7 +126,7 @@ public class SplitAction extends AnAction {
 			}
 		});
 
-      }}, "Split into Lines", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+		}}, "Split into Lines", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
 
 
@@ -135,9 +134,9 @@ public class SplitAction extends AnAction {
 	/**
 	 * Get split replacement string, according to given delimiter and delimiter disposal method
 	 *
-	 * @param delimiter
-	 * @param disposalMethod
-	 * @return
+	 * @param	delimiter		Delimiter string
+	 * @param	disposalMethod	Before/At/After
+	 * @return					String
 	 */
 	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
 		if( disposalMethod == SplitOptions.METHOD_DELIMITERDISPOSAL_BEFORE ) {
