@@ -23,15 +23,15 @@ public class SplitOptions extends JDialog {
 	private JPanel contentPane;
 	private JButton buttonOK;
 	private JButton buttonCancel;
-	private JRadioButton splitAtDelimiterAndRadioButton;
+	private JRadioButton splitAtDelimiterRadioButton;
 	private JRadioButton splitAfterDelimiterRadioButton;
 	private JRadioButton splitBeforeDelimiterRadioButton;
 	private JTextField textFieldDelimiter;
 
 	// Delimiter disposal methods
-	public static final int METHOD_DELIMITERDISPOSAL_AT		= 0;
-	public static final int METHOD_DELIMITERDISPOSAL_BEFORE	= 1;
-	public static final int METHOD_DELIMITERDISPOSAL_AFTER	= 2;
+	public static final int METHOD_DELIMITER_DISPOSAL_AT	= 0;
+	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE= 1;
+	public static final int METHOD_DELIMITER_DISPOSAL_AFTER	= 2;
 
 	public Boolean clickedOk   = false;
 
@@ -123,20 +123,54 @@ public class SplitOptions extends JDialog {
 
 
 	/**
+	 * Set delimiter text
+	 */
+	public void setDelimiter(String delimiter) {
+		textFieldDelimiter.setText(delimiter);
+	}
+
+
+
+	/**
 	 * Getter for delimiter disposal method
 	 *
 	 * @return  Integer
 	 */
 	public Integer getDelimiterDisposalMethod() {
 		if( splitBeforeDelimiterRadioButton.isSelected() ) {
-			return METHOD_DELIMITERDISPOSAL_BEFORE;
+			return METHOD_DELIMITER_DISPOSAL_BEFORE;
 		}
 
 		if( splitAfterDelimiterRadioButton.isSelected() ) {
-			return METHOD_DELIMITERDISPOSAL_AFTER;
+			return METHOD_DELIMITER_DISPOSAL_AFTER;
 		}
 
-		return METHOD_DELIMITERDISPOSAL_AT;
+		return METHOD_DELIMITER_DISPOSAL_AT;
+	}
+
+
+
+	/**
+	 * Select given split-where (at/after/before delimiter) option radio box
+	 *
+	 * @param  splitWhere	At/before/after delimiter
+	 */
+	public void setDelimiterDisposalMethod(Integer splitWhere) {
+		switch(splitWhere) {
+			case METHOD_DELIMITER_DISPOSAL_BEFORE:
+				splitBeforeDelimiterRadioButton.setSelected(true);
+				break;
+
+			case METHOD_DELIMITER_DISPOSAL_AFTER:
+				splitAfterDelimiterRadioButton.setSelected(true);
+				break;
+
+			case METHOD_DELIMITER_DISPOSAL_AT:
+			default:
+				splitAtDelimiterRadioButton.setSelected(true);
+				break;
+
+		}
 	}
 
 }

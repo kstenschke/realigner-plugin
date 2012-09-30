@@ -28,10 +28,16 @@ public class Preferences {
 	@NonNls
 	private static final String PROPERTY_WRAP_ESCAPEBACKSLASHES = "PluginRealiginer.WrapEscapeBackslashes";
 
+	@NonNls
+	private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
+
+	@NonNls
+	private static final String PROPERTY_SPLIT_SPLITWHERE = "PluginRealiginer.SplitSplitWhere";
+
 
 
 	/**
-	 * Store wrap Preferences
+	 * Store wrap preferences
 	 *
 	 * @param	prefix					Wrap prefix string (LHS)
 	 * @param	postfix					Wrap postfix string (RHS)
@@ -52,12 +58,57 @@ public class Preferences {
 
 
 	/**
-	 * Store wrap Preferences
+	 * Store split preferences
+	 *
+	 * @param	delimiter					Delimiter string
+	 * @param	delimiterDisposalMethod		Split at/after/before?
+	 */
+	public static void saveSplitProperties(String delimiter, Integer delimiterDisposalMethod) {
+		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+
+		propertiesComponent.setValue(PROPERTY_SPLIT_DELIMITER, delimiter);
+
+		if(delimiterDisposalMethod > 2 ) delimiterDisposalMethod = 0;
+		propertiesComponent.setValue(PROPERTY_SPLIT_SPLITWHERE, delimiterDisposalMethod.toString());
+	}
+
+
+
+	/**
+	 * Store wrap preferences
 	 *
 	 * @param	glue	Join glue string
 	 */
 	public static void saveJoinProperties(String glue) {
 		PropertiesComponent.getInstance().setValue(PROPERTY_JOIN_GLUE, glue);
+	}
+
+
+
+	/**
+	 * Get split delimiter preference
+	 *
+	 * @return	String
+	 */
+	public static String getSplitDelimiter() {
+		String delimiter	= PropertiesComponent.getInstance().getValue(PROPERTY_SPLIT_DELIMITER);
+		if( delimiter == null || delimiter.equals("") ) delimiter	= ", ";
+
+		return delimiter;
+	}
+
+
+
+	/**
+	 * Get split option: split at/before/after delimiter
+	 *
+	 * @return	String			"0" (default if not saved yet) / "1" / "2"
+	 */
+	public static String getSplitWhere() {
+		String splitWhere	= PropertiesComponent.getInstance().getValue(PROPERTY_SPLIT_SPLITWHERE);
+		if( splitWhere == null || splitWhere.equals("") ) splitWhere	= "0";
+
+		return splitWhere;
 	}
 
 

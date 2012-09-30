@@ -24,6 +24,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
+import com.kstenschke.realigner.helpers.Preferences;
 import com.kstenschke.realigner.helpers.TextualHelper;
 import com.kstenschke.realigner.resources.SplitOptions;
 
@@ -43,6 +44,7 @@ public class SplitAction extends AnAction {
 	public void update( AnActionEvent event ) {
 		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
+
 
 
 	/**
@@ -68,15 +70,25 @@ public class SplitAction extends AnAction {
 						SelectionModel selectionModel = editor.getSelectionModel();
 						boolean hasSelection = selectionModel.hasSelection();
 
+							// Setup dialog
 						SplitOptions splitOptionsDialog  = new SplitOptions();
 						splitOptionsDialog.pack();
 						splitOptionsDialog.setLocationRelativeTo(null); // center to screen
 						splitOptionsDialog.setTitle("Split by Delimiter");
+
+							// Load and init dialog options from preferences
+						splitOptionsDialog.setDelimiter(Preferences.getSplitDelimiter());
+						splitOptionsDialog.setDelimiterDisposalMethod( Integer.parseInt(Preferences.getSplitWhere()) );
+
+							// Show dialog
 						splitOptionsDialog.setVisible(true);
 
+							// Clicked ok: conduct split
 						if( splitOptionsDialog.clickedOk ) {
 							String delimiter = splitOptionsDialog.getDelimiter();
 							Integer delimiterDisposalMethod = splitOptionsDialog.getDelimiterDisposalMethod();
+
+							Preferences.saveSplitProperties(delimiter, delimiterDisposalMethod);
 
 							if( delimiter != null && delimiter.length() > 0 ) {
 							if (hasSelection) {
@@ -139,9 +151,9 @@ public class SplitAction extends AnAction {
 	 * @return					String
 	 */
 	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
-		if( disposalMethod == SplitOptions.METHOD_DELIMITERDISPOSAL_BEFORE ) {
+		if( disposalMethod == SplitOptions.METHOD_DELIMITER_DISPOSAL_BEFORE) {
 			return "\n" + delimiter;
-		} else if( disposalMethod == SplitOptions.METHOD_DELIMITERDISPOSAL_AFTER ) {
+		} else if( disposalMethod == SplitOptions.METHOD_DELIMITER_DISPOSAL_AFTER) {
 				return delimiter + "\n";
 		}
 
