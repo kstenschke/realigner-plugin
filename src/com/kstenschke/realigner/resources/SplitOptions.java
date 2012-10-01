@@ -28,7 +28,7 @@ public class SplitOptions extends JDialog {
 	private JRadioButton splitBeforeDelimiterRadioButton;
 	private JTextField textFieldDelimiter;
 
-	// Delimiter disposal methods
+		// Delimiter disposal methods
 	public static final int METHOD_DELIMITER_DISPOSAL_AT	= 0;
 	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE= 1;
 	public static final int METHOD_DELIMITER_DISPOSAL_AFTER	= 2;
@@ -59,7 +59,7 @@ public class SplitOptions extends JDialog {
 			}
 		});
 
-// call onCancel() when cross is clicked
+			// call onCancel() when cross is clicked
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -67,7 +67,7 @@ public class SplitOptions extends JDialog {
 			}
 		});
 
-// call onCancel() on ESCAPE
+			// call onCancel() on ESCAPE
 		contentPane.registerKeyboardAction(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onCancel();
