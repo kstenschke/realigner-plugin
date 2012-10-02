@@ -20,6 +20,8 @@ import com.intellij.openapi.editor.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Static helper methods for analysis and manipulation of texts
@@ -111,4 +113,22 @@ public class TextualHelper {
 
 		return str;
 	}
+
+
+
+	/**
+	 * @param	str
+	 * @param	regex
+	 * @return  		Amount of matches of regex in str
+	 */
+	public static Integer getAmountMatches(String str, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+
+		int count = 0;
+		while ( matcher.find() ) count++;
+
+		return count;
+	}
+
 }

@@ -139,7 +139,23 @@ public class WrapAction extends AnAction {
 									// Update selection
 								selectionModel.setSelection(offsetStart, offsetStart + wrappedString.length());
 							} else {
-								// Selection of multiple lines: wrap each line, begin/end at selection offsets
+								// Selection of multiple lines
+
+									// Remove blank lines option activated? find and remove em
+								if( wrapOptionsDialog.isSelectedRemoveBlankLines() ) {
+									String selectedText	= TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+
+									int amountBlankLines	= TextualHelper.getAmountMatches(selectedText, "\\n(\\s)*\\n");
+									String selectedTextNoBlankLines	= selectedText.replaceAll("\\n(\\s)*\\n", "\n");
+									document.replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), selectedTextNoBlankLines);
+
+										// Adjust selection
+									selectionModel.setSelection(document.getLineStartOffset(lineNumberSelStart), document.getLineEndOffset(lineNumberSelEnd - amountBlankLines));
+								}
+
+									// Wrap each line, begin/end at selection offsets
+								lineNumberSelEnd	= document.getLineNumber( selectionModel.getSelectionEnd() );
+
 								for(int lineNumber = lineNumberSelEnd; lineNumber >= lineNumberSelStart; lineNumber--) {
 									int offsetLineStart	= document.getLineStartOffset(lineNumber);
 									String lineText		= TextualHelper.extractLine(document, lineNumber);
@@ -155,13 +171,6 @@ public class WrapAction extends AnAction {
 
 									// Update selection: all lines of selection fully
 								selectionModel.setSelection(document.getLineStartOffset(lineNumberSelStart), document.getLineEndOffset(lineNumberSelEnd));
-
-									// Remove blank lines option activated? find and remove em
-								if( wrapOptionsDialog.isSelectedRemoveBlankLines() ) {
-									String selectedText	= TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
-									String selectedTextNoBlankLines	= selectedText.replaceAll("\\n(\\s)*\\n", "\n");
-									document.replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), selectedTextNoBlankLines);
-								}
 							}
 						} else {
 								// No selection: wrap the line where the caret is
