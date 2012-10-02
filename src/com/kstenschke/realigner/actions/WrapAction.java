@@ -71,6 +71,26 @@ public class WrapAction extends AnAction {
 					wrapOptionsDialog.setLocationRelativeTo(null); // Center to screen
 					wrapOptionsDialog.setTitle("Wrap");
 
+						// show option "remove blank lines" only when there's a multi-line selection
+					final Document document = editor.getDocument();
+					CharSequence editorText = document.getCharsSequence();
+
+					SelectionModel selectionModel = editor.getSelectionModel();
+					boolean hasSelection = selectionModel.hasSelection();
+
+					int offsetStart, offsetEnd, lineNumberSelStart, lineNumberSelEnd;
+
+					if (hasSelection) {
+						offsetStart	= selectionModel.getSelectionStart();
+						offsetEnd	= selectionModel.getSelectionEnd();
+
+						lineNumberSelStart	= document.getLineNumber(offsetStart);
+						lineNumberSelEnd	= document.getLineNumber(offsetEnd);
+
+						Boolean hasMultiLineSelection = ( lineNumberSelEnd > lineNumberSelStart );
+						wrapOptionsDialog.setRemoveBlankLinesVisible(hasMultiLineSelection);
+					}
+
 						// Load and init from preferences
 					wrapOptionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
 					wrapOptionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
@@ -92,18 +112,14 @@ public class WrapAction extends AnAction {
 						Preferences.saveWrapProperties(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 
 						int prefixLen	= prefix.length();
-
-						final Document document = editor.getDocument();
-						CharSequence editorText = document.getCharsSequence();
-						SelectionModel selectionModel = editor.getSelectionModel();
-						boolean hasSelection = selectionModel.hasSelection();
+						int postfixLen	= postfix.length();
 
 						if (hasSelection) {
-							int offsetStart	= selectionModel.getSelectionStart();
-							int offsetEnd	= selectionModel.getSelectionEnd();
+							offsetStart	= selectionModel.getSelectionStart();
+							offsetEnd	= selectionModel.getSelectionEnd();
 
-							int lineNumberSelStart	= document.getLineNumber(offsetStart);
-							int lineNumberSelEnd	= document.getLineNumber(offsetEnd);
+							lineNumberSelStart	= document.getLineNumber(offsetStart);
+							lineNumberSelEnd	= document.getLineNumber(offsetEnd);
 
 							if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
 								lineNumberSelEnd--;
@@ -116,6 +132,9 @@ public class WrapAction extends AnAction {
 
 								String wrappedString = prefix + selectedText + postfix;
 								document.replaceString(offsetStart, offsetEnd, wrappedString);
+
+									// Update selection
+								selectionModel.setSelection(offsetStart, offsetStart + wrappedString.length());
 							} else {
 								// Selection of multiple lines: wrap each line, begin/end at selection offsets
 								for(int lineNumber = lineNumberSelEnd; lineNumber >= lineNumberSelStart; lineNumber--) {
@@ -129,6 +148,15 @@ public class WrapAction extends AnAction {
 									lineText	= lineText.replaceAll("\n", "");
 									lineText	= TextualHelper.escapeSelectively(lineText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 									document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
+								}
+
+									// Update selection: all lines of selection fully
+								selectionModel.setSelection(document.getLineStartOffset(lineNumberSelStart), document.getLineEndOffset(lineNumberSelEnd));
+
+									// Remove blank lines option activated? find and remove em
+								if( wrapOptionsDialog.isSelectedRemoveBlankLines() ) {
+								// replace \n(\s)*\n	 => \n
+
 								}
 							}
 						} else {
@@ -146,6 +174,9 @@ public class WrapAction extends AnAction {
 							lineText	= lineText.replaceAll("\n", "");
 							lineText	= TextualHelper.escapeSelectively(lineText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 							document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
+
+								// Update selection: whole line
+							selectionModel.setSelection(document.getLineStartOffset(lineNumber), document.getLineEndOffset(lineNumber));
 						}
 					}
 				}

@@ -37,6 +37,10 @@
 
     <change-notes><![CDATA[
     <br>
+    1.0.5<br>
+    <ul>
+        <li>Added updating of text selection after wrapping</li>
+    </ul>
     1.0.4<br>
     <ul>
         <li>Added retaining of options preferences (application level)</li>

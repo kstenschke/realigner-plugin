@@ -15,6 +15,8 @@
  */
 package com.kstenschke.realigner.resources;
 
+import javax.accessibility.AccessibleContext;
+import javax.accessibility.AccessibleState;
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -27,6 +29,7 @@ public class WrapOptions extends JDialog {
 	private JCheckBox escapeSingleQuotesCheckBox;
 	private JCheckBox escapeDoubleQuotesCheckBox;
 	private JCheckBox escapeBackslashesCheckBox;
+	private JCheckBox removeBlankLines;
 
 	public Boolean clickedOk	= false;
 
@@ -177,6 +180,15 @@ public class WrapOptions extends JDialog {
 	}
 
 
+	public Boolean isSelectedRemoveBlankLines() {
+		return removeBlankLines.isSelected();
+	}
+
+	public void setRemoveBlankLinesVisible(Boolean isVisible) {
+		removeBlankLines.setVisible(isVisible);
+	}
+
+
 
 	/**
 	 * @param	args	Arguments
@@ -186,5 +198,9 @@ public class WrapOptions extends JDialog {
 		dialog.pack();
 		dialog.setVisible(true);
 		System.exit(0);
+	}
+
+	private void createUIComponents() {
+		// TODO: place custom component creation code here
 	}
 }
