@@ -32,13 +32,14 @@
     <br>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <br>
     1.0.5<br>
     <ul>
+        <li>Added option to remove blank/white-space lines while wrapping</li>
         <li>Added updating of text selection after wrapping</li>
     </ul>
     1.0.4<br>

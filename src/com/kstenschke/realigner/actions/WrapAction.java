@@ -89,6 +89,8 @@ public class WrapAction extends AnAction {
 
 						Boolean hasMultiLineSelection = ( lineNumberSelEnd > lineNumberSelStart );
 						wrapOptionsDialog.setRemoveBlankLinesVisible(hasMultiLineSelection);
+					} else {
+						wrapOptionsDialog.setRemoveBlankLinesVisible(false);
 					}
 
 						// Load and init from preferences
@@ -97,6 +99,7 @@ public class WrapAction extends AnAction {
 					wrapOptionsDialog.setSelectedEscapeSingleQuotes(Preferences.getWrapEscapeSingleQuotes());
 					wrapOptionsDialog.setSelectedEscapeDoubleQuotes(Preferences.getWrapEscapeDoubleQuotes());
 					wrapOptionsDialog.setSelectedEscapeBackslashes(Preferences.getWrapEscapeBackslashes());
+					wrapOptionsDialog.setSelectedRemoveBlankLines(Preferences.getWrapRemoveBlankLines());
 
 					wrapOptionsDialog.setVisible(true);
 
@@ -155,8 +158,9 @@ public class WrapAction extends AnAction {
 
 									// Remove blank lines option activated? find and remove em
 								if( wrapOptionsDialog.isSelectedRemoveBlankLines() ) {
-								// replace \n(\s)*\n	 => \n
-
+									String selectedText	= TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+									String selectedTextNoBlankLines	= selectedText.replaceAll("\\n(\\s)*\\n", "\n");
+									document.replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), selectedTextNoBlankLines);
 								}
 							}
 						} else {

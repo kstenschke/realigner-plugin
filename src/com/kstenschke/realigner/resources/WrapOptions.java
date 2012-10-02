@@ -179,6 +179,10 @@ public class WrapOptions extends JDialog {
 		escapeBackslashesCheckBox.setSelected(setSelected);
 	}
 
+	public void setSelectedRemoveBlankLines(Boolean setSelected) {
+		removeBlankLines.setSelected(setSelected);
+	}
+
 
 	public Boolean isSelectedRemoveBlankLines() {
 		return removeBlankLines.isSelected();

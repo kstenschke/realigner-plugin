@@ -45,10 +45,14 @@ public class Preferences {
 	private static final String PROPERTY_WRAP_ESCAPEBACKSLASHES = "PluginRealiginer.WrapEscapeBackslashes";
 
 	@NonNls
+	private static final String PROPERTY_WRAP_REMOVEBLANKLINES = "PluginRealiginer.WrapRemoveBlankLines";
+
+	@NonNls
 	private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
 
 	@NonNls
 	private static final String PROPERTY_SPLIT_SPLITWHERE = "PluginRealiginer.SplitSplitWhere";
+
 
 
 
@@ -204,6 +208,19 @@ public class Preferences {
 	 */
 	public static Boolean getWrapEscapeBackslashes() {
 		String val	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_ESCAPEBACKSLASHES);
+
+		return (val == null) || val.equals("1");
+	}
+
+
+
+	/**
+	 * Get wrap preference: Remove blank lines
+	 *
+	 * @return	String
+	 */
+	public static Boolean getWrapRemoveBlankLines() {
+		String val	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_REMOVEBLANKLINES);
 
 		return (val == null) || val.equals("1");
 	}
