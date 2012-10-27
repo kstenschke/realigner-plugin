@@ -26,8 +26,8 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.IconLoader;
-import com.kstenschke.realigner.helpers.Preferences;
-import com.kstenschke.realigner.helpers.TextualHelper;
+import com.kstenschke.realigner.Preferences;
+import com.kstenschke.realigner.TextualHelper;
 
 import javax.swing.*;
 import java.util.List;
@@ -112,7 +112,7 @@ public class JoinAction extends AnAction {
 							String glue = Messages.showInputDialog(
 								currentProject,
 								"Enter Glue (Optional)", "Join Lines With Glue",
-								IconLoader.getIcon("/com/kstenschke/realigner/resources/arrow-join.png"),
+								IconLoader.getIcon("/com/kstenschke/realigner/resources/images/arrow-join.png"),
 									Preferences.getJoinGlue(), null
 							);
 

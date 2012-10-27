@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.realigner.resources;
+package com.kstenschke.realigner.resources.forms;
 
 import javax.swing.*;
 import java.awt.event.*;

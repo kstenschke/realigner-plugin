@@ -24,9 +24,9 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.kstenschke.realigner.helpers.Preferences;
-import com.kstenschke.realigner.helpers.TextualHelper;
-import com.kstenschke.realigner.resources.SplitOptions;
+import com.kstenschke.realigner.Preferences;
+import com.kstenschke.realigner.TextualHelper;
+import com.kstenschke.realigner.resources.forms.SplitOptions;
 
 import javax.swing.*;
 

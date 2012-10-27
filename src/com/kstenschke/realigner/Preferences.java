@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.realigner.helpers;
+package com.kstenschke.realigner;
 
 import com.intellij.ide.util.PropertiesComponent;
 import org.jetbrains.annotations.NonNls;

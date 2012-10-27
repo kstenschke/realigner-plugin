@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kstenschke.realigner.resources;
+package com.kstenschke.realigner.resources.forms;
 
-import javax.accessibility.AccessibleContext;
-import javax.accessibility.AccessibleState;
 import javax.swing.*;
 import java.awt.event.*;
 
