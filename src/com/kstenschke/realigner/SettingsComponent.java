@@ -43,7 +43,7 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 
 	@Nls
 	public String getDisplayName() {
-		return "Realigner (Wrap Buttons)";
+		return "Realigner (Quick Wrap Buttons)";
 	}
 
 	public boolean isModified() {

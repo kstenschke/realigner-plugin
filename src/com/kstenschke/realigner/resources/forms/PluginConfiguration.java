@@ -136,7 +136,6 @@ public class PluginConfiguration {
 
 		if( !buttonLabel.equals("") ) {
 			Settings.removeWrapButtonItemFromStore(buttonLabel);
-
 //			Settings.clearStoredWrapButtonItemsConfig();
 			updateWrapButtonsListItems();
 		}

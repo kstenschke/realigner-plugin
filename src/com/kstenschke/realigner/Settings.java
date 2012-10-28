@@ -129,8 +129,8 @@ public class Settings {
 
 			String	buttonsConfigWithoutDeletedButton	= "";
 			String[] buttonsConfigs	= storeItemsConfig.split("##WBUTTON####WBLABEL##");
-			for(int i = 0; i < buttonsConfigs.length; i++) {
-				if( i != deleteButtonIndex ) {
+			for(int i = 1; i < buttonsConfigs.length; i++) {
+				if( i != (deleteButtonIndex+1) ) {
 					buttonsConfigWithoutDeletedButton	= buttonsConfigWithoutDeletedButton.concat("##WBUTTON####WBLABEL##" + buttonsConfigs[i]);
 				}
 			}

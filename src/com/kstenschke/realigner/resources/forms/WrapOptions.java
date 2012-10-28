@@ -50,30 +50,29 @@ public class WrapOptions extends JDialog {
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);
 
-			// Add quick wrap buttons
-		Object[] buttonsLabels	= Settings.getWrapButtonItemsLabels();
-
-			// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
-		panelWrapButtonsContainer.removeAll();
-		panelWrapButtonsContainer.setLayout(new GridLayoutManager(buttonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
-
-		for( int i = 0; i < buttonsLabels.length; i++ ) {
-			JButton wrapButton	= new javax.swing.JButton( buttonsLabels[i].toString() );
-			panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
-			wrapButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-
-				}
-			});
-		}
-		panelWrapButtonsContainer.revalidate();
-
-
 			// Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
 		if( !Settings.areWrapButtonsConfigured() ) {
 			panelQuickWrapButtons.setVisible(false);
 		} else {
+				// Add quick wrap buttons
+			Object[] buttonsLabels	= Settings.getWrapButtonItemsLabels();
+
+				// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
+			panelWrapButtonsContainer.removeAll();
+			panelWrapButtonsContainer.setLayout(new GridLayoutManager(buttonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
+
+			for( int i = 0; i < buttonsLabels.length; i++ ) {
+				JButton wrapButton	= new javax.swing.JButton( buttonsLabels[i].toString() );
+				panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
+				wrapButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+
+					}
+				});
+			}
+			panelWrapButtonsContainer.revalidate();
+
 			panelQuickWrapButtons.setVisible(true);
 		}
 
