@@ -38,6 +38,8 @@ public class PluginConfiguration {
 	private JCheckBox checkBoxNewEscapeBackslashesInsideWrapped;
 	private JCheckBox checkBoxNewRemoveBlankWhiteSpace;
 
+
+
 	/**
 	 * Constructor
 	 */
@@ -80,7 +82,7 @@ public class PluginConfiguration {
 	 *	Initialize wrap buttons list with items from store
 	 */
 	public void updateWrapButtonsListItems() {
-		listWrapButtons.setListData( Settings.getWrapButtonItemsLabels() );
+		listWrapButtons.setListData( Settings.getAllWrapButtonLabels() );
 		listWrapButtons.clearSelection();
 	}
 

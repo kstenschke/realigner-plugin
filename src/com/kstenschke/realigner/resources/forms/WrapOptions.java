@@ -55,19 +55,42 @@ public class WrapOptions extends JDialog {
 			panelQuickWrapButtons.setVisible(false);
 		} else {
 				// Add quick wrap buttons
-			Object[] buttonsLabels	= Settings.getWrapButtonItemsLabels();
+			Object[] allButtonsLabels					= Settings.getAllWrapButtonLabels();
+			Object[] allButtonPrefixConfigs				= Settings.getAllWrapButtonPrefixes();
+			Object[] allButtonPostfixConfigs			= Settings.getAllWrapButtonPostfixes();
+			Object[] allButtonEscapeSingleQuoteConfigs	= Settings.getAllWrapButtonEscapeSingleQuotes();
+			Object[] allButtonEscapeDoubleQuoteConfigs	= Settings.getAllWrapButtonEscapeDoubleQuotes();
+			Object[] allButtonEscapeBackslashConfigs	= Settings.getAllWrapButtonEscapeBackslashes();
+			Object[] allButtonRemoveBlankLinesConfigs	= Settings.getAllWrapButtonRemoveBlankLines();
 
 				// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
 			panelWrapButtonsContainer.removeAll();
-			panelWrapButtonsContainer.setLayout(new GridLayoutManager(buttonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
+			panelWrapButtonsContainer.setLayout(new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
 
-			for( int i = 0; i < buttonsLabels.length; i++ ) {
-				JButton wrapButton	= new javax.swing.JButton( buttonsLabels[i].toString() );
+			for( int i = 0; i < allButtonsLabels.length; i++ ) {
+				JButton wrapButton	= new javax.swing.JButton( allButtonsLabels[i].toString() );
 				panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
+
+					// Add button action
+				final String prefix	= allButtonPrefixConfigs[i].toString();
+				final String postfix= allButtonPostfixConfigs[i].toString();
+				final Boolean escapeSingleQuotes	= allButtonEscapeSingleQuoteConfigs[i].equals("1");
+				final Boolean escapeDoubleQuotes	= allButtonEscapeDoubleQuoteConfigs[i].equals("1");
+				final Boolean escapeBackslashes		= allButtonEscapeBackslashConfigs[i].equals("1");
+				final Boolean removeBlankLines		= allButtonRemoveBlankLinesConfigs[i].equals("1");
+
 				wrapButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
+							// Set all options from parameters of clicked button
+						setTextFieldPrefix(prefix);
+						setTextFieldPostfix(postfix);
+						setSelectedEscapeSingleQuotes(escapeSingleQuotes);
+						setSelectedEscapeDoubleQuotes(escapeDoubleQuotes);
+						setSelectedEscapeBackslashes(escapeBackslashes);
+						setSelectedRemoveBlankLines(removeBlankLines);
 
+						onOK();
 					}
 				});
 			}
@@ -237,7 +260,7 @@ public class WrapOptions extends JDialog {
 	}
 
 	private void createUIComponents() {
-		// TODO: place custom component creation code here
+		// TODO: place custom component creation code here          xxx
 	}
 
 }
