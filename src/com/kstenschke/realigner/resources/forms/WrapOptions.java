@@ -15,7 +15,12 @@
  */
 package com.kstenschke.realigner.resources.forms;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.kstenschke.realigner.Settings;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class WrapOptions extends JDialog {
@@ -28,6 +33,8 @@ public class WrapOptions extends JDialog {
 	private JCheckBox escapeDoubleQuotesCheckBox;
 	private JCheckBox escapeBackslashesCheckBox;
 	private JCheckBox removeBlankLines;
+	private JPanel panelQuickWrapButtons;
+	private JPanel panelWrapButtonsContainer;
 
 	public Boolean clickedOk	= false;
 
@@ -43,18 +50,45 @@ public class WrapOptions extends JDialog {
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);
 
+			// Add quick wrap buttons
+		Object[] buttonsLabels	= Settings.getWrapButtonItemsLabels();
+
+			// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
+		panelWrapButtonsContainer.removeAll();
+		panelWrapButtonsContainer.setLayout(new GridLayoutManager(buttonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
+
+		for( int i = 0; i < buttonsLabels.length; i++ ) {
+			JButton wrapButton	= new javax.swing.JButton( buttonsLabels[i].toString() );
+			panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
+			wrapButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
+		}
+		panelWrapButtonsContainer.revalidate();
+
+
+			// Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
+		if( !Settings.areWrapButtonsConfigured() ) {
+			panelQuickWrapButtons.setVisible(false);
+		} else {
+			panelQuickWrapButtons.setVisible(true);
+		}
+
+
+			// Setup button action listeners
 		buttonOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onOK();
 			}
 		});
-
 		buttonCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onCancel();
 			}
 		});
-
 
 // call onCancel() when cross is clicked
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -197,6 +231,7 @@ public class WrapOptions extends JDialog {
 	 */
 	public static void main(String[] args) {
 		WrapOptions dialog = new WrapOptions();
+
 		dialog.pack();
 		dialog.setVisible(true);
 		System.exit(0);
@@ -205,4 +240,5 @@ public class WrapOptions extends JDialog {
 	private void createUIComponents() {
 		// TODO: place custom component creation code here
 	}
+
 }

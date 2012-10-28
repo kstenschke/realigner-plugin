@@ -19,8 +19,9 @@ package com.kstenschke.realigner.resources.forms;
 import com.kstenschke.realigner.Settings;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.*;
 
 
 public class PluginConfiguration {
@@ -43,24 +44,101 @@ public class PluginConfiguration {
 	public PluginConfiguration() {
 		buttonAddWrapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				onClickAddButton();
+				onClickAddButton(e);
 			}
 		});
+
+		buttonRemoveSelectedButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onClickRemoveButton(e);
+			}
+		});
+
+			// Enable "remove button" only when a button item selected
+		listWrapButtons.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				buttonRemoveSelectedButton.setEnabled( !listWrapButtons.isSelectionEmpty() );
+			}
+		});
+
+			// Enable "add button" button only when button label is given
+		textFieldNewLabel.addFocusListener(new FocusListener() {
+			@Override public void focusGained(FocusEvent e) {}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				buttonAddWrapButton.setEnabled( !textFieldNewLabel.getText().isEmpty() );
+			}
+		});
+
+		 updateWrapButtonsListItems();
+	}
+
+
+	/**
+	 *	Initialize wrap buttons list with items from store
+	 */
+	public void updateWrapButtonsListItems() {
+		listWrapButtons.setListData( Settings.getWrapButtonItemsLabels() );
+		listWrapButtons.clearSelection();
+	}
+
+
+
+	/**
+	 * @return	The selected item's label
+	 */
+	public String getSelectedButtonItemLabel() {
+		if( listWrapButtons.isSelectionEmpty() ) {
+			return "";
+		}
+
+		return listWrapButtons.getSelectedValue().toString();
 	}
 
 
 
 	/**
 	 * Handler when clicking the "Add button" button
+	 *
+	 * @param	e	ActionEvent
 	 */
-	public void onClickAddButton() {
+	public void onClickAddButton(ActionEvent e) {
 		String buttonLabel	= getTextFieldButtonLabel().trim();
-		String prefix		= getTextFieldPrefix();
-		String postfix		= getTextFieldPostfix();
 
-		if( 	buttonLabel.equals("")
-			|| (prefix.equals("") || postfix.equals("")) ) {
-			JOptionPane.showMessageDialog(null,"Please enter wrap options for the new button.","No wrap options", JOptionPane.CANCEL_OPTION);
+		if( 	buttonLabel.equals("") ) {
+			JOptionPane.showMessageDialog(null,"Please name the new button with a label.","No Button Label", JOptionPane.CANCEL_OPTION);
+		} else {
+				// Store the new button
+			String prefix		= getTextFieldPrefix();
+			String postfix		= getTextFieldPostfix();
+			Boolean escapeSingeQuotes	= isSelectedEscapeSingleQuotes();
+			Boolean escapeDoubleQuotes	= isSelectedEscapeDoubleQuotes();
+			Boolean escapeBackslashes	= isSelectedEscapeBackslashes();
+			Boolean removeBlankLines	= isSelectedRemoveBlankLines();
+
+			Settings.addWrapButtonItemToStore(buttonLabel, prefix, postfix, escapeSingeQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
+
+			updateWrapButtonsListItems();
+		}
+	}
+
+
+
+	/**
+	 * Handler when clicking the "Remove selected button" button
+	 *
+	 * @param	e	ActionEvent
+	 */
+	public void onClickRemoveButton(ActionEvent e) {
+		String buttonLabel	= getSelectedButtonItemLabel();
+
+		if( !buttonLabel.equals("") ) {
+			Settings.removeWrapButtonItemFromStore(buttonLabel);
+
+//			Settings.clearStoredWrapButtonItemsConfig();
+			updateWrapButtonsListItems();
 		}
 	}
 
