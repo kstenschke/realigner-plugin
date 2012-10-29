@@ -61,6 +61,19 @@ public class PluginConfiguration {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				buttonRemoveSelectedButton.setEnabled( !listWrapButtons.isSelectionEmpty() );
+				if( !listWrapButtons.isSelectionEmpty() ) {
+						// Load selected item config into form
+					String selectedItemLabel	= listWrapButtons.getSelectedValue().toString();
+					Integer	selectedLabelStoreIndex	= Settings.getLabelIndex(selectedItemLabel);
+
+				    setTextFieldButtonLabel( selectedItemLabel );
+				    setTextFieldPrefix( Settings.getAllWrapButtonPrefixes()[selectedLabelStoreIndex].toString() );
+				    setTextFieldPostfix( Settings.getAllWrapButtonPostfixes()[selectedLabelStoreIndex].toString() );
+					setSelectedEscapeSingleQuotes( Settings.getAllWrapButtonEscapeSingleQuotes()[selectedLabelStoreIndex].equals("1") );
+					setSelectedEscapeDoubleQuotes( Settings.getAllWrapButtonEscapeDoubleQuotes()[selectedLabelStoreIndex].equals("1") );
+					setSelectedEscapeBackslashes( Settings.getAllWrapButtonEscapeBackslashes()[selectedLabelStoreIndex].equals("1") );
+					setSelectedRemoveBlankLines( Settings.getAllWrapButtonRemoveBlankLines()[selectedLabelStoreIndex].equals("1") );
+				}
 			}
 		});
 
@@ -154,12 +167,12 @@ public class PluginConfiguration {
 		return textFieldNewLabel.getText();
 	}
 
-//	/**
-//	 * Set button label
-//	 */
-//	public void setTextFieldButtonLabel(String label) {
-//		textFieldNewLabel.setText(label);
-//	}
+	/**
+	 * Set button label
+	 */
+	public void setTextFieldButtonLabel(String label) {
+		textFieldNewLabel.setText(label);
+	}
 
 
 
@@ -172,12 +185,12 @@ public class PluginConfiguration {
 		return textFieldNewPrefix.getText();
 	}
 
-//	/**
-//	 * Set wrap LHS
-//	 */
-//	public void setTextFieldPrefix(String prefix) {
-//		textFieldNewPrefix.setText(prefix);
-//	}
+	/**
+	 * Set wrap LHS
+	 */
+	public void setTextFieldPrefix(String prefix) {
+		textFieldNewPrefix.setText(prefix);
+	}
 
 
 
@@ -190,14 +203,12 @@ public class PluginConfiguration {
 		return textFieldNewPostfix.getText();
 	}
 
-
-
-//	/**
-//	 * Set wrap LHS
-//	 */
-//	public void setTextFieldPostfix(String postfix) {
-//		textFieldNewPostfix.setText(postfix);
-//	}
+	/**
+	 * Set wrap RHS
+	 */
+	public void setTextFieldPostfix(String postfix) {
+		textFieldNewPostfix.setText(postfix);
+	}
 
 
 
@@ -210,9 +221,9 @@ public class PluginConfiguration {
 		return checkBoxNewEscapeSingleQuotesInsideWrapped.isSelected();
 	}
 
-//	public void setSelectedEscapeSingleQuotes(Boolean setSelected) {
-//		escapeSingleQuotesCheckBox.setSelected(setSelected);
-//	}
+	public void setSelectedEscapeSingleQuotes(Boolean setSelected) {
+		checkBoxNewEscapeSingleQuotesInsideWrapped.setSelected(setSelected);
+	}
 
 
 
@@ -226,9 +237,9 @@ public class PluginConfiguration {
 		return checkBoxNewEscapeDoubleQuotesInsideWrapped.isSelected();
 	}
 
-//	public void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
-//		escapeDoubleQuotesCheckBox.setSelected(setSelected);
-//	}
+	public void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
+		checkBoxNewEscapeDoubleQuotesInsideWrapped.setSelected(setSelected);
+	}
 
 
 
@@ -241,9 +252,9 @@ public class PluginConfiguration {
 		return checkBoxNewEscapeBackslashesInsideWrapped.isSelected();
 	}
 
-//	public void setSelectedEscapeBackslashes(Boolean setSelected) {
-//		checkBoxNewEscapeBackslashesInsideWrapped.setSelected(setSelected);
-//	}
+	public void setSelectedEscapeBackslashes(Boolean setSelected) {
+		checkBoxNewEscapeBackslashesInsideWrapped.setSelected(setSelected);
+	}
 
 
 
@@ -251,9 +262,9 @@ public class PluginConfiguration {
 		return checkBoxNewRemoveBlankWhiteSpace.isSelected();
 	}
 
-//	public void setSelectedRemoveBlankLines(Boolean setSelected) {
-//		checkBoxNewRemoveBlankWhiteSpace.setSelected(setSelected);
-//	}
+	public void setSelectedRemoveBlankLines(Boolean setSelected) {
+		checkBoxNewRemoveBlankWhiteSpace.setSelected(setSelected);
+	}
 
 
 

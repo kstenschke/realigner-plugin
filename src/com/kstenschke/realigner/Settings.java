@@ -187,6 +187,26 @@ public class Settings {
 
 
 	/**
+	 * Find index of given label in store
+	 *
+	 * @param	label
+	 * @return	Stored index
+	 */
+	public static Integer getLabelIndex(String label) {
+		Object[] allLabels	= getAllWrapButtonLabels();
+
+		for( Integer i=0; i < allLabels.length; i++ ) {
+			if( allLabels[i].toString().equals(label) ) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+
+
+	/**
 	 * @return		Array of stored buttons' prefix values
 	 */
 	public static Object[] getAllWrapButtonPrefixes() {

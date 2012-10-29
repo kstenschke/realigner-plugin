@@ -68,7 +68,8 @@ public class WrapOptions extends JDialog {
 			panelWrapButtonsContainer.setLayout(new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
 
 			for( int i = 0; i < allButtonsLabels.length; i++ ) {
-				JButton wrapButton	= new javax.swing.JButton( allButtonsLabels[i].toString() );
+				String buttonLabel	= allButtonsLabels[i].toString();
+				JButton wrapButton	= new javax.swing.JButton( buttonLabel );
 				panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
 
 					// Add button action
