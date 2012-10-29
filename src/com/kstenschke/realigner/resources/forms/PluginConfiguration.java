@@ -67,8 +67,8 @@ public class PluginConfiguration {
 					Integer	selectedLabelStoreIndex	= Settings.getLabelIndex(selectedItemLabel);
 
 				    setTextFieldButtonLabel( selectedItemLabel );
-				    setTextFieldPrefix( Settings.getAllWrapButtonPrefixes()[selectedLabelStoreIndex].toString() );
-				    setTextFieldPostfix( Settings.getAllWrapButtonPostfixes()[selectedLabelStoreIndex].toString() );
+				    setTextFieldPrefix( Settings.getPrefixByIndex(selectedLabelStoreIndex) );
+				    setTextFieldPostfix( Settings.getPostfixByIndex(selectedLabelStoreIndex) );
 					setSelectedEscapeSingleQuotes( Settings.getAllWrapButtonEscapeSingleQuotes()[selectedLabelStoreIndex].equals("1") );
 					setSelectedEscapeDoubleQuotes( Settings.getAllWrapButtonEscapeDoubleQuotes()[selectedLabelStoreIndex].equals("1") );
 					setSelectedEscapeBackslashes( Settings.getAllWrapButtonEscapeBackslashes()[selectedLabelStoreIndex].equals("1") );

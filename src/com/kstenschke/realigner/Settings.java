@@ -213,6 +213,10 @@ public class Settings {
 		return getAllWrapButtonAttributesByType("WBPREFIX");
 	}
 
+	public static String getPrefixByIndex(Integer index) {
+		return getAllWrapButtonPrefixes()[index].toString();
+	}
+
 
 
 	/**
@@ -220,6 +224,10 @@ public class Settings {
 	 */
 	public static Object[] getAllWrapButtonPostfixes() {
 		return getAllWrapButtonAttributesByType("WBPOSTFIX");
+	}
+
+	public static String getPostfixByIndex(Integer index) {
+		return getAllWrapButtonPostfixes()[index].toString();
 	}
 
 
