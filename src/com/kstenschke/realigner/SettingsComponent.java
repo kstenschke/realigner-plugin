@@ -43,11 +43,11 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 
 	@Nls
 	public String getDisplayName() {
-		return "Realigner (Quick Wrap Buttons)";
+		return "Realigner Quick Wraps";
 	}
 
 	public boolean isModified() {
-		return form != null && form.isModified(settings);
+		return form != null && form.isModified();
 	}
 
 	public void disposeUIResources() {
@@ -57,7 +57,7 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	public void reset() {
 		if (form != null) {
 				// Reset form data from component
-			form.setData(settings);
+			form.setData();
 		}
 	}
 
@@ -68,7 +68,7 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	public void apply() throws ConfigurationException {
 		if (form != null) {
 				// Get data from form to component
-			form.getData(settings);
+			form.getData();
 			applyGlobalSettings();
 		}
 	}

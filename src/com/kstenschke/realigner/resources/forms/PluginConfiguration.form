@@ -40,7 +40,7 @@
                 </constraints>
                 <properties>
                   <labelFor value="b19a2"/>
-                  <text value="Button Label"/>
+                  <text value="Button &amp;Label"/>
                 </properties>
               </component>
               <component id="b19a2" class="javax.swing.JTextField" binding="textFieldNewLabel">
@@ -65,7 +65,7 @@
                 </constraints>
                 <properties>
                   <labelFor value="327ca"/>
-                  <text value="Wrap after"/>
+                  <text value="Wrap &amp;after"/>
                 </properties>
               </component>
               <component id="fb0cf" class="javax.swing.JLabel">
@@ -74,7 +74,7 @@
                 </constraints>
                 <properties>
                   <labelFor value="f9649"/>
-                  <text value="Wrap before"/>
+                  <text value="Wrap be&amp;fore"/>
                 </properties>
               </component>
               <component id="327ca" class="javax.swing.JTextField" binding="textFieldNewPostfix">
@@ -90,7 +90,7 @@
                   <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Escape double quotes inside wrapped text"/>
+                  <text value="Escape &amp;double quotes inside wrapped text"/>
                 </properties>
               </component>
               <component id="ce8c9" class="javax.swing.JCheckBox" binding="checkBoxNewEscapeBackslashesInsideWrapped" default-binding="true">
@@ -98,7 +98,7 @@
                   <grid row="4" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Escape backslashes inside wrapped text"/>
+                  <text value="Escape &amp;backslashes inside wrapped text"/>
                 </properties>
               </component>
               <component id="fae9c" class="javax.swing.JCheckBox" binding="checkBoxNewEscapeSingleQuotesInsideWrapped" default-binding="true">
@@ -107,7 +107,7 @@
                 </constraints>
                 <properties>
                   <selected value="false"/>
-                  <text value="Escape single quotes inside wrapped text"/>
+                  <text value="Escape single &amp;quotes inside wrapped text"/>
                 </properties>
               </component>
               <component id="1bed2" class="javax.swing.JCheckBox" binding="checkBoxNewRemoveBlankWhiteSpace" default-binding="true">
@@ -115,7 +115,7 @@
                   <grid row="5" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Remove blank / white-space lines"/>
+                  <text value="Remove blank / &amp;white-space lines"/>
                 </properties>
               </component>
             </children>
@@ -126,14 +126,14 @@
             </constraints>
             <properties/>
           </component>
-          <component id="66569" class="javax.swing.JButton" binding="buttonAddWrapButton" default-binding="true">
+          <component id="66569" class="javax.swing.JButton" binding="buttonSaveWrapButton" default-binding="true">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <enabled value="false"/>
-              <icon value="general/plus.png"/>
-              <text value="Add new quick wrap button"/>
+              <icon value="groovy/ui/icons/disk.png"/>
+              <text value="&amp;Save quick wrap button"/>
             </properties>
           </component>
           <vspacer id="4aead">
@@ -159,6 +159,7 @@
             </constraints>
             <properties>
               <model/>
+              <selectionMode value="0"/>
             </properties>
           </component>
         </children>
@@ -170,7 +171,7 @@
         <properties>
           <enabled value="false"/>
           <icon value="icons/inspector/minus.png"/>
-          <text value="Remove Selected Button"/>
+          <text value="&amp;Remove Selected Button"/>
         </properties>
       </component>
     </children>

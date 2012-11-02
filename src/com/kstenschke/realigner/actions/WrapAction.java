@@ -115,7 +115,7 @@ public class WrapAction extends AnAction {
 						Preferences.saveWrapProperties(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 
 						int prefixLen	= prefix.length();
-						int postfixLen	= postfix.length();
+//						int postfixLen	= postfix.length();
 
 						if (hasSelection) {
 							offsetStart	= selectionModel.getSelectionStart();

@@ -117,8 +117,8 @@ public class TextualHelper {
 
 
 	/**
-	 * @param	str
-	 * @param	regex
+	 * @param	str		String to be analyzed
+	 * @param	regex	Regular expression
 	 * @return  		Amount of matches of regex in str
 	 */
 	public static Integer getAmountMatches(String str, String regex) {
