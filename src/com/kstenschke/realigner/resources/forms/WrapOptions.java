@@ -83,15 +83,15 @@ public class WrapOptions extends JDialog {
 				wrapButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-							// Set all options from parameters of clicked button
-						setTextFieldPrefix(prefix);
-						setTextFieldPostfix(postfix);
-						setSelectedEscapeSingleQuotes(escapeSingleQuotes);
-						setSelectedEscapeDoubleQuotes(escapeDoubleQuotes);
-						setSelectedEscapeBackslashes(escapeBackslashes);
-						setSelectedRemoveBlankLines(removeBlankLines);
+						// Set all options from parameters of clicked button
+					setTextFieldPrefix(prefix);
+					setTextFieldPostfix(postfix);
+					setSelectedEscapeSingleQuotes(escapeSingleQuotes);
+					setSelectedEscapeDoubleQuotes(escapeDoubleQuotes);
+					setSelectedEscapeBackslashes(escapeBackslashes);
+					setSelectedRemoveBlankLines(removeBlankLines);
 
-						onOK();
+					onOK();
 					}
 				});
 			}

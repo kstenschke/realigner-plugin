@@ -32,7 +32,7 @@ public class PluginConfiguration {
 	private JTextField textFieldNewPostfix;
 	private JList listWrapButtons;
 	private JButton buttonRemoveSelectedButton;
-	private JButton buttonAddWrapButton;
+	private JButton buttonSaveWrapButton;
 	private JCheckBox checkBoxNewEscapeSingleQuotesInsideWrapped;
 	private JCheckBox checkBoxNewEscapeDoubleQuotesInsideWrapped;
 	private JCheckBox checkBoxNewEscapeBackslashesInsideWrapped;
@@ -44,9 +44,9 @@ public class PluginConfiguration {
 	 * Constructor
 	 */
 	public PluginConfiguration() {
-		buttonAddWrapButton.addActionListener(new ActionListener() {
+		buttonSaveWrapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				onClickAddButton(e);
+				onClickSaveWrapButton(e);
 			}
 		});
 
@@ -60,10 +60,15 @@ public class PluginConfiguration {
 		listWrapButtons.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				buttonRemoveSelectedButton.setEnabled( !listWrapButtons.isSelectionEmpty() );
-				if( !listWrapButtons.isSelectionEmpty() ) {
+				Boolean isListSelectionEmpty= listWrapButtons.isSelectionEmpty();
+				Boolean isButtonLabelEmpty	= textFieldNewLabel.getText().isEmpty();
+
+				buttonRemoveSelectedButton.setEnabled( !isListSelectionEmpty );
+				buttonSaveWrapButton.setEnabled( !isListSelectionEmpty || !isButtonLabelEmpty );
+
+				if( !isListSelectionEmpty ) {
 						// Load selected item config into form
-					String selectedItemLabel	= listWrapButtons.getSelectedValue().toString();
+					String selectedItemLabel	= listWrapButtons.getSelectedValue().toString().trim();
 					Integer	selectedLabelStoreIndex	= Settings.getLabelIndex(selectedItemLabel);
 
 				    setTextFieldButtonLabel( selectedItemLabel );
@@ -77,13 +82,13 @@ public class PluginConfiguration {
 			}
 		});
 
-			// Enable "add button" button only when button label is given
+			// Enable/disable "add button" button when button label is entered/empty
 		textFieldNewLabel.addFocusListener(new FocusListener() {
 			@Override public void focusGained(FocusEvent e) {}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				buttonAddWrapButton.setEnabled( !textFieldNewLabel.getText().isEmpty() );
+				buttonSaveWrapButton.setEnabled(!textFieldNewLabel.getText().isEmpty());
 			}
 		});
 
@@ -94,7 +99,7 @@ public class PluginConfiguration {
 	/**
 	 *	Initialize wrap buttons list with items from store
 	 */
-	public void updateWrapButtonsListItems() {
+	void updateWrapButtonsListItems() {
 		listWrapButtons.setListData( Settings.getAllWrapButtonLabels() );
 		listWrapButtons.clearSelection();
 	}
@@ -104,7 +109,7 @@ public class PluginConfiguration {
 	/**
 	 * @return	The selected item's label
 	 */
-	public String getSelectedButtonItemLabel() {
+	String getSelectedButtonItemLabel() {
 		if( listWrapButtons.isSelectionEmpty() ) {
 			return "";
 		}
@@ -119,13 +124,13 @@ public class PluginConfiguration {
 	 *
 	 * @param	e	ActionEvent
 	 */
-	public void onClickAddButton(ActionEvent e) {
+	void onClickSaveWrapButton(ActionEvent e) {
 		String buttonLabel	= getTextFieldButtonLabel().trim();
 
 		if( 	buttonLabel.equals("") ) {
 			JOptionPane.showMessageDialog(null,"Please name the new button with a label.","No Button Label", JOptionPane.CANCEL_OPTION);
 		} else {
-				// Store the new button
+				// Store the button config
 			String prefix		= getTextFieldPrefix();
 			String postfix		= getTextFieldPostfix();
 			Boolean escapeSingeQuotes	= isSelectedEscapeSingleQuotes();
@@ -133,7 +138,7 @@ public class PluginConfiguration {
 			Boolean escapeBackslashes	= isSelectedEscapeBackslashes();
 			Boolean removeBlankLines	= isSelectedRemoveBlankLines();
 
-			Settings.addWrapButtonItemToStore(buttonLabel, prefix, postfix, escapeSingeQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
+			Settings.saveWrapButtonItemToStore(buttonLabel, prefix, postfix, escapeSingeQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
 
 			updateWrapButtonsListItems();
 		}
@@ -146,7 +151,7 @@ public class PluginConfiguration {
 	 *
 	 * @param	e	ActionEvent
 	 */
-	public void onClickRemoveButton(ActionEvent e) {
+	void onClickRemoveButton(ActionEvent e) {
 		String buttonLabel	= getSelectedButtonItemLabel();
 
 		if( !buttonLabel.equals("") ) {
@@ -163,14 +168,14 @@ public class PluginConfiguration {
 	 *
 	 * @return	String
 	 */
-	public String getTextFieldButtonLabel() {
+	String getTextFieldButtonLabel() {
 		return textFieldNewLabel.getText();
 	}
 
 	/**
 	 * Set button label
 	 */
-	public void setTextFieldButtonLabel(String label) {
+	void setTextFieldButtonLabel(String label) {
 		textFieldNewLabel.setText(label);
 	}
 
@@ -181,14 +186,14 @@ public class PluginConfiguration {
 	 *
 	 * @return	String
 	 */
-	public String getTextFieldPrefix() {
+	String getTextFieldPrefix() {
 		return textFieldNewPrefix.getText();
 	}
 
 	/**
 	 * Set wrap LHS
 	 */
-	public void setTextFieldPrefix(String prefix) {
+	void setTextFieldPrefix(String prefix) {
 		textFieldNewPrefix.setText(prefix);
 	}
 
@@ -199,14 +204,14 @@ public class PluginConfiguration {
 	 *
 	 * @return	String
 	 */
-	public String getTextFieldPostfix() {
+	String getTextFieldPostfix() {
 		return textFieldNewPostfix.getText();
 	}
 
 	/**
 	 * Set wrap RHS
 	 */
-	public void setTextFieldPostfix(String postfix) {
+	void setTextFieldPostfix(String postfix) {
 		textFieldNewPostfix.setText(postfix);
 	}
 
@@ -217,11 +222,11 @@ public class PluginConfiguration {
 	 *
 	 * @return	Boolean.
 	 */
-	public Boolean isSelectedEscapeSingleQuotes() {
+	Boolean isSelectedEscapeSingleQuotes() {
 		return checkBoxNewEscapeSingleQuotesInsideWrapped.isSelected();
 	}
 
-	public void setSelectedEscapeSingleQuotes(Boolean setSelected) {
+	void setSelectedEscapeSingleQuotes(Boolean setSelected) {
 		checkBoxNewEscapeSingleQuotesInsideWrapped.setSelected(setSelected);
 	}
 
@@ -233,11 +238,11 @@ public class PluginConfiguration {
 	 *
 	 * @return	Boolean.
 	 */
-	public Boolean isSelectedEscapeDoubleQuotes() {
+	Boolean isSelectedEscapeDoubleQuotes() {
 		return checkBoxNewEscapeDoubleQuotesInsideWrapped.isSelected();
 	}
 
-	public void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
+	void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
 		checkBoxNewEscapeDoubleQuotesInsideWrapped.setSelected(setSelected);
 	}
 
@@ -248,21 +253,21 @@ public class PluginConfiguration {
 	 *
 	 * @return	Boolean.
 	 */
-	public Boolean isSelectedEscapeBackslashes() {
+	Boolean isSelectedEscapeBackslashes() {
 		return checkBoxNewEscapeBackslashesInsideWrapped.isSelected();
 	}
 
-	public void setSelectedEscapeBackslashes(Boolean setSelected) {
+	void setSelectedEscapeBackslashes(Boolean setSelected) {
 		checkBoxNewEscapeBackslashesInsideWrapped.setSelected(setSelected);
 	}
 
 
 
-	public Boolean isSelectedRemoveBlankLines() {
+	Boolean isSelectedRemoveBlankLines() {
 		return checkBoxNewRemoveBlankWhiteSpace.isSelected();
 	}
 
-	public void setSelectedRemoveBlankLines(Boolean setSelected) {
+	void setSelectedRemoveBlankLines(Boolean setSelected) {
 		checkBoxNewRemoveBlankWhiteSpace.setSelected(setSelected);
 	}
 
@@ -272,15 +277,15 @@ public class PluginConfiguration {
 		return rootPanel;
 	}
 
-	public boolean isModified(Settings data) {
+	public boolean isModified() {
 		return false;
 	}
 
-	public void setData(Settings data) {
+	public void setData() {
 
 	}
 
-	public void getData(Settings data) {
+	public void getData() {
 
 	}
 }
