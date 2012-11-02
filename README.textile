@@ -10,7 +10,9 @@ h2. Description
 The Realigner plugin is helpful e.g. to quickly convert lines to comma separated lists and vice versa.
 Additionally the plugin adds a tool to wrap a selection, the current line or each of multiple selected lines
 with surrounding strings. The wrap tool of the plugin also provides options for escaping single, double quote
-and backslash characters.
+and backslash characters and to remove white-space lines from a multi-line selection.
+The plugin settings allow for setting up configurations of quickly accessible preconfigured options,
+available than in the wrap dialog.
 
 
 Realigner adds the following editing tools:
