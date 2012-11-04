@@ -93,7 +93,7 @@
                 </constraints>
                 <properties>
                   <labelFor value="acbf9"/>
-                  <text value="After"/>
+                  <text value="&amp;After"/>
                 </properties>
               </component>
               <component id="c648a" class="javax.swing.JLabel">
@@ -102,7 +102,7 @@
                 </constraints>
                 <properties>
                   <labelFor value="3c9b6"/>
-                  <text value="Before"/>
+                  <text value="&amp;Before"/>
                 </properties>
               </component>
             </children>
@@ -137,7 +137,7 @@
             </constraints>
             <properties>
               <selected value="true"/>
-              <text value="Escape &amp;single quotes inside wrapped text"/>
+              <text value="Escape single &amp;quotes inside wrapped text"/>
             </properties>
           </component>
           <component id="3fa18" class="javax.swing.JCheckBox" binding="escapeDoubleQuotesCheckBox">
@@ -155,7 +155,7 @@
             </constraints>
             <properties>
               <selected value="true"/>
-              <text value="Escape &amp;backslashes inside wrapped text"/>
+              <text value="Escape back&amp;slashes inside wrapped text"/>
             </properties>
           </component>
           <component id="f6596" class="javax.swing.JCheckBox" binding="removeBlankLines">
