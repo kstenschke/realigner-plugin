@@ -29,53 +29,81 @@ import javax.swing.*;
 
 public class SettingsComponent implements ProjectComponent, Configurable {
 
-	private PluginConfiguration form;
-	private ImageIcon icon;
-	private Settings settings;
+	// Note: Components shown in the IDEA settings dialog have 32x32 icons.
+	private ImageIcon icon = new ImageIcon("/com/kstenschke/realigner/resources/images/blank32x32.png");
+
+	protected PluginConfiguration settingsPanel = null;
+
+
 
 	public JComponent createComponent() {
-		if (form == null) {
-			form = new PluginConfiguration();
+		if (settingsPanel == null) {
+			settingsPanel = new PluginConfiguration();
 		}
 
-		return form.getRootPanel();
+		reset();
+
+		return settingsPanel.getRootPanel();
 	}
+
+
 
 	@Nls
 	public String getDisplayName() {
 		return "Realigner Quick Wraps";
 	}
 
+
+
 	public boolean isModified() {
-		return form != null && form.isModified();
+		return settingsPanel != null && settingsPanel.isModified();
 	}
+
+
 
 	public void disposeUIResources() {
-		form = null;
+		settingsPanel = null;
 	}
 
+
+
 	public void reset() {
-		if (form != null) {
-				// Reset form data from component
-			form.setData();
+		if (settingsPanel != null ) {
+				// Reset settingsPanel data from component
+// 			settingsPanel.setData();
 		}
 	}
 
+
+
+	/**
+	 * Get the icon of this {@link com.intellij.openapi.options.Configurable}.
+	 */
 	public Icon getIcon() {
+		if( icon == null ) {
+			icon	= new ImageIcon("/com/kstenschke/realigner/resources/images/blank32x32.png");
+		}
+
 		return icon;
 	}
 
+
+
 	public void apply() throws ConfigurationException {
-		if (form != null) {
-				// Get data from form to component
-			form.getData();
-			applyGlobalSettings();
+		if (settingsPanel != null) {
+				// Get data from settingsPanel to component
+			settingsPanel.getData();
+//			applyGlobalSettings();
 		}
 	}
+
+
 
 	public String getHelpTopic() {
 		return null;
 	}
+
+
 
 	private void applyGlobalSettings() {
 
@@ -87,26 +115,39 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 
 
 	public SettingsComponent(Project project) {
+
 	}
+
+
 
 	public void initComponent() {
 		// TODO: insert component initialization logic here
 	}
 
+
+
 	public void disposeComponent() {
-		// TODO: insert component disposal logic here
+		settingsPanel = null;
 	}
+
+
 
 	@NotNull
 	public String getComponentName() {
-		return "SettingsComponent";
+//		return "SettingsComponent";
+		return "Realigner Settings";
 	}
+
+
 
 	public void projectOpened() {
 		// called when project is opened
 	}
 
+
+
 	public void projectClosed() {
 		// called when project is being closed
 	}
+
 }

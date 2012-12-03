@@ -122,7 +122,7 @@
             </constraints>
             <properties>
               <enabled value="false"/>
-              <icon value="groovy/ui/icons/disk.png"/>
+              <hideActionText value="false"/>
               <text value="&amp;Save quick wrap button"/>
             </properties>
           </component>
@@ -160,7 +160,6 @@
         </constraints>
         <properties>
           <enabled value="false"/>
-          <icon value="icons/inspector/minus.png"/>
           <text value="&amp;Remove Selected Button"/>
         </properties>
       </component>

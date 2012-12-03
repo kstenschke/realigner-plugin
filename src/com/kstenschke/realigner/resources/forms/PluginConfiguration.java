@@ -26,7 +26,7 @@ import java.awt.event.*;
 
 public class PluginConfiguration {
 
-	private JPanel rootPanel;
+	public JPanel rootPanel;
 	private JTextField textFieldNewLabel;
 	private JTextField textFieldNewPrefix;
 	private JTextField textFieldNewPostfix;
@@ -44,7 +44,7 @@ public class PluginConfiguration {
 	 * Constructor
 	 */
 	public PluginConfiguration() {
-		buttonSaveWrapButton.addActionListener(new ActionListener() {
+		this.buttonSaveWrapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onClickSaveWrapButton(e);
 			}
@@ -56,7 +56,7 @@ public class PluginConfiguration {
 			}
 		});
 
-			// Enable "remove button" only when a button item selected
+		// Enable "remove button" only when a button item selected
 		listWrapButtons.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -67,13 +67,13 @@ public class PluginConfiguration {
 				buttonSaveWrapButton.setEnabled( !isListSelectionEmpty || !isButtonLabelEmpty );
 
 				if( !isListSelectionEmpty ) {
-						// Load selected item config into form
+					// Load selected item config into form
 					String selectedItemLabel	= listWrapButtons.getSelectedValue().toString().trim();
 					Integer	selectedLabelStoreIndex	= Settings.getLabelIndex(selectedItemLabel);
 
-				    setTextFieldButtonLabel( selectedItemLabel );
-				    setTextFieldPrefix( Settings.getPrefixByIndex(selectedLabelStoreIndex) );
-				    setTextFieldPostfix( Settings.getPostfixByIndex(selectedLabelStoreIndex) );
+					setTextFieldButtonLabel( selectedItemLabel );
+					setTextFieldPrefix( Settings.getPrefixByIndex(selectedLabelStoreIndex) );
+					setTextFieldPostfix( Settings.getPostfixByIndex(selectedLabelStoreIndex) );
 					setSelectedEscapeSingleQuotes( Settings.getAllWrapButtonEscapeSingleQuotes()[selectedLabelStoreIndex].equals("1") );
 					setSelectedEscapeDoubleQuotes( Settings.getAllWrapButtonEscapeDoubleQuotes()[selectedLabelStoreIndex].equals("1") );
 					setSelectedEscapeBackslashes( Settings.getAllWrapButtonEscapeBackslashes()[selectedLabelStoreIndex].equals("1") );
@@ -82,7 +82,7 @@ public class PluginConfiguration {
 			}
 		});
 
-			// Enable/disable "add button" button when button label is entered/empty
+		// Enable/disable "add button" button when button label is entered/empty
 		textFieldNewLabel.addFocusListener(new FocusListener() {
 			@Override public void focusGained(FocusEvent e) {}
 
@@ -92,7 +92,7 @@ public class PluginConfiguration {
 			}
 		});
 
-		 updateWrapButtonsListItems();
+		updateWrapButtonsListItems();
 	}
 
 
@@ -128,7 +128,7 @@ public class PluginConfiguration {
 		String buttonLabel	= getTextFieldButtonLabel().trim();
 
 		if( 	buttonLabel.equals("") ) {
-			JOptionPane.showMessageDialog(null,"Please name the new button with a label.","No Button Label", JOptionPane.CANCEL_OPTION);
+			JOptionPane.showMessageDialog(null,"Please name the new button with a label.","No Button Label", JOptionPane.ERROR_MESSAGE);
 		} else {
 				// Store the button config
 			String prefix		= getTextFieldPrefix();
