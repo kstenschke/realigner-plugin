@@ -123,6 +123,7 @@
             <properties>
               <enabled value="false"/>
               <hideActionText value="false"/>
+              <icon value="com/kstenschke/realigner/resources/images/disk.png"/>
               <text value="&amp;Save quick wrap button"/>
             </properties>
           </component>
@@ -160,6 +161,7 @@
         </constraints>
         <properties>
           <enabled value="false"/>
+          <icon value="com/kstenschke/realigner/resources/images/cross-delete.png"/>
           <text value="&amp;Remove Selected Button"/>
         </properties>
       </component>

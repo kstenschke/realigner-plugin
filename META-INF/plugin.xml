@@ -43,6 +43,7 @@
     <br>
     1.0.8<br><ul>
         <li>Added auto-generated button label suggestion to wrap options of plugin settings</li>
+        <li>Added plugin settings icons</li>
     </ul>
     1.0.7<br><ul>
         <li>Bugfix: plugin settings compatibility issues with PhpStorm</li>
