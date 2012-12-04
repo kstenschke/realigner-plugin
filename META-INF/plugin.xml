@@ -41,40 +41,35 @@
 
     <change-notes><![CDATA[
     <br>
-    1.0.7<br>
-    <ul>
+    1.0.8<br><ul>
+        <li>Added auto-generated button label suggestion to wrap options of plugin settings</li>
+    </ul>
+    1.0.7<br><ul>
         <li>Bugfix: plugin settings compatibility issues with PhpStorm</li>
     </ul>
-    1.0.6<br>
-    <ul>
+    1.0.6<br><ul>
         <li>Added plugin settings: configuration for quick wrap buttons</li>
     </ul>
-    1.0.5<br>
-    <ul>
+    1.0.5<br><ul>
         <li>Added option to remove blank/white-space lines while wrapping</li>
         <li>Added updating of text selection after wrapping</li>
     </ul>
-    1.0.4<br>
-    <ul>
+    1.0.4<br><ul>
         <li>Added retaining of options preferences (application level)</li>
         <li>Added disabling of options when no project, editor or necessary selection given</li>
     </ul>
-    1.0.3<br>
-    <ul>
+    1.0.3<br><ul>
         <li>Added missing title text to dialog window of split and wrap option</li>
         <li>Added error message when trying to join w/o multiple lines of selection</li>
     </ul>
-    1.0.2<br>
-    <ul>
+    1.0.2<br><ul>
         <li>Changed wrap tool to work also w/o any surrounding text (to allow being used for escaping only)</li>
         <li>Added options to escape single/double quotes and backslashes while wrapping</li>
     </ul>
-    1.0.1<br>
-    <ul>
+    1.0.1<br><ul>
         <li>Added splitting options: split at / before / after delimiter</li>
     </ul>
-    1.0.0<br>
-    <ul>
+    1.0.0<br><ul>
         <li>Initial release</li>
     </ul>
   ]]></change-notes>

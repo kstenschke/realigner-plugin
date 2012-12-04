@@ -44,6 +44,24 @@ public class PluginConfiguration {
 	 * Constructor
 	 */
 	public PluginConfiguration() {
+
+			// When leaving prefix/postfix - auto-generate button label suggestion
+		FocusListener focusListenerPrefixPostfix = new FocusListener() {
+			@Override public void focusGained(FocusEvent e) {
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				String buttonLabelText	= textFieldNewPrefix.getText() + " ... " + textFieldNewPostfix.getText();
+				textFieldNewLabel.setText(buttonLabelText);
+			}
+		};
+
+		textFieldNewPrefix.addFocusListener(focusListenerPrefixPostfix);
+		textFieldNewPostfix.addFocusListener(focusListenerPrefixPostfix);
+
+			// Add action listeners to save and delete button
 		this.buttonSaveWrapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onClickSaveWrapButton(e);
