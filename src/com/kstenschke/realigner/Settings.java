@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2012-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,43 +82,12 @@ public class Settings {
 
 
 
-//	/**
-//	 * Remove wrap button config from wrap button items store
-//	 *
-//	 * @param buttonLabel
-//	 * @param prefix
-//	 * @param postfix
-//	 * @param escapeSingleQuotes
-//	 * @param escapeDoubleQuotes
-//	 * @param escapeBackslashes
-//	 * @param removeBlankLines
-//	 */
-//	public static void removeWrapButtonItemFromStore(String buttonLabel, String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes, Boolean removeBlankLines) {
-//		if( !buttonLabel.isEmpty() ) {
-//				// Get button config, stored button items
-//			String buttonConfig		= renderWrapButtonConfigStr(buttonLabel, prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
-//			String wrapButtonsConfig= loadWrapButtonItemsConfig();
-//
-//			if( wrapButtonsConfig == null ) {
-//				wrapButtonsConfig	= "";
-//			} else {
-//					// Remove button config
-//				wrapButtonsConfig	= wrapButtonsConfig.replace(buttonConfig, "");
-//			}
-//				// Save to store
-//			saveWrapButtonItemsConfig(wrapButtonsConfig);
-//		}
-//	}
-
-
-
 	/**
 	 * Find and remove button item with given label from store
 	 *
-	 * @param buttonLabel
+	 * @param	buttonLabel
 	 */
 	public static void removeWrapButtonItemFromStore(String buttonLabel) {
-			// Find index of button with given label
 		Object[] buttonLabels	= getAllWrapButtonLabels();
 		if( buttonLabels != null ) {
 			Integer deleteButtonIndex = null;
@@ -274,7 +243,7 @@ public class Settings {
 	private static Object[] getAllWrapButtonBoolOptionsByIndex(Integer index) {
 		String storeItemsConfig	= loadWrapButtonItemsConfig();
 
-		// Extract only item prefixes into array
+			// Extract only item prefixes into array
 		List<String> items = new ArrayList<String>();
 		if( storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
 			String[] configs	= storeItemsConfig.split("##/WBPOSTFIX##");

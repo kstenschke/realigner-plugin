@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2012-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,6 +75,7 @@ public class WrapOptions extends JDialog {
 					// Add button action
 				final String prefix	= allButtonPrefixConfigs[i].toString();
 				final String postfix= allButtonPostfixConfigs[i].toString();
+
 				final Boolean escapeSingleQuotes	= allButtonEscapeSingleQuoteConfigs[i].equals("1");
 				final Boolean escapeDoubleQuotes	= allButtonEscapeDoubleQuoteConfigs[i].equals("1");
 				final Boolean escapeBackslashes		= allButtonEscapeBackslashConfigs[i].equals("1");

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2012 Kay Stenschke
+  ~ Copyright 2012-2013 Kay Stenschke
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -24,53 +24,53 @@
     and to remove white-space lines from a multi-line selection.
     The plugin settings allow for setting up configurations of quickly accessible preconfigured options,
     available than in the wrap dialog.
-    <br><br>
+    <br/><br/>
     Realigner adds the following editing tools:
-    <br><ul>
+    <br/><ul>
         <li>Ctrl+Shift+Alt+J - Joins selected lines by removing linefeeds. Optionally, a "gluing" string can be used as delimiter
         <li>Ctrl+Shift+Alt+L - Splits current line or selection into multiple lines at, before or after an arbitrary delimiter
         <li>Ctrl+Shift+Alt+W - Wraps current line / selection / each of multiple selected lines with an arbitrary prefix and/or postfix string
     </ul>
-    <br>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    <br>
-    <br>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
+    <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    <br/>
+    <br/>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
     <version>1.0.7</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
-    <br>
-    1.0.8<br><ul>
+    <br/>
+    1.0.8<ul>
         <li>Added auto-generated button label suggestion to wrap options of plugin settings</li>
         <li>Added plugin settings icons</li>
     </ul>
-    1.0.7<br><ul>
+    1.0.7<ul>
         <li>Bugfix: plugin settings compatibility issues with PhpStorm</li>
     </ul>
-    1.0.6<br><ul>
+    1.0.6<ul>
         <li>Added plugin settings: configuration for quick wrap buttons</li>
     </ul>
-    1.0.5<br><ul>
+    1.0.5<ul>
         <li>Added option to remove blank/white-space lines while wrapping</li>
         <li>Added updating of text selection after wrapping</li>
     </ul>
-    1.0.4<br><ul>
+    1.0.4<ul>
         <li>Added retaining of options preferences (application level)</li>
         <li>Added disabling of options when no project, editor or necessary selection given</li>
     </ul>
-    1.0.3<br><ul>
+    1.0.3<ul>
         <li>Added missing title text to dialog window of split and wrap option</li>
         <li>Added error message when trying to join w/o multiple lines of selection</li>
     </ul>
-    1.0.2<br><ul>
+    1.0.2<ul>
         <li>Changed wrap tool to work also w/o any surrounding text (to allow being used for escaping only)</li>
         <li>Added options to escape single/double quotes and backslashes while wrapping</li>
     </ul>
-    1.0.1<br><ul>
+    1.0.1<ul>
         <li>Added splitting options: split at / before / after delimiter</li>
     </ul>
-    1.0.0<br><ul>
+    1.0.0<ul>
         <li>Initial release</li>
     </ul>
   ]]></change-notes>

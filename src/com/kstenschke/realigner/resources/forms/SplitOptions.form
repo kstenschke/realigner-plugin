@@ -96,6 +96,7 @@
                 </constraints>
                 <properties>
                   <icon value="com/kstenschke/realigner/resources/images/arrow-split.png"/>
+                  <labelFor value="6fad"/>
                   <text value="Delimiter"/>
                 </properties>
               </component>
