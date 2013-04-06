@@ -97,7 +97,7 @@
                 <properties>
                   <icon value="com/kstenschke/realigner/resources/images/arrow-split.png"/>
                   <labelFor value="6fad"/>
-                  <text value="Delimiter"/>
+                  <text value="&amp;Delimiter"/>
                 </properties>
               </component>
               <component id="6fad" class="javax.swing.JTextField" binding="textFieldDelimiter">

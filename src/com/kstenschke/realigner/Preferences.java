@@ -106,18 +106,35 @@ public class Preferences {
 
 
 	/**
-	 * Get split delimiter preference
-	 *
+	 * @param   propertyName         Name of the preference property
+	 * @param   defaultValue         Default value to be set if null
+	 * @param   setDefaultIfEmpty    Set default also if empty?
 	 * @return	String
 	 */
-	public static String getSplitDelimiter() {
-		String delimiter	= PropertiesComponent.getInstance().getValue(PROPERTY_SPLIT_DELIMITER);
-		if( delimiter == null || delimiter.equals("") ) delimiter	= ", ";
+	private static String getProperty(String propertyName, String defaultValue, Boolean setDefaultIfEmpty) {
+		String value   = PropertiesComponent.getInstance().getValue(propertyName);
+		if( value == null ) {
+			value	= defaultValue;
+		}
+		if( value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
+			value = defaultValue;
+		}
 
-		return delimiter;
+		return value;
+	}
+
+	public static String getProperty(String propertyName, String defaultValue) {
+		return getProperty(propertyName, defaultValue, false);
 	}
 
 
+
+	/**
+	 * @return	Split delimiter
+	 */
+	public static String getSplitDelimiter() {
+		return getProperty(PROPERTY_SPLIT_DELIMITER, ", ", true);
+	}
 
 	/**
 	 * Get split option: split at/before/after delimiter
@@ -125,104 +142,57 @@ public class Preferences {
 	 * @return	String			"0" (default if not saved yet) / "1" / "2"
 	 */
 	public static String getSplitWhere() {
-		String splitWhere	= PropertiesComponent.getInstance().getValue(PROPERTY_SPLIT_SPLITWHERE);
-		if( splitWhere == null || splitWhere.equals("") ) splitWhere	= "0";
-
-		return splitWhere;
+		return getProperty(PROPERTY_SPLIT_SPLITWHERE, "0", true);
 	}
 
-
-
 	/**
-	 * Get wrap prefix preference
-	 *
-	 * @return	String
+	 * @return	Join glue preference
 	 */
 	public static String getJoinGlue() {
-		String glue	= PropertiesComponent.getInstance().getValue(PROPERTY_JOIN_GLUE);
-		if( glue == null || glue.equals("") ) glue	= ", ";
-
-		return glue;
+//		return getProperty(PROPERTY_JOIN_GLUE, ", ", true);
+		return getProperty(PROPERTY_JOIN_GLUE, "", false);
 	}
 
-
-
 	/**
-	 * Get wrap prefix preference
-	 *
-	 * @return	String
+	 * @return	Wrap prefix
 	 */
 	public static String getWrapPrefix() {
-		String prefix	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_PREFIX);
-		if( prefix == null ) prefix	= ", ";
-
-		return prefix;
+		return getProperty(PROPERTY_WRAP_PREFIX, ", ", false);
 	}
 
-
-
 	/**
-	 * Get wrap postfix preference
-	 *
-	 * @return	String
+	 * @return	Wrap postfix
 	 */
 	public static String getWrapPostfix() {
-		String postfix	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_POSTFIX);
-		if( postfix == null ) postfix	= ", ";
-
-		return postfix;
+		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
 	}
 
-
-
 	/**
-	 * Get wrap preference: escape single quotes
-	 *
-	 * @return	String
+	 * @return	Escape single quotes?
 	 */
 	public static Boolean getWrapEscapeSingleQuotes() {
-		String val	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_ESCAPESINGLEQUOTES);
-
-		return (val == null) || val.equals("1");
+		return getProperty(PROPERTY_WRAP_ESCAPESINGLEQUOTES, "1", true).equals("1");
 	}
 
-
-
 	/**
-	 * Get wrap preference: escape double quotes
-	 *
-	 * @return	String
+	 * @return	Escape double quotes?
 	 */
 	public static Boolean getWrapEscapeDoubleQuotes() {
-		String val	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_ESCAPEDOUBLEQUOTES);
-
-		return (val == null) || val.equals("1");
+		return getProperty(PROPERTY_WRAP_ESCAPEDOUBLEQUOTES, "1", true).equals("1");
 	}
 
-
-
 	/**
-	 * Get wrap preference: Escape backslashes
-	 *
-	 * @return	String
+	 * @return	Escape backslashes?
 	 */
 	public static Boolean getWrapEscapeBackslashes() {
-		String val	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_ESCAPEBACKSLASHES);
-
-		return (val == null) || val.equals("1");
+		return getProperty(PROPERTY_WRAP_ESCAPEBACKSLASHES, "1", true).equals("1");
 	}
 
-
-
 	/**
-	 * Get wrap preference: Remove blank lines
-	 *
-	 * @return	String
+	 * @return	Remove blank lines?
 	 */
 	public static Boolean getWrapRemoveBlankLines() {
-		String val	= PropertiesComponent.getInstance().getValue(PROPERTY_WRAP_REMOVEBLANKLINES);
-
-		return (val == null) || val.equals("1");
+		return getProperty(PROPERTY_WRAP_REMOVEBLANKLINES, "1", true).equals("1");
 	}
 
 }
