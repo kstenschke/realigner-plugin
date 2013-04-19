@@ -20,17 +20,26 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class SplitOptions extends JDialog {
+
 	private JPanel contentPane;
+
 	private JButton buttonOK;
+
 	private JButton buttonCancel;
+
 	private JRadioButton splitAtDelimiterRadioButton;
+
 	private JRadioButton splitAfterDelimiterRadioButton;
+
 	private JRadioButton splitBeforeDelimiterRadioButton;
+
 	private JTextField textFieldDelimiter;
 
 		// Delimiter disposal methods
 	public static final int METHOD_DELIMITER_DISPOSAL_AT	= 0;
+
 	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE= 1;
+
 	public static final int METHOD_DELIMITER_DISPOSAL_AFTER	= 2;
 
 	public Boolean clickedOk   = false;
@@ -75,8 +84,6 @@ public class SplitOptions extends JDialog {
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
 
-
-
 	/**
 	 * Handle click ok event
 	 */
@@ -85,8 +92,6 @@ public class SplitOptions extends JDialog {
 		dispose();
 	}
 
-
-
 	/**
 	 * Handle click cancel event
 	 */
@@ -94,8 +99,6 @@ public class SplitOptions extends JDialog {
 		clickedOk   = false;
 		dispose();
 	}
-
-
 
 	/**
 	 * Split options main
@@ -109,8 +112,6 @@ public class SplitOptions extends JDialog {
 		System.exit(0);
 	}
 
-
-
 	/**
 	 * Getter for delimiter text
 	 *
@@ -120,16 +121,12 @@ public class SplitOptions extends JDialog {
 		return textFieldDelimiter.getText();
 	}
 
-
-
 	/**
 	 * Set delimiter text
 	 */
 	public void setDelimiter(String delimiter) {
 		textFieldDelimiter.setText(delimiter);
 	}
-
-
 
 	/**
 	 * Getter for delimiter disposal method
@@ -147,8 +144,6 @@ public class SplitOptions extends JDialog {
 
 		return METHOD_DELIMITER_DISPOSAL_AT;
 	}
-
-
 
 	/**
 	 * Select given split-where (at/after/before delimiter) option radio box

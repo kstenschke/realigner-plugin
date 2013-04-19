@@ -27,15 +27,25 @@ import java.awt.event.*;
 public class PluginConfiguration {
 
 	public JPanel rootPanel;
+
 	private JTextField textFieldNewLabel;
+
 	private JTextField textFieldNewPrefix;
+
 	private JTextField textFieldNewPostfix;
+
 	private JList listWrapButtons;
+
 	private JButton buttonRemoveSelectedButton;
+
 	private JButton buttonSaveWrapButton;
+
 	private JCheckBox checkBoxNewEscapeSingleQuotesInsideWrapped;
+
 	private JCheckBox checkBoxNewEscapeDoubleQuotesInsideWrapped;
+
 	private JCheckBox checkBoxNewEscapeBackslashesInsideWrapped;
+
 	private JCheckBox checkBoxNewRemoveBlankWhiteSpace;
 
 
@@ -113,7 +123,6 @@ public class PluginConfiguration {
 		updateWrapButtonsListItems();
 	}
 
-
 	/**
 	 *	Initialize wrap buttons list with items from store
 	 */
@@ -121,8 +130,6 @@ public class PluginConfiguration {
 		listWrapButtons.setListData( Settings.getAllWrapButtonLabels() );
 		listWrapButtons.clearSelection();
 	}
-
-
 
 	/**
 	 * @return	The selected item's label
@@ -134,8 +141,6 @@ public class PluginConfiguration {
 
 		return listWrapButtons.getSelectedValue().toString();
 	}
-
-
 
 	/**
 	 * Handler when clicking the "Add button" button
@@ -162,8 +167,6 @@ public class PluginConfiguration {
 		}
 	}
 
-
-
 	/**
 	 * Handler when clicking the "Remove selected button" button
 	 *
@@ -178,8 +181,6 @@ public class PluginConfiguration {
 			updateWrapButtonsListItems();
 		}
 	}
-
-
 
 	/**
 	 * Get button label
@@ -197,8 +198,6 @@ public class PluginConfiguration {
 		textFieldNewLabel.setText(label);
 	}
 
-
-
 	/**
 	 * Get wrap LHS
 	 *
@@ -214,8 +213,6 @@ public class PluginConfiguration {
 	void setTextFieldPrefix(String prefix) {
 		textFieldNewPrefix.setText(prefix);
 	}
-
-
 
 	/**
 	 * Get wrap RHS
@@ -233,8 +230,6 @@ public class PluginConfiguration {
 		textFieldNewPostfix.setText(postfix);
 	}
 
-
-
 	/**
 	 * Check whether wrapped single quotes are selected to be escaped
 	 *
@@ -247,9 +242,6 @@ public class PluginConfiguration {
 	void setSelectedEscapeSingleQuotes(Boolean setSelected) {
 		checkBoxNewEscapeSingleQuotesInsideWrapped.setSelected(setSelected);
 	}
-
-
-
 
 	/**
 	 * Check whether wrapped double quotes are selected to be escaped
@@ -264,8 +256,6 @@ public class PluginConfiguration {
 		checkBoxNewEscapeDoubleQuotesInsideWrapped.setSelected(setSelected);
 	}
 
-
-
 	/**
 	 * Check whether wrapped double quotes are selected to be escaped
 	 *
@@ -279,8 +269,6 @@ public class PluginConfiguration {
 		checkBoxNewEscapeBackslashesInsideWrapped.setSelected(setSelected);
 	}
 
-
-
 	Boolean isSelectedRemoveBlankLines() {
 		return checkBoxNewRemoveBlankWhiteSpace.isSelected();
 	}
@@ -288,8 +276,6 @@ public class PluginConfiguration {
 	void setSelectedRemoveBlankLines(Boolean setSelected) {
 		checkBoxNewRemoveBlankWhiteSpace.setSelected(setSelected);
 	}
-
-
 
 	public JPanel getRootPanel() {
 		return rootPanel;
@@ -306,4 +292,5 @@ public class PluginConfiguration {
 	public void getData() {
 
 	}
+
 }

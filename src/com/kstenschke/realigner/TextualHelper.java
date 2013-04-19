@@ -32,8 +32,8 @@ public class TextualHelper {
 	 * Get sub sequence from given offset region
 	 *
 	 * @param	haystack		Text from which the sub string is to be extracted
-	 * @param	offsetStart		Starting offset
-	 * @param	offsetEnd		Ending offset
+	 * @param	offsetStart	Starting offset
+	 * @param	offsetEnd	Ending offset
 	 * @return					String
 	 */
 	public static String getSubString(CharSequence haystack, int offsetStart, int offsetEnd) {
@@ -41,8 +41,6 @@ public class TextualHelper {
 
 		return haystack.subSequence(offsetStart, offsetEnd).toString();
 	}
-
-
 
 	/**
 	 * @param	doc				The full document
@@ -61,8 +59,6 @@ public class TextualHelper {
 
 		return lines;
 	}
-
-
 
 	/**
 	 * @param	doc				The full document
@@ -86,14 +82,12 @@ public class TextualHelper {
 		return line;
 	}
 
-
-
 	/**
 	 * @param	str						String with special chars to be escaped
-	 * @param	escapeSingleQuotes		' to \' ?
-	 * @param	escapeDoubleQuotes		" to \" ?
+	 * @param	escapeSingleQuotes	' to \' ?
+	 * @param	escapeDoubleQuotes	" to \" ?
 	 * @param	escapeBackslashes		\ to \\ ?
-	 * @return							The escaped string
+	 * @return	The escaped string
 	 */
 	public static String escapeSelectively(String str, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
 			// Escape backslashes - important: must be done before quotes, as their escaping adds more backslashes!
@@ -114,10 +108,8 @@ public class TextualHelper {
 		return str;
 	}
 
-
-
 	/**
-	 * @param	str		String to be analyzed
+	 * @param	str   String to be analyzed
 	 * @param	regex	Regular expression
 	 * @return  		Amount of matches of regex in str
 	 */
@@ -129,6 +121,23 @@ public class TextualHelper {
 		while ( matcher.find() ) count++;
 
 		return count;
+	}
+
+	/**
+	 * @param   str
+	 * @return  Does the given string contain an HTML tag?
+	 */
+	public static Boolean containsHtmlTag(String str) {
+		String regex   = "<[a-z|A-Z]+(.| )*>.*";
+
+		return str.matches(regex);
+	}
+
+	public static String getClosingTagPendent(String prefix) {
+		prefix      = prefix.replaceAll("<", "");
+		String[]  tag = prefix.split("\\W+");
+
+		return "</" + tag[0] + ">";
 	}
 
 }

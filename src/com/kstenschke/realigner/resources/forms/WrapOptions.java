@@ -18,22 +18,34 @@ package com.kstenschke.realigner.resources.forms;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.kstenschke.realigner.Settings;
+import com.kstenschke.realigner.TextualHelper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class WrapOptions extends JDialog {
+
 	private JPanel contentPane;
+
 	private JButton buttonOK;
+
 	private JButton buttonCancel;
+
 	private JTextField textFieldPrefix;
+
 	private JTextField textFieldPostfix;
+
 	private JCheckBox escapeSingleQuotesCheckBox;
+
 	private JCheckBox escapeDoubleQuotesCheckBox;
+
 	private JCheckBox escapeBackslashesCheckBox;
+
 	private JCheckBox removeBlankLines;
+
 	private JPanel panelQuickWrapButtons;
+
 	private JPanel panelWrapButtonsContainer;
 
 	public Boolean clickedOk	= false;
@@ -55,17 +67,19 @@ public class WrapOptions extends JDialog {
 			panelQuickWrapButtons.setVisible(false);
 		} else {
 				// Add quick wrap buttons
-			Object[] allButtonsLabels					= Settings.getAllWrapButtonLabels();
-			Object[] allButtonPrefixConfigs				= Settings.getAllWrapButtonPrefixes();
-			Object[] allButtonPostfixConfigs			= Settings.getAllWrapButtonPostfixes();
+			Object[] allButtonsLabels					      = Settings.getAllWrapButtonLabels();
+			Object[] allButtonPrefixConfigs				   = Settings.getAllWrapButtonPrefixes();
+			Object[] allButtonPostfixConfigs			      = Settings.getAllWrapButtonPostfixes();
 			Object[] allButtonEscapeSingleQuoteConfigs	= Settings.getAllWrapButtonEscapeSingleQuotes();
 			Object[] allButtonEscapeDoubleQuoteConfigs	= Settings.getAllWrapButtonEscapeDoubleQuotes();
-			Object[] allButtonEscapeBackslashConfigs	= Settings.getAllWrapButtonEscapeBackslashes();
-			Object[] allButtonRemoveBlankLinesConfigs	= Settings.getAllWrapButtonRemoveBlankLines();
+			Object[] allButtonEscapeBackslashConfigs	   = Settings.getAllWrapButtonEscapeBackslashes();
+			Object[] allButtonRemoveBlankLinesConfigs	   = Settings.getAllWrapButtonRemoveBlankLines();
 
 				// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
 			panelWrapButtonsContainer.removeAll();
-			panelWrapButtonsContainer.setLayout(new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
+			panelWrapButtonsContainer.setLayout(
+				new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false)
+			);
 
 			for( int i = 0; i < allButtonsLabels.length; i++ ) {
 				String buttonLabel	= allButtonsLabels[i].toString();
@@ -73,13 +87,13 @@ public class WrapOptions extends JDialog {
 				panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
 
 					// Add button action
-				final String prefix	= allButtonPrefixConfigs[i].toString();
-				final String postfix= allButtonPostfixConfigs[i].toString();
+				final String prefix  = allButtonPrefixConfigs[i].toString();
+				final String postfix = allButtonPostfixConfigs[i].toString();
 
 				final Boolean escapeSingleQuotes	= allButtonEscapeSingleQuoteConfigs[i].equals("1");
 				final Boolean escapeDoubleQuotes	= allButtonEscapeDoubleQuoteConfigs[i].equals("1");
-				final Boolean escapeBackslashes		= allButtonEscapeBackslashConfigs[i].equals("1");
-				final Boolean removeBlankLines		= allButtonRemoveBlankLinesConfigs[i].equals("1");
+				final Boolean escapeBackslashes	= allButtonEscapeBackslashConfigs[i].equals("1");
+				final Boolean removeBlankLines	= allButtonRemoveBlankLinesConfigs[i].equals("1");
 
 				wrapButton.addActionListener(new ActionListener() {
 					@Override
@@ -97,10 +111,24 @@ public class WrapOptions extends JDialog {
 				});
 			}
 			panelWrapButtonsContainer.revalidate();
-
 			panelQuickWrapButtons.setVisible(true);
 		}
 
+		textFieldPrefix.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+					// When leaving prefix field containing an HTML tag: fill with postfix field with resp. pendent
+				String prefix  = textFieldPrefix.getText();
+				if (TextualHelper.containsHtmlTag(prefix)) {
+					textFieldPostfix.setText(TextualHelper.getClosingTagPendent(prefix));
+				}
+			}
+		});
 
 			// Setup button action listeners
 		buttonOK.addActionListener(new ActionListener() {
@@ -108,6 +136,7 @@ public class WrapOptions extends JDialog {
 				onOK();
 			}
 		});
+
 		buttonCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onCancel();
@@ -130,8 +159,6 @@ public class WrapOptions extends JDialog {
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
 
-
-
 	/**
 	 * Handle click ok event
 	 */
@@ -140,8 +167,6 @@ public class WrapOptions extends JDialog {
 		dispose();
 	}
 
-
-
 	/**
 	 * Handle click cancel event
 	 */
@@ -149,8 +174,6 @@ public class WrapOptions extends JDialog {
 		clickedOk	= false;
 		dispose();
 	}
-
-
 
 	/**
 	 * Get wrap LHS
@@ -161,15 +184,12 @@ public class WrapOptions extends JDialog {
 		return textFieldPrefix.getText();
 	}
 
-
 	/**
 	 * Set wrap LHS
 	 */
 	public void setTextFieldPrefix(String prefix) {
 		textFieldPrefix.setText(prefix);
 	}
-
-
 
 	/**
 	 * Get wrap RHS
@@ -180,16 +200,12 @@ public class WrapOptions extends JDialog {
 		return textFieldPostfix.getText();
 	}
 
-
-
 	/**
 	 * Set wrap LHS
 	 */
 	public void setTextFieldPostfix(String postfix) {
 		textFieldPostfix.setText(postfix);
 	}
-
-
 
 	/**
 	 * Check whether wrapped single quotes are selected to be escaped
@@ -204,9 +220,6 @@ public class WrapOptions extends JDialog {
 		escapeSingleQuotesCheckBox.setSelected(setSelected);
 	}
 
-
-
-
 	/**
 	 * Check whether wrapped double quotes are selected to be escaped
 	 *
@@ -219,8 +232,6 @@ public class WrapOptions extends JDialog {
 	public void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
 		escapeDoubleQuotesCheckBox.setSelected(setSelected);
 	}
-
-
 
 	/**
 	 * Check whether wrapped double quotes are selected to be escaped
@@ -247,8 +258,6 @@ public class WrapOptions extends JDialog {
 	public void setRemoveBlankLinesVisible(Boolean isVisible) {
 		removeBlankLines.setVisible(isVisible);
 	}
-
-
 
 	/**
 	 * @param	args	Arguments
