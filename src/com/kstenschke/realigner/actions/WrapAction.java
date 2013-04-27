@@ -24,7 +24,6 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.kstenschke.realigner.TextualHelper;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.resources.forms.WrapOptions;
 

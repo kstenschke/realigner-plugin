@@ -153,7 +153,7 @@ public class Wrapper {
 			}
 		} else {
 			// No selection: wrap the line where the caret is
-			//this.unwrapCaretLine(prefix, postfix);
+			this.unwrapCaretLine(prefix, postfix);
 		}
 	}
 
@@ -255,6 +255,26 @@ public class Wrapper {
 	}
 
 	/**
+	 * Unwrap the line the caret is in
+	 *
+	 * @param prefix
+	 * @param postfix
+	 */
+	private void unwrapCaretLine(String prefix, String postfix) {
+		int caretOffset= editor.getCaretModel().getOffset();
+		int lineNumber = document.getLineNumber(caretOffset);
+
+		int offsetLineStart	= document.getLineStartOffset(lineNumber);
+		String lineText		= TextualHelper.extractLine(document, lineNumber);
+		int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+
+		this.offsetSelectionStart  = offsetLineStart;
+		this.offsetSelectionEnd    = offsetLineEnd;
+
+		this.unwrapSingleLinedSelection(prefix, postfix);
+	}
+
+	/**
 	 * Remove given strings from the beginning and ending of current selection
 	 *
 	 * @param prefix
@@ -276,4 +296,6 @@ public class Wrapper {
 		document.replaceString(offsetSelectionStart, offsetSelectionEnd, unwrappedString);
 		selectionModel.setSelection(offsetSelectionStart, offsetSelectionStart + unwrappedString.length());
 	}
+
+
 }
