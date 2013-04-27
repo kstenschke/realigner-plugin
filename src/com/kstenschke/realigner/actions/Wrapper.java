@@ -46,13 +46,11 @@ public class Wrapper {
 	 */
 	public Wrapper(Editor editor) {
 		this.editor   = editor;
-
-		this.hasMultiLineSelection = false;
-
 		this.document = editor.getDocument();
-
 		this.selectionModel = editor.getSelectionModel();
 		this.hasSelection = selectionModel.hasSelection();
+
+		this.hasMultiLineSelection = false;
 
 		if (this.hasSelection) {
 			this.offsetStart	= this.selectionModel.getSelectionStart();
@@ -65,8 +63,9 @@ public class Wrapper {
 		}
 	}
 
-
-
+	/**
+	 * @return  Wrap options dialog
+	 */
 	public WrapOptions showWrapOptions() {
 		WrapOptions wrapOptionsDialog	= new WrapOptions();
 		wrapOptionsDialog.pack();
@@ -94,20 +93,21 @@ public class Wrapper {
 	}
 
 
-
-	public Boolean wrap(WrapOptions wrapOptionsDialog) {
-		String prefix	= wrapOptionsDialog.getTextFieldPrefix();
-		String postfix	= wrapOptionsDialog.getTextFieldPostfix();
-
-		Boolean escapeSingleQuotes	= wrapOptionsDialog.isSelectedEscapeSingleQuotes();
-		Boolean escapeDoubleQuotes	= wrapOptionsDialog.isSelectedEscapeDoubleQuotes();
-		Boolean escapeBackslashes	= wrapOptionsDialog.isSelectedEscapeBackslashes();
-
-		// Store preferences
-		Preferences.saveWrapProperties(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+	/**
+	 * Perform wrapping of line around caret, single- or multi-line selection
+	 *
+	 * @param   prefix
+	 * @param   postfix
+	 * @param   escapeSingleQuotes
+	 * @param   escapeDoubleQuotes
+	 * @param   escapeBackslashes
+	 * @param   removeBlankLines
+	 */
+	public void wrap(String prefix, String postfix,
+	                 Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes,
+	                 Boolean removeBlankLines) {
 
 		int prefixLen	= prefix.length();
-//						int postfixLen	= postfix.length();
 
 		if (hasSelection) {
 			offsetStart	= selectionModel.getSelectionStart();
@@ -136,7 +136,7 @@ public class Wrapper {
 				// Selection of multiple lines
 
 				// Remove blank lines option activated? find and remove em
-				if( wrapOptionsDialog.isSelectedRemoveBlankLines() ) {
+				if( removeBlankLines ) {
 					String selectedText	= TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
 
 					int amountBlankLines	= TextualHelper.getAmountMatches(selectedText, "\\n(\\s)*\\n");
@@ -185,9 +185,15 @@ public class Wrapper {
 			// Update selection: whole line
 			selectionModel.setSelection(document.getLineStartOffset(lineNumber), document.getLineEndOffset(lineNumber));
 		}
-
-		return true;
 	}
 
+	/**
+	 * Perform unwrapping of line around caret, single- or multi-line selection
+	 *
+	 * @param   prefix
+	 * @param   postfix
+	 */
+	public void unwrap(String prefix, String postfix) {
 
+	}
 }

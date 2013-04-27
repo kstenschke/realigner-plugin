@@ -43,35 +43,57 @@ public class WrapAction extends AnAction {
 		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
 
-
-
 	/**
-	 * Perform wrap: show options dialog, than wrap current selection or line of caret or each of the selected lines
+	 * Perform wrap or unwrap
+	 * Show options dialog, than wrap/unwrap current selection or line of caret or each of the selected lines
 	 *
 	 * @param	event	Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 		final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
-		CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+		ApplicationManager.getApplication().runWriteAction(new Runnable() {
 			public void run() {
-
-				ApplicationManager.getApplication().runWriteAction(new Runnable() {
-					public void run() {
-					Editor editor = event.getData(PlatformDataKeys.EDITOR);
+				Editor editor = event.getData(PlatformDataKeys.EDITOR);
 
 				if (editor != null) {
-					Wrapper wrapper  = new Wrapper(editor);
+					final Wrapper wrapper = new Wrapper(editor);
 					WrapOptions wrapOptionsDialog = wrapper.showWrapOptions();
 
-					if( wrapOptionsDialog.clickedOperation == WrapOptions.OPERATION_WRAP ) {
-						wrapper.wrap(wrapOptionsDialog);
+					final String prefix	            = wrapOptionsDialog.getTextFieldPrefix();
+					final String postfix             = wrapOptionsDialog.getTextFieldPostfix();
+					final Boolean escapeSingleQuotes	= wrapOptionsDialog.isSelectedEscapeSingleQuotes();
+					final Boolean escapeDoubleQuotes	= wrapOptionsDialog.isSelectedEscapeDoubleQuotes();
+					final Boolean escapeBackslashes	= wrapOptionsDialog.isSelectedEscapeBackslashes();
+					final Boolean removeBlankLines   = wrapOptionsDialog.isSelectedRemoveBlankLines();
+
+					// Store preferences
+					Preferences.saveWrapProperties(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+
+					// Perform actual wrap or unwrap
+					if (wrapOptionsDialog.clickedOperation == WrapOptions.OPERATION_WRAP) {
+						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+							public void run() {
+								wrapper.wrap(
+										  prefix, postfix,
+										  escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes,
+										  removeBlankLines
+								);
+							}
+						}, "Wrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+
+					} else if (wrapOptionsDialog.clickedOperation == WrapOptions.OPERATION_UNWRAP) {
+						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+							public void run() {
+								wrapper.unwrap(prefix, postfix);
+							}
+						}, "Unwrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+
 					}
 				}
 			}
 		});
 
-		}}, "Wrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
 
 }
