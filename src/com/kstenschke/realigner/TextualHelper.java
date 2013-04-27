@@ -140,4 +140,21 @@ public class TextualHelper {
 		return "</" + tag[0] + ">";
 	}
 
+	/**
+	 * @param   str        String to be transformed
+	 * @param   prefix     Prefix to be removed
+	 * @param   postfix    Postfix to be removed
+	 * @return  Given string with prefix and postfix removed
+	 */
+	public static String unwrap(String str, String prefix, String postfix) {
+		if( str.startsWith(prefix)) {
+			str   = str.substring(prefix.length());
+		}
+		if( str.endsWith(postfix)) {
+			str   = str.substring(0, str.length()-postfix.length());
+		}
+
+		return str;
+	}
+
 }

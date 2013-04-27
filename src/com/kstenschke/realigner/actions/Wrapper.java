@@ -149,7 +149,7 @@ public class Wrapper {
 			if( lineNumberSelectionStart == lineNumberSelectionEnd) {
 				this.unwrapSingleLinedSelection(prefix, postfix);
 			} else {
-				//this.unwrapMultiLineSelection(prefix, postfix);
+				this.unwrapMultiLineSelection(prefix, postfix);
 			}
 		} else {
 			// No selection: wrap the line where the caret is
@@ -160,12 +160,12 @@ public class Wrapper {
 	/**
 	 * Wrap selection over multiple lines with given prefix and postfix, do given transformations on selection
 	 *
-	 * @param prefix
-	 * @param postfix
-	 * @param escapeSingleQuotes
-	 * @param escapeDoubleQuotes
-	 * @param escapeBackslashes
-	 * @param removeBlankLines
+	 * @param   prefix
+	 * @param   postfix
+	 * @param   escapeSingleQuotes
+	 * @param   escapeDoubleQuotes
+	 * @param   escapeBackslashes
+	 * @param   removeBlankLines
 	 */
 	private void wrapMultiLineSelection(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes, Boolean removeBlankLines) {
 			// Remove blank lines option activated? find and remove em
@@ -206,11 +206,11 @@ public class Wrapper {
 	/**
 	 * Wrap selection within a single line with given prefix and postfix, do given transformations on selection
 	 *
-	 * @param prefix
-	 * @param postfix
-	 * @param escapeSingleQuotes
-	 * @param escapeDoubleQuotes
-	 * @param escapeBackslashes
+	 * @param   prefix
+	 * @param   postfix
+	 * @param   escapeSingleQuotes
+	 * @param   escapeDoubleQuotes
+	 * @param   escapeBackslashes
 	 */
 	private void wrapSingleLinedSelection(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
 		CharSequence editorText = document.getCharsSequence();
@@ -227,11 +227,11 @@ public class Wrapper {
 	/**
 	 * Wrap the line where the caret is with given prefix and postfix, do given transformations on the line
 	 *
-	 * @param prefix
-	 * @param postfix
-	 * @param escapeSingleQuotes
-	 * @param escapeDoubleQuotes
-	 * @param escapeBackslashes
+	 * @param   prefix
+	 * @param   postfix
+	 * @param   escapeSingleQuotes
+	 * @param   escapeDoubleQuotes
+	 * @param   escapeBackslashes
 	 */
 	private void wrapCaretLine(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
 		int caretOffset= editor.getCaretModel().getOffset();
@@ -257,8 +257,8 @@ public class Wrapper {
 	/**
 	 * Unwrap the line the caret is in
 	 *
-	 * @param prefix
-	 * @param postfix
+	 * @param   prefix
+	 * @param   postfix
 	 */
 	private void unwrapCaretLine(String prefix, String postfix) {
 		int caretOffset= editor.getCaretModel().getOffset();
@@ -277,25 +277,44 @@ public class Wrapper {
 	/**
 	 * Remove given strings from the beginning and ending of current selection
 	 *
-	 * @param prefix
-	 * @param postfix
+	 * @param   prefix
+	 * @param   postfix
 	 */
 	private void unwrapSingleLinedSelection(String prefix, String postfix) {
 		CharSequence editorText = document.getCharsSequence();
 		String unwrappedString = TextualHelper.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
-		if( unwrappedString.startsWith(prefix)) {
-			unwrappedString   = unwrappedString.substring(prefix.length());
-		}
-
-		if( unwrappedString.endsWith(postfix)) {
-			unwrappedString   = unwrappedString.substring(0, unwrappedString.length()-postfix.length());
-		}
+		unwrappedString = TextualHelper.unwrap(unwrappedString, prefix, postfix);
 
 			// Update selected text with unwrapped version, update set selection
 		document.replaceString(offsetSelectionStart, offsetSelectionEnd, unwrappedString);
 		selectionModel.setSelection(offsetSelectionStart, offsetSelectionStart + unwrappedString.length());
 	}
 
+	/**
+	 * Unwrap selection over multiple lines with given prefix and postfix, do given transformations on selection
+	 *
+	 * @param   prefix
+	 * @param   postfix
+	 */
+	private void unwrapMultiLineSelection(String prefix, String postfix) {
+		// Unwrap each line, begin/end at selection offsets
+		Integer prefixLen = prefix.length();
+		lineNumberSelectionEnd = document.getLineNumber( selectionModel.getSelectionEnd() );
+
+		for(int lineNumber = lineNumberSelectionEnd; lineNumber >= lineNumberSelectionStart; lineNumber--) {
+			int offsetLineStart	= document.getLineStartOffset(lineNumber);
+			String lineText		= TextualHelper.extractLine(document, lineNumber);
+			int offsetLineEnd    = offsetLineStart + lineText.length() - 1;
+
+			lineText	= lineText.replaceAll("\n", "");
+			lineText = TextualHelper.unwrap(lineText, prefix, postfix);
+
+			document.replaceString(offsetLineStart, offsetLineEnd, lineText);
+		}
+
+		// Update selection: all lines of selection fully
+		selectionModel.setSelection(document.getLineStartOffset(lineNumberSelectionStart), document.getLineEndOffset(lineNumberSelectionEnd));
+	}
 
 }
