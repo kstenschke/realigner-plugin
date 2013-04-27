@@ -48,7 +48,13 @@ public class WrapOptions extends JDialog {
 
 	private JPanel panelWrapButtonsContainer;
 
-	public Boolean clickedOk	= false;
+	private JButton buttonUnwrap;
+
+	public static final int OPERATION_CANCEL = 0;
+	public static final int OPERATION_WRAP   = 1;
+	public static final int OPERATION_UNWRAP = 2;
+
+	public Integer clickedOperation	= OPERATION_CANCEL;
 
 
 
@@ -56,7 +62,7 @@ public class WrapOptions extends JDialog {
 	 * Wrap Options constructor
 	 */
 	public WrapOptions() {
-		clickedOk	= false;
+		clickedOperation	= OPERATION_CANCEL;
 
 		setContentPane(contentPane);
 		setModal(true);
@@ -136,6 +142,11 @@ public class WrapOptions extends JDialog {
 				onOK();
 			}
 		});
+		buttonUnwrap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onUnwrap();
+			}
+		});
 
 		buttonCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,7 +174,15 @@ public class WrapOptions extends JDialog {
 	 * Handle click ok event
 	 */
 	private void onOK() {
-		clickedOk	= true;
+		clickedOperation	= OPERATION_WRAP;
+		dispose();
+	}
+
+	/**
+	 * Handle click Unwrap event
+	 */
+	private void onUnwrap() {
+		clickedOperation	= OPERATION_UNWRAP;
 		dispose();
 	}
 
@@ -171,7 +190,7 @@ public class WrapOptions extends JDialog {
 	 * Handle click cancel event
 	 */
 	private void onCancel() {
-		clickedOk	= false;
+		clickedOperation	= OPERATION_CANCEL;
 		dispose();
 	}
 

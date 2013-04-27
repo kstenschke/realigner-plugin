@@ -45,17 +45,13 @@ public class SplitAction extends AnAction {
 		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
 
-
-
 	/**
 	 * Perform split into lines
 	 *
 	 * @param	event	Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
-
 		final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
-		//Project currentProject = (Project) event.getDataContext().getData(DataConstants.PROJECT);
 
 		CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 			public void run() {
@@ -63,7 +59,6 @@ public class SplitAction extends AnAction {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
 					Editor editor = event.getData(PlatformDataKeys.EDITOR);
-					//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
 
 					if (editor != null) {
 						final Document document = editor.getDocument();
@@ -140,8 +135,6 @@ public class SplitAction extends AnAction {
 
 		}}, "Split into Lines", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
-
-
 
 	/**
 	 * Get split replacement string, according to given delimiter and delimiter disposal method

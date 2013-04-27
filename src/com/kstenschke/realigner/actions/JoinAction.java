@@ -66,8 +66,6 @@ public class JoinAction extends AnAction {
 		event.getPresentation().setEnabled(enabled);
 	}
 
-
-
 	/**
 	 * Perform implode / explode
 	 *
