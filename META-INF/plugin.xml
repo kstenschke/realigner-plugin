@@ -41,7 +41,7 @@
     <br/>
     1.1.0<ul>
         <li>Extended wrap action with unwrap option: removal of prefix and postfix</li>
-        <li>Removed additional transformations (escape, white-space removal) from wrap option</li>
+        <li>Removed transformations (escaping, white-space removal) from wrap option</li>
     </ul>
     1.0.9<ul>
         <li>Added detection of HTML tag in wrap prefix and presetting of postfix with resp. closing tag</li>
