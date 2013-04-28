@@ -36,18 +36,14 @@ public class Settings {
 	 * @param	buttonLabel			Item label
 	 * @param	prefix				Wrap LHS string
 	 * @param	postfix				Wrap RHS string
-	 * @param	escapeSingleQuotes	Escape wrapped '-chars?
-	 * @param	escapeDoubleQuotes	Escape wrapped "-chars?
-	 * @param	escapeBackslashes   Escape wrapped \-chars?
-	 * @param	removeBlankLines	Remove wrapped whitespace lines?
 	 */
-	public static void saveWrapButtonItemToStore(String buttonLabel, String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes, Boolean removeBlankLines) {
+	public static void saveWrapButtonItemToStore(String buttonLabel, String prefix, String postfix) {
 		if( !buttonLabel.isEmpty() ) {
 				// Delete pre-existing button config with same label, if stored already
 			removeWrapButtonItemFromStore(buttonLabel);
 
 				// Get new button config, stored button items
-			String newButtonConfigStr	= renderWrapButtonConfigStr(buttonLabel, prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
+			String newButtonConfigStr	= renderWrapButtonConfigStr(buttonLabel, prefix, postfix);
 			String storeWrapButtons		= loadWrapButtonItemsConfig();
 
 			if( storeWrapButtons == null ) {
@@ -60,8 +56,6 @@ public class Settings {
 		}
 	}
 
-
-
 	/**
 	 * Store given wrap buttons' items config
 	 *
@@ -72,15 +66,14 @@ public class Settings {
 		propertiesComponent.setValue(PROPERTY_WRAPBUTTONS, itemsConfig);
 	}
 
-
-
+	/**
+	 * @return  Wrap buttons setting
+	 */
 	private static String loadWrapButtonItemsConfig() {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
 		return propertiesComponent.getValue(PROPERTY_WRAPBUTTONS);
 	}
-
-
 
 	/**
 	 * Find and remove button item with given label from store
@@ -114,34 +107,22 @@ public class Settings {
 		}
 	}
 
-
-
 	/**
 	 * @param	buttonLabel			Item label
 	 * @param	prefix				Wrap LHS string
 	 * @param	postfix				Wrap RHS string
-	 * @param	escapeSingleQuotes	Escape wrapped '-chars?
-	 * @param	escapeDoubleQuotes	Escape wrapped "-chars?
-	 * @param	escapeBackslashes   Escape wrapped \-chars?
-	 * @param	removeBlankLines	Remove wrapped whitespace lines?
 	 * @return	configuration string for given wrap button options
 	 */
-	private static String renderWrapButtonConfigStr(String buttonLabel, String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes, Boolean removeBlankLines) {
+	private static String renderWrapButtonConfigStr(String buttonLabel, String prefix, String postfix) {
 		String configStr	= "##WBUTTON##";
 
 		configStr	= configStr.concat("##WBLABEL##" + buttonLabel + "##/WBLABEL##");
 		configStr	= configStr.concat("##WBPREFIX##" + prefix + "##/WBPREFIX##");
 		configStr	= configStr.concat("##WBPOSTFIX##" + postfix + "##/WBPOSTFIX##");
-		configStr	= configStr.concat( escapeSingleQuotes ? "1," : "0,");
-		configStr	= configStr.concat( escapeDoubleQuotes ? "1," : "0,");
-		configStr	= configStr.concat( escapeBackslashes ? "1," : "0,");
-		configStr	= configStr.concat( removeBlankLines ? "1," : "0,");
 		configStr	= configStr.concat("##/WBUTTON##");
 
 		return configStr;
 	}
-
-
 
 	/**
 	 * @return		Array of stored buttons' labels
@@ -149,8 +130,6 @@ public class Settings {
 	public static Object[] getAllWrapButtonLabels() {
 		return getAllWrapButtonAttributesByType("WBLABEL");
 	}
-
-
 
 	/**
 	 * Find index of given label in store
@@ -170,8 +149,6 @@ public class Settings {
 		return -1;
 	}
 
-
-
 	/**
 	 * @return		Array of stored buttons' prefix values
 	 */
@@ -183,8 +160,6 @@ public class Settings {
 		return getAllWrapButtonPrefixes()[index].toString();
 	}
 
-
-
 	/**
 	 * @return		Array of stored buttons' postfix values
 	 */
@@ -195,8 +170,6 @@ public class Settings {
 	public static String getPostfixByIndex(Integer index) {
 		return getAllWrapButtonPostfixes()[index].toString();
 	}
-
-
 
 	/**
 	 * @param		typeName string e.g. "WBPREFIX"
@@ -220,46 +193,21 @@ public class Settings {
 		return items.toArray();
 	}
 
-
-
-	public static Object[] getAllWrapButtonEscapeSingleQuotes() {
-		return getAllWrapButtonBoolOptionsByIndex(0);
-	}
-
-	public static Object[] getAllWrapButtonEscapeDoubleQuotes() {
-		return getAllWrapButtonBoolOptionsByIndex(1);
-	}
-
-	public static Object[] getAllWrapButtonEscapeBackslashes() {
-		return getAllWrapButtonBoolOptionsByIndex(2);
-	}
-
-	public static Object[] getAllWrapButtonRemoveBlankLines() {
-		return getAllWrapButtonBoolOptionsByIndex(3);
-	}
-
-
-
-	private static Object[] getAllWrapButtonBoolOptionsByIndex(Integer index) {
-		String storeItemsConfig	= loadWrapButtonItemsConfig();
-
-			// Extract only item prefixes into array
-		List<String> items = new ArrayList<String>();
-		if( storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
-			String[] configs	= storeItemsConfig.split("##/WBPOSTFIX##");
-
-			for( int i = 1; i < configs.length; i++) {
-				String[] boolOpts	= configs[i].split(",");
-				if( i < boolOpts.length ) {
-					items.add( boolOpts[i] );
-				}
-			}
-		}
-
-		return items.toArray();
-	}
-
-
+//	private static Object[] getAllWrapButtonBoolOptionsByIndex(Integer index) {
+//		String storeItemsConfig	= loadWrapButtonItemsConfig();
+//			// Extract only item prefixes into array
+//		List<String> items = new ArrayList<String>();
+//		if( storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
+//			String[] configs	= storeItemsConfig.split("##/WBPOSTFIX##");
+//			for( int i = 1; i < configs.length; i++) {
+//				String[] boolOpts	= configs[i].split(",");
+//				if( i < boolOpts.length ) {
+//					items.add( boolOpts[i] );
+//				}
+//			}
+//		}
+//		return items.toArray();
+//	}
 
 	/**
 	 * @return	Amount of stored wrap buttons
@@ -267,8 +215,6 @@ public class Settings {
 	private static Integer getAmountWrapButtons() {
 		return getAllWrapButtonLabels().length;
 	}
-
-
 
 	/**
 	 * @return	Are any wrap buttons configured?

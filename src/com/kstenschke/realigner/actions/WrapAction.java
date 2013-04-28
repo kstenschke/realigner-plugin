@@ -61,23 +61,15 @@ public class WrapAction extends AnAction {
 
 					final String prefix	            = wrapOptionsDialog.getTextFieldPrefix();
 					final String postfix             = wrapOptionsDialog.getTextFieldPostfix();
-					final Boolean escapeSingleQuotes	= wrapOptionsDialog.isSelectedEscapeSingleQuotes();
-					final Boolean escapeDoubleQuotes	= wrapOptionsDialog.isSelectedEscapeDoubleQuotes();
-					final Boolean escapeBackslashes	= wrapOptionsDialog.isSelectedEscapeBackslashes();
-					final Boolean removeBlankLines   = wrapOptionsDialog.isSelectedRemoveBlankLines();
 
 					// Store preferences
-					Preferences.saveWrapProperties(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+					Preferences.saveWrapProperties(prefix, postfix);
 
 					// Perform actual wrap or unwrap
 					if (wrapOptionsDialog.clickedOperation == WrapOptions.OPERATION_WRAP) {
 						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 							public void run() {
-								wrapper.wrap(
-										  prefix, postfix,
-										  escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes,
-										  removeBlankLines
-								);
+								wrapper.wrap(prefix, postfix);
 							}
 						}, "Wrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 

@@ -36,18 +36,6 @@ public class Preferences {
 	private static final String PROPERTY_WRAP_POSTFIX = "PluginRealiginer.WrapPostfix";
 
 	@NonNls
-	private static final String PROPERTY_WRAP_ESCAPESINGLEQUOTES = "PluginRealiginer.WrapEscapeSingleQuotes";
-
-	@NonNls
-	private static final String PROPERTY_WRAP_ESCAPEDOUBLEQUOTES = "PluginRealiginer.WrapEscapeDoubleQuotes";
-
-	@NonNls
-	private static final String PROPERTY_WRAP_ESCAPEBACKSLASHES = "PluginRealiginer.WrapEscapeBackslashes";
-
-	@NonNls
-	private static final String PROPERTY_WRAP_REMOVEBLANKLINES = "PluginRealiginer.WrapRemoveBlankLines";
-
-	@NonNls
 	private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
 
 	@NonNls
@@ -59,28 +47,20 @@ public class Preferences {
 	/**
 	 * Store wrap preferences
 	 *
-	 * @param	prefix					Wrap prefix string (LHS)
-	 * @param	postfix					Wrap postfix string (RHS)
-	 * @param	escapeSingleQuotes		Escape single quote characters?
-	 * @param	escapeDoubleQuotes		Escape double quote characters?
-	 * @param	escapeBackslashes		Escape backslash characters?
+	 * @param	prefix		Wrap prefix string (LHS)
+	 * @param	postfix		Wrap postfix string (RHS)
 	 */
-	public static void saveWrapProperties(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
+	public static void saveWrapProperties(String prefix, String postfix) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
 		propertiesComponent.setValue(PROPERTY_WRAP_PREFIX, prefix);
 		propertiesComponent.setValue(PROPERTY_WRAP_POSTFIX, postfix);
-		propertiesComponent.setValue(PROPERTY_WRAP_ESCAPESINGLEQUOTES, escapeSingleQuotes ? "1" : "0");
-		propertiesComponent.setValue(PROPERTY_WRAP_ESCAPEDOUBLEQUOTES, escapeDoubleQuotes ? "1" : "0");
-		propertiesComponent.setValue(PROPERTY_WRAP_ESCAPEBACKSLASHES, escapeBackslashes ? "1" : "0");
 	}
-
-
 
 	/**
 	 * Store split preferences
 	 *
-	 * @param	delimiter					Delimiter string
+	 * @param	delimiter					   Delimiter string
 	 * @param	delimiterDisposalMethod		Split at/after/before?
 	 */
 	public static void saveSplitProperties(String delimiter, Integer delimiterDisposalMethod) {
@@ -92,8 +72,6 @@ public class Preferences {
 		propertiesComponent.setValue(PROPERTY_SPLIT_SPLITWHERE, delimiterDisposalMethod.toString());
 	}
 
-
-
 	/**
 	 * Store wrap preferences
 	 *
@@ -102,8 +80,6 @@ public class Preferences {
 	public static void saveJoinProperties(String glue) {
 		PropertiesComponent.getInstance().setValue(PROPERTY_JOIN_GLUE, glue);
 	}
-
-
 
 	/**
 	 * @param   propertyName         Name of the preference property
@@ -127,8 +103,6 @@ public class Preferences {
 		return getProperty(propertyName, defaultValue, false);
 	}
 
-
-
 	/**
 	 * @return	Split delimiter
 	 */
@@ -149,7 +123,6 @@ public class Preferences {
 	 * @return	Join glue preference
 	 */
 	public static String getJoinGlue() {
-//		return getProperty(PROPERTY_JOIN_GLUE, ", ", true);
 		return getProperty(PROPERTY_JOIN_GLUE, "", false);
 	}
 
@@ -165,34 +138,6 @@ public class Preferences {
 	 */
 	public static String getWrapPostfix() {
 		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
-	}
-
-	/**
-	 * @return	Escape single quotes?
-	 */
-	public static Boolean getWrapEscapeSingleQuotes() {
-		return getProperty(PROPERTY_WRAP_ESCAPESINGLEQUOTES, "1", true).equals("1");
-	}
-
-	/**
-	 * @return	Escape double quotes?
-	 */
-	public static Boolean getWrapEscapeDoubleQuotes() {
-		return getProperty(PROPERTY_WRAP_ESCAPEDOUBLEQUOTES, "1", true).equals("1");
-	}
-
-	/**
-	 * @return	Escape backslashes?
-	 */
-	public static Boolean getWrapEscapeBackslashes() {
-		return getProperty(PROPERTY_WRAP_ESCAPEBACKSLASHES, "1", true).equals("1");
-	}
-
-	/**
-	 * @return	Remove blank lines?
-	 */
-	public static Boolean getWrapRemoveBlankLines() {
-		return getProperty(PROPERTY_WRAP_REMOVEBLANKLINES, "1", true).equals("1");
 	}
 
 }

@@ -40,14 +40,6 @@ public class PluginConfiguration {
 
 	private JButton buttonSaveWrapButton;
 
-	private JCheckBox checkBoxNewEscapeSingleQuotesInsideWrapped;
-
-	private JCheckBox checkBoxNewEscapeDoubleQuotesInsideWrapped;
-
-	private JCheckBox checkBoxNewEscapeBackslashesInsideWrapped;
-
-	private JCheckBox checkBoxNewRemoveBlankWhiteSpace;
-
 
 
 	/**
@@ -102,10 +94,6 @@ public class PluginConfiguration {
 					setTextFieldButtonLabel( selectedItemLabel );
 					setTextFieldPrefix( Settings.getPrefixByIndex(selectedLabelStoreIndex) );
 					setTextFieldPostfix( Settings.getPostfixByIndex(selectedLabelStoreIndex) );
-					setSelectedEscapeSingleQuotes( Settings.getAllWrapButtonEscapeSingleQuotes()[selectedLabelStoreIndex].equals("1") );
-					setSelectedEscapeDoubleQuotes( Settings.getAllWrapButtonEscapeDoubleQuotes()[selectedLabelStoreIndex].equals("1") );
-					setSelectedEscapeBackslashes( Settings.getAllWrapButtonEscapeBackslashes()[selectedLabelStoreIndex].equals("1") );
-					setSelectedRemoveBlankLines( Settings.getAllWrapButtonRemoveBlankLines()[selectedLabelStoreIndex].equals("1") );
 				}
 			}
 		});
@@ -156,12 +144,8 @@ public class PluginConfiguration {
 				// Store the button config
 			String prefix		= getTextFieldPrefix();
 			String postfix		= getTextFieldPostfix();
-			Boolean escapeSingeQuotes	= isSelectedEscapeSingleQuotes();
-			Boolean escapeDoubleQuotes	= isSelectedEscapeDoubleQuotes();
-			Boolean escapeBackslashes	= isSelectedEscapeBackslashes();
-			Boolean removeBlankLines	= isSelectedRemoveBlankLines();
 
-			Settings.saveWrapButtonItemToStore(buttonLabel, prefix, postfix, escapeSingeQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
+			Settings.saveWrapButtonItemToStore(buttonLabel, prefix, postfix);
 
 			updateWrapButtonsListItems();
 		}
@@ -228,53 +212,6 @@ public class PluginConfiguration {
 	 */
 	void setTextFieldPostfix(String postfix) {
 		textFieldNewPostfix.setText(postfix);
-	}
-
-	/**
-	 * Check whether wrapped single quotes are selected to be escaped
-	 *
-	 * @return	Boolean.
-	 */
-	Boolean isSelectedEscapeSingleQuotes() {
-		return checkBoxNewEscapeSingleQuotesInsideWrapped.isSelected();
-	}
-
-	void setSelectedEscapeSingleQuotes(Boolean setSelected) {
-		checkBoxNewEscapeSingleQuotesInsideWrapped.setSelected(setSelected);
-	}
-
-	/**
-	 * Check whether wrapped double quotes are selected to be escaped
-	 *
-	 * @return	Boolean.
-	 */
-	Boolean isSelectedEscapeDoubleQuotes() {
-		return checkBoxNewEscapeDoubleQuotesInsideWrapped.isSelected();
-	}
-
-	void setSelectedEscapeDoubleQuotes(Boolean setSelected) {
-		checkBoxNewEscapeDoubleQuotesInsideWrapped.setSelected(setSelected);
-	}
-
-	/**
-	 * Check whether wrapped double quotes are selected to be escaped
-	 *
-	 * @return	Boolean.
-	 */
-	Boolean isSelectedEscapeBackslashes() {
-		return checkBoxNewEscapeBackslashesInsideWrapped.isSelected();
-	}
-
-	void setSelectedEscapeBackslashes(Boolean setSelected) {
-		checkBoxNewEscapeBackslashesInsideWrapped.setSelected(setSelected);
-	}
-
-	Boolean isSelectedRemoveBlankLines() {
-		return checkBoxNewRemoveBlankWhiteSpace.isSelected();
-	}
-
-	void setSelectedRemoveBlankLines(Boolean setSelected) {
-		checkBoxNewRemoveBlankWhiteSpace.setSelected(setSelected);
 	}
 
 	public JPanel getRootPanel() {

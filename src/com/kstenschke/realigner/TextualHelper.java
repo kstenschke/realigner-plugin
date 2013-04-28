@@ -82,46 +82,18 @@ public class TextualHelper {
 		return line;
 	}
 
-	/**
-	 * @param	str						String with special chars to be escaped
-	 * @param	escapeSingleQuotes	' to \' ?
-	 * @param	escapeDoubleQuotes	" to \" ?
-	 * @param	escapeBackslashes		\ to \\ ?
-	 * @return	The escaped string
-	 */
-	public static String escapeSelectively(String str, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
-			// Escape backslashes - important: must be done before quotes, as their escaping adds more backslashes!
-		if( escapeBackslashes ) {
-			str	= str.replaceAll("\\\\", "\\\\\\\\");
-		}
-
-			// Escape single quotes
-		if( escapeSingleQuotes ) {
-			str = str.replaceAll("'", "\\\\\'");
-		}
-
-			// Escape double quotes
-		if( escapeDoubleQuotes ) {
-			str = str.replaceAll("\"", "\\\\\\\"");
-		}
-
-		return str;
-	}
-
-	/**
-	 * @param	str   String to be analyzed
-	 * @param	regex	Regular expression
-	 * @return  		Amount of matches of regex in str
-	 */
-	public static Integer getAmountMatches(String str, String regex) {
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(str);
-
-		int count = 0;
-		while ( matcher.find() ) count++;
-
-		return count;
-	}
+//	/**
+//	 * @param	str   String to be analyzed
+//	 * @param	regex	Regular expression
+//	 * @return  		Amount of matches of regex in str
+//	 */
+//	public static Integer getAmountMatches(String str, String regex) {
+//		Pattern pattern = Pattern.compile(regex);
+//		Matcher matcher = pattern.matcher(str);
+//		int count = 0;
+//		while ( matcher.find() ) count++;
+//		return count;
+//	}
 
 	/**
 	 * @param   str

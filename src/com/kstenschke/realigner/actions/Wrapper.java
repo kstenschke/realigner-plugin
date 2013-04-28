@@ -83,20 +83,9 @@ public class Wrapper {
 		wrapOptionsDialog.setLocationRelativeTo(null); // Center to screen
 		wrapOptionsDialog.setTitle("Wrap");
 
-
-		if (this.hasMultiLineSelection) {
-			wrapOptionsDialog.setRemoveBlankLinesVisible(true);
-		} else {
-			wrapOptionsDialog.setRemoveBlankLinesVisible(false);
-		}
-
 		// Load and init from preferences
 		wrapOptionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
 		wrapOptionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
-		wrapOptionsDialog.setSelectedEscapeSingleQuotes(Preferences.getWrapEscapeSingleQuotes());
-		wrapOptionsDialog.setSelectedEscapeDoubleQuotes(Preferences.getWrapEscapeDoubleQuotes());
-		wrapOptionsDialog.setSelectedEscapeBackslashes(Preferences.getWrapEscapeBackslashes());
-		wrapOptionsDialog.setSelectedRemoveBlankLines(Preferences.getWrapRemoveBlankLines());
 
 		wrapOptionsDialog.setVisible(true);
 
@@ -109,14 +98,8 @@ public class Wrapper {
 	 *
 	 * @param   prefix
 	 * @param   postfix
-	 * @param   escapeSingleQuotes
-	 * @param   escapeDoubleQuotes
-	 * @param   escapeBackslashes
-	 * @param   removeBlankLines
 	 */
-	public void wrap(String prefix, String postfix,
-	                 Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes,
-	                 Boolean removeBlankLines) {
+	public void wrap(String prefix, String postfix) {
 
 		if (hasSelection) {
 			if (document.getLineStartOffset(lineNumberSelectionEnd) == this.offsetSelectionEnd) {
@@ -124,13 +107,13 @@ public class Wrapper {
 			}
 
 			if( lineNumberSelectionStart == lineNumberSelectionEnd) {
-				this.wrapSingleLinedSelection(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+				this.wrapSingleLinedSelection(prefix, postfix);
 			} else {
-				this.wrapMultiLineSelection(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes, removeBlankLines);
+				this.wrapMultiLineSelection(prefix, postfix);
 			}
 		} else {
 				// No selection: wrap the line where the caret is
-			this.wrapCaretLine(prefix, postfix, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
+			this.wrapCaretLine(prefix, postfix);
 		}
 	}
 
@@ -162,26 +145,8 @@ public class Wrapper {
 	 *
 	 * @param   prefix
 	 * @param   postfix
-	 * @param   escapeSingleQuotes
-	 * @param   escapeDoubleQuotes
-	 * @param   escapeBackslashes
-	 * @param   removeBlankLines
 	 */
-	private void wrapMultiLineSelection(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes, Boolean removeBlankLines) {
-			// Remove blank lines option activated? find and remove em
-		if( removeBlankLines ) {
-			CharSequence editorText = document.getCharsSequence();
-			String selectedText	   = TextualHelper.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
-
-			int amountBlankLines             = TextualHelper.getAmountMatches(selectedText, "\\n(\\s)*\\n");
-			String selectedTextNoBlankLines	= selectedText.replaceAll("\\n(\\s)*\\n", "\n");
-
-			document.replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), selectedTextNoBlankLines);
-
-				// Adjust selection
-			selectionModel.setSelection(document.getLineStartOffset(lineNumberSelectionStart), document.getLineEndOffset(lineNumberSelectionEnd - amountBlankLines));
-		}
-
+	private void wrapMultiLineSelection(String prefix, String postfix) {
 		// Wrap each line, begin/end at selection offsets
 		Integer prefixLen = prefix.length();
 		lineNumberSelectionEnd = document.getLineNumber( selectionModel.getSelectionEnd() );
@@ -195,7 +160,6 @@ public class Wrapper {
 			document.insertString(offsetLineStart, prefix);
 
 			lineText	= lineText.replaceAll("\n", "");
-			lineText	= TextualHelper.escapeSelectively(lineText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 			document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
 		}
 
@@ -208,14 +172,10 @@ public class Wrapper {
 	 *
 	 * @param   prefix
 	 * @param   postfix
-	 * @param   escapeSingleQuotes
-	 * @param   escapeDoubleQuotes
-	 * @param   escapeBackslashes
 	 */
-	private void wrapSingleLinedSelection(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
+	private void wrapSingleLinedSelection(String prefix, String postfix) {
 		CharSequence editorText = document.getCharsSequence();
 		String selectedText     = TextualHelper.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
-		selectedText		      = TextualHelper.escapeSelectively(selectedText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 
 		String wrappedString = prefix + selectedText + postfix;
 		document.replaceString(offsetSelectionStart, offsetSelectionEnd, wrappedString);
@@ -229,11 +189,8 @@ public class Wrapper {
 	 *
 	 * @param   prefix
 	 * @param   postfix
-	 * @param   escapeSingleQuotes
-	 * @param   escapeDoubleQuotes
-	 * @param   escapeBackslashes
 	 */
-	private void wrapCaretLine(String prefix, String postfix, Boolean escapeSingleQuotes, Boolean escapeDoubleQuotes, Boolean escapeBackslashes) {
+	private void wrapCaretLine(String prefix, String postfix) {
 		int caretOffset= editor.getCaretModel().getOffset();
 		int lineNumber = document.getLineNumber(caretOffset);
 
@@ -245,7 +202,6 @@ public class Wrapper {
 		document.insertString(offsetLineStart, prefix);
 
 		lineText	= lineText.replaceAll("\n", "");
-		lineText	= TextualHelper.escapeSelectively(lineText, escapeSingleQuotes, escapeDoubleQuotes, escapeBackslashes);
 		Integer prefixLen = prefix.length();
 
 		document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);

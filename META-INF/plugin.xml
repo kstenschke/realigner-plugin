@@ -17,32 +17,31 @@
 <idea-plugin version="2">
     <name>Realigner</name>
     <description><![CDATA[
-    The Realigner plugin is helpful e.g. to quickly convert lines of text to comma separated lists and vice versa.
-    Additionally the plugin adds a tool to wrap a selection, the current line or each of multiple selected lines
-    with surrounding strings.
-    The wrap tool of the plugin also provides options for escaping single, double quote and backslash characters
-    and to remove white-space lines from a multi-line selection.
-    The plugin settings allow for setting up configurations of quickly accessible preconfigured options,
-    available than in the wrap dialog.
-    <br/><br/>
-    Realigner adds the following editing tools:
-    <br/><ul>
-        <li>Ctrl+Shift+Alt+J - Joins selected lines by removing linefeeds. Optionally, a "gluing" string can be used as delimiter
-        <li>Ctrl+Shift+Alt+L - Splits current line or selection into multiple lines at, before or after an arbitrary delimiter
-        <li>Ctrl+Shift+Alt+W - Wraps current line / selection / each of multiple selected lines with an arbitrary prefix and/or postfix string
+    The Realigner plugin adds three tools for reformatting text:
+    <ul><li>Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.</li>
+        <li>Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.</li>
+        <li>Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.</li>
+    </ul><br/>
+    Realigner is helpful e.g. for:
+    <ul><li>Reformatting lines into comma-separated lists</li>
+        <li>Converting lists into lines</li>
+        <li>Breaking up long URLs for easier analysis</li>
+        <li>Quickly commenting-out multiple lines of code though that particular language is not supported</li>
+        <li>Quickly un-commenting lines of code though that particular language is not supported</li>
     </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     <br/>
     <br/>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.0.10</version>
+    <version>1.1.0</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <br/>
-    1.0.10<ul>
+    1.1.0<ul>
         <li>Extended wrap action with unwrap option: removal of prefix and postfix</li>
+        <li>Removed additional transformations (escape, white-space removal) from wrap option</li>
     </ul>
     1.0.9<ul>
         <li>Added detection of HTML tag in wrap prefix and presetting of postfix with resp. closing tag</li>
