@@ -82,21 +82,8 @@ public class TextualHelper {
 		return line;
 	}
 
-//	/**
-//	 * @param	str   String to be analyzed
-//	 * @param	regex	Regular expression
-//	 * @return  		Amount of matches of regex in str
-//	 */
-//	public static Integer getAmountMatches(String str, String regex) {
-//		Pattern pattern = Pattern.compile(regex);
-//		Matcher matcher = pattern.matcher(str);
-//		int count = 0;
-//		while ( matcher.find() ) count++;
-//		return count;
-//	}
-
 	/**
-	 * @param   str
+	 * @param   str   String to be checked for containing an HTML tag
 	 * @return  Does the given string contain an HTML tag?
 	 */
 	public static Boolean containsHtmlTag(String str) {

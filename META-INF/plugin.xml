@@ -26,8 +26,8 @@
     <ul><li>Reformatting lines into comma-separated lists</li>
         <li>Converting lists into lines</li>
         <li>Breaking up long URLs for easier analysis</li>
-        <li>Quickly commenting-out multiple lines of code though that particular language is not supported</li>
-        <li>Quickly un-commenting lines of code though that particular language is not supported</li>
+        <li>Quickly commenting-out multiple lines of code even if that particular language is not supported</li>
+        <li>Quickly un-commenting lines of code even if that particular language is not supported</li>
     </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     <br/>

@@ -17,8 +17,8 @@ Realigner is helpful e.g. for:
 * Reformatting lines into comma-separated lists
 * Converting lists into lines
 * Breaking up long URLs for easier analysis
-* Quickly commenting-out multiple lines of code though that particular language is not supported
-* Quickly un-commenting lines of code though that particular language is not supported</li>
+* Quickly commenting-out multiple lines of code even if that particular language is not supported
+* Quickly un-commenting lines of code even if that particular language is not supported
 
 
 

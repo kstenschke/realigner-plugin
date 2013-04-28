@@ -78,7 +78,7 @@ public class Settings {
 	/**
 	 * Find and remove button item with given label from store
 	 *
-	 * @param	buttonLabel
+	 * @param	buttonLabel    Label of button to be removed
 	 */
 	public static void removeWrapButtonItemFromStore(String buttonLabel) {
 		Object[] buttonLabels	= getAllWrapButtonLabels();
@@ -192,22 +192,6 @@ public class Settings {
 
 		return items.toArray();
 	}
-
-//	private static Object[] getAllWrapButtonBoolOptionsByIndex(Integer index) {
-//		String storeItemsConfig	= loadWrapButtonItemsConfig();
-//			// Extract only item prefixes into array
-//		List<String> items = new ArrayList<String>();
-//		if( storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
-//			String[] configs	= storeItemsConfig.split("##/WBPOSTFIX##");
-//			for( int i = 1; i < configs.length; i++) {
-//				String[] boolOpts	= configs[i].split(",");
-//				if( i < boolOpts.length ) {
-//					items.add( boolOpts[i] );
-//				}
-//			}
-//		}
-//		return items.toArray();
-//	}
 
 	/**
 	 * @return	Amount of stored wrap buttons

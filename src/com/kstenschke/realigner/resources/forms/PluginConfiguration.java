@@ -104,7 +104,7 @@ public class PluginConfiguration {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				buttonSaveWrapButton.setEnabled(!textFieldNewLabel.getText().isEmpty());
+				buttonSaveWrapButton.setEnabled( !textFieldNewLabel.getText().isEmpty() );
 			}
 		});
 

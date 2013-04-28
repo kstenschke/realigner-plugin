@@ -26,15 +26,13 @@ import com.kstenschke.realigner.resources.forms.WrapOptions;
 
 public class Wrapper {
 
-	Editor editor;
+	final Editor editor;
 
 	private Boolean hasSelection = false;
 
-	private Boolean hasMultiLineSelection = false;
-
 	SelectionModel selectionModel;
 
-	Document document;
+	final Document document;
 
 	int offsetSelectionStart, offsetSelectionEnd, lineNumberSelectionStart, lineNumberSelectionEnd;
 
@@ -59,7 +57,7 @@ public class Wrapper {
 		this.selectionModel = editor.getSelectionModel();
 
 		this.hasSelection = selectionModel.hasSelection();
-		this.hasMultiLineSelection = false;
+		Boolean hasMultiLineSelection = false;
 
 		if (this.hasSelection) {
 			this.offsetSelectionStart  = this.selectionModel.getSelectionStart();
@@ -68,7 +66,7 @@ public class Wrapper {
 			this.lineNumberSelectionStart = this.document.getLineNumber(this.offsetSelectionStart);
 			this.lineNumberSelectionEnd   = this.document.getLineNumber(this.offsetSelectionEnd);
 
-			this.hasMultiLineSelection = ( this.lineNumberSelectionEnd > this.lineNumberSelectionStart);
+			hasMultiLineSelection = ( this.lineNumberSelectionEnd > this.lineNumberSelectionStart);
 		}
 	}
 
@@ -255,7 +253,6 @@ public class Wrapper {
 	 */
 	private void unwrapMultiLineSelection(String prefix, String postfix) {
 		// Unwrap each line, begin/end at selection offsets
-		Integer prefixLen = prefix.length();
 		lineNumberSelectionEnd = document.getLineNumber( selectionModel.getSelectionEnd() );
 
 		for(int lineNumber = lineNumberSelectionEnd; lineNumber >= lineNumberSelectionStart; lineNumber--) {
