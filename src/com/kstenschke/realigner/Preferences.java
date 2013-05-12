@@ -107,7 +107,7 @@ public class Preferences {
 	 * @return	Split delimiter
 	 */
 	public static String getSplitDelimiter() {
-		return getProperty(PROPERTY_SPLIT_DELIMITER, ", ", true);
+		return getProperty(PROPERTY_SPLIT_DELIMITER, "", true);
 	}
 
 	/**

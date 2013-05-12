@@ -22,6 +22,7 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.Preferences;
@@ -65,18 +66,8 @@ public class SplitAction extends AnAction {
 						SelectionModel selectionModel = editor.getSelectionModel();
 						boolean hasSelection = selectionModel.hasSelection();
 
-							// Setup dialog
-						SplitOptions splitOptionsDialog  = new SplitOptions();
-						splitOptionsDialog.pack();
-						splitOptionsDialog.setLocationRelativeTo(null); // center to screen
-						splitOptionsDialog.setTitle("Split by Delimiter");
-
-							// Load and init dialog options from preferences
-						splitOptionsDialog.setDelimiter(Preferences.getSplitDelimiter());
-						splitOptionsDialog.setDelimiterDisposalMethod( Integer.parseInt(Preferences.getSplitWhere()) );
-
-							// Show dialog
-						splitOptionsDialog.setVisible(true);
+							// Setup and display options dialog
+						SplitOptions splitOptionsDialog  = showOptionsDialog();
 
 							// Clicked ok: conduct split
 						if( splitOptionsDialog.clickedOk ) {
@@ -127,6 +118,31 @@ public class SplitAction extends AnAction {
 									document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
 								}
 							}
+						} else {
+								// No selection + empty delimiter = split line at soft-wrap
+								if (!hasSelection) {
+									int caretOffset	= editor.getCaretModel().getOffset();
+									int lineNumber	= document.getLineNumber(caretOffset);
+
+									int offsetLineStart	= document.getLineStartOffset(lineNumber);
+									String lineText		= TextualHelper.extractLine(document, lineNumber);
+
+									if (lineText.length() > 120) {
+										int offsetLineEnd	= offsetLineStart + lineText.length() - 1;
+										int wrapPosition = 120;
+										String wrapChar = lineText.substring(wrapPosition, wrapPosition+1);
+										while( wrapPosition > 0 && !wrapChar.equals(" ") && !wrapChar.equals("\t") ) {
+											wrapPosition--;
+											wrapChar = lineText.substring(wrapPosition, wrapPosition+1);
+										}
+										if( wrapPosition > 1 ) {
+											String explodedText =  lineText.substring(0, wrapPosition) + "\n" + lineText.substring(wrapPosition+1, lineText.length());
+											document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
+											editor.getCaretModel().moveToOffset(document.getLineStartOffset(lineNumber + 1));
+											editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
+										}
+									}
+								}
 						}
 					}
 				}
@@ -151,6 +167,26 @@ public class SplitAction extends AnAction {
 		}
 
 		return "\n";
+	}
+
+	/**
+	 * Setup and display options dialog for split action
+	 *
+	 * @return  Split options dialog
+	 */
+	private SplitOptions showOptionsDialog() {
+		SplitOptions splitOptionsDialog  = new SplitOptions();
+		splitOptionsDialog.pack();
+		splitOptionsDialog.setLocationRelativeTo(null); // center to screen
+		splitOptionsDialog.setTitle("Split by Delimiter");
+
+		// Load and init dialog options from preferences
+		splitOptionsDialog.setDelimiter(Preferences.getSplitDelimiter());
+		splitOptionsDialog.setDelimiterDisposalMethod( Integer.parseInt(Preferences.getSplitWhere()) );
+
+		splitOptionsDialog.setVisible(true);
+
+		return splitOptionsDialog;
 	}
 
 }

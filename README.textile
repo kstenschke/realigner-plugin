@@ -9,9 +9,11 @@ h2. Description
 
 The Realigner plugin adds three tools for reformatting text:
 * Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.
-* Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.
+* Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines. Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
 * Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line
 or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.
+
+
 
 Realigner is helpful e.g. for:
 * Reformatting lines into comma-separated lists
@@ -19,7 +21,8 @@ Realigner is helpful e.g. for:
 * Breaking up long URLs for easier analysis
 * Quickly commenting-out multiple lines of code even if that particular language is not supported
 * Quickly un-commenting lines of code even if that particular language is not supported
-
+* Commenting-out / un-commenting using keyboards with layouts not compliant to the keyboard shortcuts for the similar in-built function
+* Reformatting long lines to wrap at the soft-wrap boundary (120 chars)
 
 
 h2. Credits

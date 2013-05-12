@@ -19,26 +19,33 @@
     <description><![CDATA[
     The Realigner plugin adds three tools for reformatting text:
     <ul><li>Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.</li>
-        <li>Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.</li>
+        <li>Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.*</li>
         <li>Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.</li>
     </ul><br/>
+    *Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
+    <br /><br />
     Realigner is helpful e.g. for:
     <ul><li>Reformatting lines into comma-separated lists</li>
         <li>Converting lists into lines</li>
         <li>Breaking up long URLs for easier analysis</li>
         <li>Quickly commenting-out multiple lines of code even if that particular language is not supported</li>
         <li>Quickly un-commenting lines of code even if that particular language is not supported</li>
+        <li>Commenting-out / un-commenting using keyboards with layouts not compliant to the keyboard shortcuts for the similar in-built function</li>
+        <li>Reformatting long lines to wrap at the soft-wrap boundary (120 chars)</li>
     </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     <br/>
     <br/>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <br/>
+    1.1.1<ul>
+        <li>New: Splitting with an empty delimiter w/o selection inserts a linefeed at the soft-wrap boundary</li>
+    </ul>
     1.1.0<ul>
         <li>Extended wrap action with unwrap option: removal of prefix and postfix</li>
         <li>Removed transformations (escaping, white-space removal) from wrap option</li>
