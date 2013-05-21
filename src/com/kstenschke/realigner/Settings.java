@@ -24,34 +24,33 @@ import java.util.List;
 
 public class Settings {
 
-		// Wrap button items are stored custom serialized: each item as a config string
+	// Wrap button items are stored custom serialized: each item as a config string
 	@NonNls
 	private static final String PROPERTY_WRAPBUTTONS = "";
-
 
 
 	/**
 	 * Store given wrap button config into wrap buttons store
 	 *
-	 * @param	buttonLabel			Item label
-	 * @param	prefix				Wrap LHS string
-	 * @param	postfix				Wrap RHS string
+	 * @param   buttonLabel         Item label
+	 * @param   prefix            Wrap LHS string
+	 * @param   postfix            Wrap RHS string
 	 */
 	public static void saveWrapButtonItemToStore(String buttonLabel, String prefix, String postfix) {
-		if( !buttonLabel.isEmpty() ) {
-				// Delete pre-existing button config with same label, if stored already
+		if (!buttonLabel.isEmpty()) {
+			// Delete pre-existing button config with same label, if stored already
 			removeWrapButtonItemFromStore(buttonLabel);
 
-				// Get new button config, stored button items
-			String newButtonConfigStr	= renderWrapButtonConfigStr(buttonLabel, prefix, postfix);
-			String storeWrapButtons		= loadWrapButtonItemsConfig();
+			// Get new button config, stored button items
+			String newButtonConfigStr = renderWrapButtonConfigStr(buttonLabel, prefix, postfix);
+			String storeWrapButtons = loadWrapButtonItemsConfig();
 
-			if( storeWrapButtons == null ) {
-				storeWrapButtons	= "";
+			if (storeWrapButtons == null) {
+				storeWrapButtons = "";
 			}
 
-				// Store button config
-			storeWrapButtons	= storeWrapButtons.concat(newButtonConfigStr);
+			// Store button config
+			storeWrapButtons = storeWrapButtons.concat(newButtonConfigStr);
 			saveWrapButtonItemsConfig(storeWrapButtons);
 		}
 	}
@@ -59,7 +58,7 @@ public class Settings {
 	/**
 	 * Store given wrap buttons' items config
 	 *
-	 * @param	itemsConfig		Custom serialized items config string
+	 * @param   itemsConfig      Custom serialized items config string
 	 */
 	private static void saveWrapButtonItemsConfig(String itemsConfig) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
@@ -67,7 +66,7 @@ public class Settings {
 	}
 
 	/**
-	 * @return  Wrap buttons setting
+	 * @return Wrap buttons setting
 	 */
 	private static String loadWrapButtonItemsConfig() {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
@@ -78,54 +77,54 @@ public class Settings {
 	/**
 	 * Find and remove button item with given label from store
 	 *
-	 * @param	buttonLabel    Label of button to be removed
+	 * @param   buttonLabel Label of button to be removed
 	 */
 	public static void removeWrapButtonItemFromStore(String buttonLabel) {
-		Object[] buttonLabels	= getAllWrapButtonLabels();
-		if( buttonLabels != null ) {
+		Object[] buttonLabels = getAllWrapButtonLabels();
+		if (buttonLabels != null) {
 			Integer deleteButtonIndex = null;
-			for(int i = 0; i < buttonLabels.length; i++) {
-				if( buttonLabels[i].equals(buttonLabel) ) {
-					deleteButtonIndex	= i;
+			for (int i = 0; i < buttonLabels.length; i++) {
+				if (buttonLabels[i].equals(buttonLabel)) {
+					deleteButtonIndex = i;
 				}
 			}
 
-			if( deleteButtonIndex != null ) {
-					// Remove button config with found index
-				String storeItemsConfig	= loadWrapButtonItemsConfig();
+			if (deleteButtonIndex != null) {
+				// Remove button config with found index
+				String storeItemsConfig = loadWrapButtonItemsConfig();
 
-				String	buttonsConfigWithoutDeletedButton	= "";
-				String[] buttonsConfigs	= storeItemsConfig.split("##WBUTTON####WBLABEL##");
-				for(int i = 1; i < buttonsConfigs.length; i++) {
-					if( i != (deleteButtonIndex+1) ) {
-						buttonsConfigWithoutDeletedButton	= buttonsConfigWithoutDeletedButton.concat("##WBUTTON####WBLABEL##" + buttonsConfigs[i]);
+				String buttonsConfigWithoutDeletedButton = "";
+				String[] buttonsConfigs = storeItemsConfig.split("##WBUTTON####WBLABEL##");
+				for (int i = 1; i < buttonsConfigs.length; i++) {
+					if (i != (deleteButtonIndex + 1)) {
+						buttonsConfigWithoutDeletedButton = buttonsConfigWithoutDeletedButton.concat("##WBUTTON####WBLABEL##" + buttonsConfigs[i]);
 					}
 				}
-					// Save
+				// Save
 				saveWrapButtonItemsConfig(buttonsConfigWithoutDeletedButton);
 			}
 		}
 	}
 
 	/**
-	 * @param	buttonLabel			Item label
-	 * @param	prefix				Wrap LHS string
-	 * @param	postfix				Wrap RHS string
-	 * @return	configuration string for given wrap button options
+	 * @param   buttonLabel         Item label
+	 * @param   prefix            Wrap LHS string
+	 * @param   postfix            Wrap RHS string
+	 * @return configuration string for given wrap button options
 	 */
 	private static String renderWrapButtonConfigStr(String buttonLabel, String prefix, String postfix) {
-		String configStr	= "##WBUTTON##";
+		String configStr = "##WBUTTON##";
 
-		configStr	= configStr.concat("##WBLABEL##" + buttonLabel + "##/WBLABEL##");
-		configStr	= configStr.concat("##WBPREFIX##" + prefix + "##/WBPREFIX##");
-		configStr	= configStr.concat("##WBPOSTFIX##" + postfix + "##/WBPOSTFIX##");
-		configStr	= configStr.concat("##/WBUTTON##");
+		configStr = configStr.concat("##WBLABEL##" + buttonLabel + "##/WBLABEL##");
+		configStr = configStr.concat("##WBPREFIX##" + prefix + "##/WBPREFIX##");
+		configStr = configStr.concat("##WBPOSTFIX##" + postfix + "##/WBPOSTFIX##");
+		configStr = configStr.concat("##/WBUTTON##");
 
 		return configStr;
 	}
 
 	/**
-	 * @return		Array of stored buttons' labels
+	 * @return Array of stored buttons' labels
 	 */
 	public static Object[] getAllWrapButtonLabels() {
 		return getAllWrapButtonAttributesByType("WBLABEL");
@@ -134,14 +133,14 @@ public class Settings {
 	/**
 	 * Find index of given label in store
 	 *
-	 * @param	label		Item label
-	 * @return	Stored index
+	 * @param   label      Item label
+	 * @return Stored index
 	 */
 	public static Integer getLabelIndex(String label) {
-		Object[] allLabels	= getAllWrapButtonLabels();
+		Object[] allLabels = getAllWrapButtonLabels();
 
-		for( Integer i=0; i < allLabels.length; i++ ) {
-			if( allLabels[i].toString().equals(label) ) {
+		for (Integer i = 0; i < allLabels.length; i++) {
+			if (allLabels[i].toString().equals(label)) {
 				return i;
 			}
 		}
@@ -150,7 +149,7 @@ public class Settings {
 	}
 
 	/**
-	 * @return		Array of stored buttons' prefix values
+	 * @return Array of stored buttons' prefix values
 	 */
 	public static Object[] getAllWrapButtonPrefixes() {
 		return getAllWrapButtonAttributesByType("WBPREFIX");
@@ -161,7 +160,7 @@ public class Settings {
 	}
 
 	/**
-	 * @return		Array of stored buttons' postfix values
+	 * @return Array of stored buttons' postfix values
 	 */
 	public static Object[] getAllWrapButtonPostfixes() {
 		return getAllWrapButtonAttributesByType("WBPOSTFIX");
@@ -172,21 +171,21 @@ public class Settings {
 	}
 
 	/**
-	 * @param		typeName string e.g. "WBPREFIX"
-	 * @return		Array of stored buttons' prefix values
+	 * @param      typeName string e.g. "WBPREFIX"
+	 * @return Array of stored buttons' prefix values
 	 */
 	private static Object[] getAllWrapButtonAttributesByType(String typeName) {
-		typeName	= typeName.trim().toUpperCase();
+		typeName = typeName.trim().toUpperCase();
 
-		String storeItemsConfig	= loadWrapButtonItemsConfig();
+		String storeItemsConfig = loadWrapButtonItemsConfig();
 
-			// Extract only item prefixes into array
+		// Extract only item prefixes into array
 		List<String> items = new ArrayList<String>();
-		if( storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
-			String[] buttonConfigs	= storeItemsConfig.split("##" + typeName + "##");
+		if (storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
+			String[] buttonConfigs = storeItemsConfig.split("##" + typeName + "##");
 
-			for( int i = 1; i < buttonConfigs.length; i++) {
-				items.add( buttonConfigs[i].split("##/" + typeName + "##")[0] );
+			for (int i = 1; i < buttonConfigs.length; i++) {
+				items.add(buttonConfigs[i].split("##/" + typeName + "##")[0]);
 			}
 		}
 
@@ -194,14 +193,14 @@ public class Settings {
 	}
 
 	/**
-	 * @return	Amount of stored wrap buttons
+	 * @return Amount of stored wrap buttons
 	 */
 	private static Integer getAmountWrapButtons() {
 		return getAllWrapButtonLabels().length;
 	}
 
 	/**
-	 * @return	Are any wrap buttons configured?
+	 * @return Are any wrap buttons configured?
 	 */
 	public static Boolean areWrapButtonsConfigured() {
 		return getAmountWrapButtons() > 0;

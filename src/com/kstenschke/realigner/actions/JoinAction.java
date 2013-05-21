@@ -41,10 +41,10 @@ public class JoinAction extends AnAction {
 	/**
 	 * Disable when no project open
 	 *
-	 * @param	event	Action system event
+	 * @param   event   Action system event
 	 */
-	public void update( AnActionEvent event ) {
-		boolean  enabled = false;
+	public void update(AnActionEvent event) {
+		boolean enabled = false;
 
 		final Project project = event.getData(PlatformDataKeys.PROJECT);
 		Editor editor = event.getData(PlatformDataKeys.EDITOR);
@@ -54,11 +54,11 @@ public class JoinAction extends AnAction {
 			if (hasSelection) {
 				final Document document = editor.getDocument();
 
-				int lineNumberSelStart	= document.getLineNumber(selectionModel.getSelectionStart());
-				int lineNumberSelEnd	= document.getLineNumber(selectionModel.getSelectionEnd());
+				int lineNumberSelStart = document.getLineNumber(selectionModel.getSelectionStart());
+				int lineNumberSelEnd = document.getLineNumber(selectionModel.getSelectionEnd());
 
 				if (lineNumberSelEnd > lineNumberSelStart) {
-					enabled	= true;
+					enabled = true;
 				}
 			}
 		}
@@ -69,7 +69,7 @@ public class JoinAction extends AnAction {
 	/**
 	 * Perform implode / explode
 	 *
-	 * @param	event	Action system event
+	 * @param   event   Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 
@@ -81,74 +81,75 @@ public class JoinAction extends AnAction {
 
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-					Editor editor = event.getData(PlatformDataKeys.EDITOR);
-					//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
+						Editor editor = event.getData(PlatformDataKeys.EDITOR);
+						//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
 
-				if (editor != null) {
-					boolean cannotJoin = false;
+						if (editor != null) {
+							boolean cannotJoin = false;
 
-					SelectionModel selectionModel = editor.getSelectionModel();
-					boolean hasSelection = selectionModel.hasSelection();
+							SelectionModel selectionModel = editor.getSelectionModel();
+							boolean hasSelection = selectionModel.hasSelection();
 
-					if (hasSelection) {
-						int offsetStart	= selectionModel.getSelectionStart();
-						int offsetEnd	= selectionModel.getSelectionEnd();
+							if (hasSelection) {
+								int offsetStart = selectionModel.getSelectionStart();
+								int offsetEnd = selectionModel.getSelectionEnd();
 
-						final Document document = editor.getDocument();
-						//CharSequence editorText = document.getCharsSequence();
-						//int caretOffset = editor.getCaretModel().getOffset();
+								final Document document = editor.getDocument();
+								//CharSequence editorText = document.getCharsSequence();
+								//int caretOffset = editor.getCaretModel().getOffset();
 
-						int lineNumberSelStart = document.getLineNumber(offsetStart);
-						int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+								int lineNumberSelStart = document.getLineNumber(offsetStart);
+								int lineNumberSelEnd = document.getLineNumber(offsetEnd);
 
-						if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
-							lineNumberSelEnd--;
-						}
-
-						if( lineNumberSelEnd > lineNumberSelStart ) {
-								// Join selected lines
-							String glue = Messages.showInputDialog(
-								currentProject,
-								"Enter Glue (Optional)", "Join Lines With Glue",
-								IconLoader.getIcon("/com/kstenschke/realigner/resources/images/arrow-join.png"),
-									Preferences.getJoinGlue(), null
-							);
-
-							if( glue != null ) {
-								Preferences.saveJoinProperties(glue);
-
-								List<String> linesList	= TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-								String linesStr	= "";
-								int amountLines	= linesList.size();
-								for(int i = 0; i < amountLines; i++) {
-									linesStr = linesStr + linesList.get(i) + ( i < (amountLines -1) ? glue : "");
+								if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+									lineNumberSelEnd--;
 								}
 
-									// Remove newlines
-								String joinedLines	= linesStr.replaceAll("(\\n)+", "" );
+								if (lineNumberSelEnd > lineNumberSelStart) {
+									// Join selected lines
+									String glue = Messages.showInputDialog(
+											  currentProject,
+											  "Enter Glue (Optional)", "Join Lines With Glue",
+											  IconLoader.getIcon("/com/kstenschke/realigner/resources/images/arrow-join.png"),
+											  Preferences.getJoinGlue(), null
+									);
 
-									// Replace the full lines with themselves joined
-								offsetStart	= document.getLineStartOffset(lineNumberSelStart);
-								offsetEnd	= document.getLineEndOffset(lineNumberSelEnd);
+									if (glue != null) {
+										Preferences.saveJoinProperties(glue);
 
-								document.replaceString(offsetStart, offsetEnd, joinedLines);
+										List<String> linesList = TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+										String linesStr = "";
+										int amountLines = linesList.size();
+										for (int i = 0; i < amountLines; i++) {
+											linesStr = linesStr + linesList.get(i) + (i < (amountLines - 1) ? glue : "");
+										}
+
+										// Remove newlines
+										String joinedLines = linesStr.replaceAll("(\\n)+", "");
+
+										// Replace the full lines with themselves joined
+										offsetStart = document.getLineStartOffset(lineNumberSelStart);
+										offsetEnd = document.getLineEndOffset(lineNumberSelEnd);
+
+										document.replaceString(offsetStart, offsetEnd, joinedLines);
+									}
+								} else {
+									cannotJoin = true;
+								}
+							} else {
+								cannotJoin = true;
 							}
-						} else {
-							cannotJoin = true;
+
+							// No selection or only one line of selection? Display resp. message
+							if (cannotJoin) {
+								JOptionPane.showMessageDialog(editor.getComponent(), "Please select lines to be joined.");
+							}
 						}
-					} else {
-						cannotJoin	= true;
 					}
+				});
 
-						// No selection or only one line of selection? Display resp. message
-					if( cannotJoin ) {
-						JOptionPane.showMessageDialog(editor.getComponent(), "Please select lines to be joined.");
-					}
-				}
 			}
-		});
-
-			}}, "Join Lines with Glue", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+		}, "Join Lines with Glue", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
 
 }

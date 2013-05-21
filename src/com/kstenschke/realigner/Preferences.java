@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NonNls;
  */
 public class Preferences {
 
-		//  @NonNls = element is not a string requiring internationalization and it does not contain such strings.
+	//  @NonNls = element is not a string requiring internationalization and it does not contain such strings.
 	@NonNls
 	private static final String PROPERTY_JOIN_GLUE = "PluginRealiginer.JoinGlue";
 
@@ -42,13 +42,11 @@ public class Preferences {
 	private static final String PROPERTY_SPLIT_SPLITWHERE = "PluginRealiginer.SplitSplitWhere";
 
 
-
-
 	/**
 	 * Store wrap preferences
 	 *
-	 * @param	prefix		Wrap prefix string (LHS)
-	 * @param	postfix		Wrap postfix string (RHS)
+	 * @param   prefix      Wrap prefix string (LHS)
+	 * @param   postfix      Wrap postfix string (RHS)
 	 */
 	public static void saveWrapProperties(String prefix, String postfix) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
@@ -60,39 +58,39 @@ public class Preferences {
 	/**
 	 * Store split preferences
 	 *
-	 * @param	delimiter					   Delimiter string
-	 * @param	delimiterDisposalMethod		Split at/after/before?
+	 * @param   delimiter                Delimiter string
+	 * @param   delimiterDisposalMethod      Split at/after/before?
 	 */
 	public static void saveSplitProperties(String delimiter, Integer delimiterDisposalMethod) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
 		propertiesComponent.setValue(PROPERTY_SPLIT_DELIMITER, delimiter);
 
-		if(delimiterDisposalMethod > 2 ) delimiterDisposalMethod = 0;
+		if (delimiterDisposalMethod > 2) delimiterDisposalMethod = 0;
 		propertiesComponent.setValue(PROPERTY_SPLIT_SPLITWHERE, delimiterDisposalMethod.toString());
 	}
 
 	/**
 	 * Store wrap preferences
 	 *
-	 * @param	glue	Join glue string
+	 * @param   glue   Join glue string
 	 */
 	public static void saveJoinProperties(String glue) {
 		PropertiesComponent.getInstance().setValue(PROPERTY_JOIN_GLUE, glue);
 	}
 
 	/**
-	 * @param   propertyName         Name of the preference property
-	 * @param   defaultValue         Default value to be set if null
-	 * @param   setDefaultIfEmpty    Set default also if empty?
-	 * @return	String
+	 * @param propertyName      Name of the preference property
+	 * @param defaultValue      Default value to be set if null
+	 * @param setDefaultIfEmpty Set default also if empty?
+	 * @return String
 	 */
 	private static String getProperty(String propertyName, String defaultValue, Boolean setDefaultIfEmpty) {
-		String value   = PropertiesComponent.getInstance().getValue(propertyName);
-		if( value == null ) {
-			value	= defaultValue;
+		String value = PropertiesComponent.getInstance().getValue(propertyName);
+		if (value == null) {
+			value = defaultValue;
 		}
-		if( value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
+		if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
 			value = defaultValue;
 		}
 
@@ -104,7 +102,7 @@ public class Preferences {
 	}
 
 	/**
-	 * @return	Split delimiter
+	 * @return Split delimiter
 	 */
 	public static String getSplitDelimiter() {
 		return getProperty(PROPERTY_SPLIT_DELIMITER, "", true);
@@ -113,28 +111,28 @@ public class Preferences {
 	/**
 	 * Get split option: split at/before/after delimiter
 	 *
-	 * @return	String			"0" (default if not saved yet) / "1" / "2"
+	 * @return String         "0" (default if not saved yet) / "1" / "2"
 	 */
 	public static String getSplitWhere() {
 		return getProperty(PROPERTY_SPLIT_SPLITWHERE, "0", true);
 	}
 
 	/**
-	 * @return	Join glue preference
+	 * @return Join glue preference
 	 */
 	public static String getJoinGlue() {
 		return getProperty(PROPERTY_JOIN_GLUE, "", false);
 	}
 
 	/**
-	 * @return	Wrap prefix
+	 * @return Wrap prefix
 	 */
 	public static String getWrapPrefix() {
 		return getProperty(PROPERTY_WRAP_PREFIX, ", ", false);
 	}
 
 	/**
-	 * @return	Wrap postfix
+	 * @return Wrap postfix
 	 */
 	public static String getWrapPostfix() {
 		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);

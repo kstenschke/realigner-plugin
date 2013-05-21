@@ -20,8 +20,6 @@ import com.intellij.openapi.editor.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Static helper methods for analysis and manipulation of texts
@@ -31,10 +29,10 @@ public class TextualHelper {
 	/**
 	 * Get sub sequence from given offset region
 	 *
-	 * @param	haystack		Text from which the sub string is to be extracted
-	 * @param	offsetStart	Starting offset
-	 * @param	offsetEnd	Ending offset
-	 * @return					String
+	 * @param   haystack      Text from which the sub string is to be extracted
+	 * @param   offsetStart   Starting offset
+	 * @param   offsetEnd   Ending offset
+	 * @return String
 	 */
 	public static String getSubString(CharSequence haystack, int offsetStart, int offsetEnd) {
 		if (haystack.length() == 0) return null;
@@ -43,10 +41,10 @@ public class TextualHelper {
 	}
 
 	/**
-	 * @param	doc				The full document
-	 * @param	startLine		Starting line number
-	 * @param	endLine			Ending line number
-	 * @return	List<String>
+	 * @param   doc            The full document
+	 * @param   startLine      Starting line number
+	 * @param   endLine         Ending line number
+	 * @return List<String>
 	 */
 	public static List<String> extractLines(Document doc, int startLine, int endLine) {
 		List<String> lines = new ArrayList<String>(endLine - startLine);
@@ -61,9 +59,9 @@ public class TextualHelper {
 	}
 
 	/**
-	 * @param	doc				The full document
-	 * @param	lineNumber		Number of line to be extracted
-	 * @return	String			The extracted line
+	 * @param   doc            The full document
+	 * @param   lineNumber      Number of line to be extracted
+	 * @return String         The extracted line
 	 */
 	public static String extractLine(Document doc, int lineNumber) {
 		int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
@@ -83,37 +81,46 @@ public class TextualHelper {
 	}
 
 	/**
-	 * @param   str   String to be checked for containing an HTML tag
-	 * @return  Does the given string contain an HTML tag?
+	 * @param str String to be checked for containing an HTML tag
+	 * @return Does the given string contain an HTML tag?
 	 */
 	public static Boolean containsHtmlTag(String str) {
-		String regex   = "<[a-z|A-Z]+(.| )*>.*";
+		String regex = "<[a-z|A-Z]+(.| )*>.*";
 
 		return str.matches(regex);
 	}
 
 	public static String getClosingTagPendent(String prefix) {
-		prefix      = prefix.replaceAll("<", "");
-		String[]  tag = prefix.split("\\W+");
+		prefix = prefix.replaceAll("<", "");
+		String[] tag = prefix.split("\\W+");
 
 		return "</" + tag[0] + ">";
 	}
 
 	/**
-	 * @param   str        String to be transformed
-	 * @param   prefix     Prefix to be removed
-	 * @param   postfix    Postfix to be removed
-	 * @return  Given string with prefix and postfix removed
+	 * @param str     String to be transformed
+	 * @param prefix  Prefix to be removed
+	 * @param postfix Postfix to be removed
+	 * @return Given string with prefix and postfix removed
 	 */
 	public static String unwrap(String str, String prefix, String postfix) {
-		if( str.startsWith(prefix)) {
-			str   = str.substring(prefix.length());
+		if (str.startsWith(prefix)) {
+			str = str.substring(prefix.length());
 		}
-		if( str.endsWith(postfix)) {
-			str   = str.substring(0, str.length()-postfix.length());
+		if (str.endsWith(postfix)) {
+			str = str.substring(0, str.length() - postfix.length());
 		}
 
 		return str;
+	}
+
+	/**
+	 * @param str
+	 * @param subStr
+	 * @return Amount of occurrences of given substring in given string
+	 */
+	public static Integer countSubstringOccurrences(String str, String subStr) {
+		return str.length() - str.replaceAll(subStr, "").length();
 	}
 
 }

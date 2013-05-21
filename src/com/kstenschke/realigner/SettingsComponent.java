@@ -35,7 +35,6 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	protected PluginConfiguration settingsPanel = null;
 
 
-
 	public JComponent createComponent() {
 		if (settingsPanel == null) {
 			settingsPanel = new PluginConfiguration();
@@ -47,12 +46,10 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	}
 
 
-
 	@Nls
 	public String getDisplayName() {
 		return "Realigner Quick Wraps";
 	}
-
 
 
 	public boolean isModified() {
@@ -60,43 +57,38 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	}
 
 
-
 	public void disposeUIResources() {
 		settingsPanel = null;
 	}
 
 
-
 	public void reset() {
-		if (settingsPanel != null ) {
-				// Reset settingsPanel data from component
+		if (settingsPanel != null) {
+			// Reset settingsPanel data from component
 // 			settingsPanel.setData();
 		}
 	}
-
 
 
 	/**
 	 * Get the icon of this {@link com.intellij.openapi.options.Configurable}.
 	 */
 	public Icon getIcon() {
-		if( icon == null ) {
-			icon	= new ImageIcon("/com/kstenschke/realigner/resources/images/blank32x32.png");
+		if (icon == null) {
+			icon = new ImageIcon("/com/kstenschke/realigner/resources/images/blank32x32.png");
 		}
 
 		return icon;
 	}
 
 
-
 	public void apply() throws ConfigurationException {
 		if (settingsPanel != null) {
-				// Get data from settingsPanel to component
+			// Get data from settingsPanel to component
 			settingsPanel.getData();
 //			applyGlobalSettings();
 		}
 	}
-
 
 
 	public String getHelpTopic() {
@@ -104,14 +96,9 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	}
 
 
-
 	private void applyGlobalSettings() {
 
 	}
-
-
-
-
 
 
 	public SettingsComponent(Project project) {
@@ -119,17 +106,14 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	}
 
 
-
 	public void initComponent() {
 		// TODO: insert component initialization logic here
 	}
 
 
-
 	public void disposeComponent() {
 		settingsPanel = null;
 	}
-
 
 
 	@NotNull
@@ -139,11 +123,9 @@ public class SettingsComponent implements ProjectComponent, Configurable {
 	}
 
 
-
 	public void projectOpened() {
 		// called when project is opened
 	}
-
 
 
 	public void projectClosed() {

@@ -36,9 +36,9 @@ public class WrapAction extends AnAction {
 	/**
 	 * Disable when no project open
 	 *
-	 * @param	event	Action system event
+	 * @param   event   Action system event
 	 */
-	public void update( AnActionEvent event ) {
+	public void update(AnActionEvent event) {
 		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
 
@@ -46,7 +46,7 @@ public class WrapAction extends AnAction {
 	 * Perform wrap or unwrap
 	 * Show options dialog, than wrap/unwrap current selection or line of caret or each of the selected lines
 	 *
-	 * @param	event	Action system event
+	 * @param   event   Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 		final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
@@ -59,8 +59,8 @@ public class WrapAction extends AnAction {
 					final Wrapper wrapper = new Wrapper(editor);
 					WrapOptions wrapOptionsDialog = wrapper.showWrapOptions();
 
-					final String prefix	            = wrapOptionsDialog.getTextFieldPrefix();
-					final String postfix             = wrapOptionsDialog.getTextFieldPostfix();
+					final String prefix = wrapOptionsDialog.getTextFieldPrefix();
+					final String postfix = wrapOptionsDialog.getTextFieldPostfix();
 
 					// Store preferences
 					Preferences.saveWrapProperties(prefix, postfix);

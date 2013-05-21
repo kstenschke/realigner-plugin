@@ -35,22 +35,21 @@ public class SplitOptions extends JDialog {
 
 	private JTextField textFieldDelimiter;
 
-		// Delimiter disposal methods
-	public static final int METHOD_DELIMITER_DISPOSAL_AT	= 0;
+	// Delimiter disposal methods
+	public static final int METHOD_DELIMITER_DISPOSAL_AT = 0;
 
-	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE= 1;
+	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE = 1;
 
-	public static final int METHOD_DELIMITER_DISPOSAL_AFTER	= 2;
+	public static final int METHOD_DELIMITER_DISPOSAL_AFTER = 2;
 
-	public Boolean clickedOk   = false;
-
+	public Boolean clickedOk = false;
 
 
 	/**
 	 * Split options constructor
 	 */
 	public SplitOptions() {
-		clickedOk   = false;
+		clickedOk = false;
 
 		setContentPane(contentPane);
 		setModal(true);
@@ -67,7 +66,7 @@ public class SplitOptions extends JDialog {
 			}
 		});
 
-			// call onCancel() when cross is clicked
+		// call onCancel() when cross is clicked
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -75,7 +74,7 @@ public class SplitOptions extends JDialog {
 			}
 		});
 
-			// call onCancel() on ESCAPE
+		// call onCancel() on ESCAPE
 		contentPane.registerKeyboardAction(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onCancel();
@@ -87,7 +86,7 @@ public class SplitOptions extends JDialog {
 	 * Handle click ok event
 	 */
 	private void onOK() {
-		clickedOk   = true;
+		clickedOk = true;
 		dispose();
 	}
 
@@ -95,14 +94,14 @@ public class SplitOptions extends JDialog {
 	 * Handle click cancel event
 	 */
 	private void onCancel() {
-		clickedOk   = false;
+		clickedOk = false;
 		dispose();
 	}
 
 	/**
 	 * Split options main
 	 *
-	 * @param	args	Arguments
+	 * @param   args   Arguments
 	 */
 	public static void main(String[] args) {
 		SplitOptions dialog = new SplitOptions();
@@ -114,7 +113,7 @@ public class SplitOptions extends JDialog {
 	/**
 	 * Getter for delimiter text
 	 *
-	 * @return  String
+	 * @return String
 	 */
 	public String getDelimiter() {
 		return textFieldDelimiter.getText();
@@ -130,14 +129,14 @@ public class SplitOptions extends JDialog {
 	/**
 	 * Getter for delimiter disposal method
 	 *
-	 * @return  Integer
+	 * @return Integer
 	 */
 	public Integer getDelimiterDisposalMethod() {
-		if( splitBeforeDelimiterRadioButton.isSelected() ) {
+		if (splitBeforeDelimiterRadioButton.isSelected()) {
 			return METHOD_DELIMITER_DISPOSAL_BEFORE;
 		}
 
-		if( splitAfterDelimiterRadioButton.isSelected() ) {
+		if (splitAfterDelimiterRadioButton.isSelected()) {
 			return METHOD_DELIMITER_DISPOSAL_AFTER;
 		}
 
@@ -147,10 +146,10 @@ public class SplitOptions extends JDialog {
 	/**
 	 * Select given split-where (at/after/before delimiter) option radio box
 	 *
-	 * @param  splitWhere	At/before/after delimiter
+	 * @param splitWhere At/before/after delimiter
 	 */
 	public void setDelimiterDisposalMethod(Integer splitWhere) {
-		switch(splitWhere) {
+		switch (splitWhere) {
 			case METHOD_DELIMITER_DISPOSAL_BEFORE:
 				splitBeforeDelimiterRadioButton.setSelected(true);
 				break;
@@ -163,7 +162,6 @@ public class SplitOptions extends JDialog {
 			default:
 				splitAtDelimiterRadioButton.setSelected(true);
 				break;
-
 		}
 	}
 

@@ -41,21 +41,21 @@ public class PluginConfiguration {
 	private JButton buttonSaveWrapButton;
 
 
-
 	/**
 	 * Constructor
 	 */
 	public PluginConfiguration() {
 
-			// When leaving prefix/postfix - auto-generate button label suggestion
+		// When leaving prefix/postfix - auto-generate button label suggestion
 		FocusListener focusListenerPrefixPostfix = new FocusListener() {
-			@Override public void focusGained(FocusEvent e) {
+			@Override
+			public void focusGained(FocusEvent e) {
 
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				String buttonLabelText	= textFieldNewPrefix.getText() + " ... " + textFieldNewPostfix.getText();
+				String buttonLabelText = textFieldNewPrefix.getText() + " ... " + textFieldNewPostfix.getText();
 				textFieldNewLabel.setText(buttonLabelText);
 			}
 		};
@@ -63,7 +63,7 @@ public class PluginConfiguration {
 		textFieldNewPrefix.addFocusListener(focusListenerPrefixPostfix);
 		textFieldNewPostfix.addFocusListener(focusListenerPrefixPostfix);
 
-			// Add action listeners to save and delete button
+		// Add action listeners to save and delete button
 		this.buttonSaveWrapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onClickSaveWrapButton(e);
@@ -80,31 +80,33 @@ public class PluginConfiguration {
 		listWrapButtons.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				Boolean isListSelectionEmpty= listWrapButtons.isSelectionEmpty();
-				Boolean isButtonLabelEmpty	= textFieldNewLabel.getText().isEmpty();
+				Boolean isListSelectionEmpty = listWrapButtons.isSelectionEmpty();
+				Boolean isButtonLabelEmpty = textFieldNewLabel.getText().isEmpty();
 
-				buttonRemoveSelectedButton.setEnabled( !isListSelectionEmpty );
-				buttonSaveWrapButton.setEnabled( !isListSelectionEmpty || !isButtonLabelEmpty );
+				buttonRemoveSelectedButton.setEnabled(!isListSelectionEmpty);
+				buttonSaveWrapButton.setEnabled(!isListSelectionEmpty || !isButtonLabelEmpty);
 
-				if( !isListSelectionEmpty ) {
+				if (!isListSelectionEmpty) {
 					// Load selected item config into form
-					String selectedItemLabel	= listWrapButtons.getSelectedValue().toString().trim();
-					Integer	selectedLabelStoreIndex	= Settings.getLabelIndex(selectedItemLabel);
+					String selectedItemLabel = listWrapButtons.getSelectedValue().toString().trim();
+					Integer selectedLabelStoreIndex = Settings.getLabelIndex(selectedItemLabel);
 
-					setTextFieldButtonLabel( selectedItemLabel );
-					setTextFieldPrefix( Settings.getPrefixByIndex(selectedLabelStoreIndex) );
-					setTextFieldPostfix( Settings.getPostfixByIndex(selectedLabelStoreIndex) );
+					setTextFieldButtonLabel(selectedItemLabel);
+					setTextFieldPrefix(Settings.getPrefixByIndex(selectedLabelStoreIndex));
+					setTextFieldPostfix(Settings.getPostfixByIndex(selectedLabelStoreIndex));
 				}
 			}
 		});
 
 		// Enable/disable "add button" button when button label is entered/empty
 		textFieldNewLabel.addFocusListener(new FocusListener() {
-			@Override public void focusGained(FocusEvent e) {}
+			@Override
+			public void focusGained(FocusEvent e) {
+			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				buttonSaveWrapButton.setEnabled( !textFieldNewLabel.getText().isEmpty() );
+				buttonSaveWrapButton.setEnabled(!textFieldNewLabel.getText().isEmpty());
 			}
 		});
 
@@ -112,18 +114,18 @@ public class PluginConfiguration {
 	}
 
 	/**
-	 *	Initialize wrap buttons list with items from store
+	 * Initialize wrap buttons list with items from store
 	 */
 	void updateWrapButtonsListItems() {
-		listWrapButtons.setListData( Settings.getAllWrapButtonLabels() );
+		listWrapButtons.setListData(Settings.getAllWrapButtonLabels());
 		listWrapButtons.clearSelection();
 	}
 
 	/**
-	 * @return	The selected item's label
+	 * @return The selected item's label
 	 */
 	String getSelectedButtonItemLabel() {
-		if( listWrapButtons.isSelectionEmpty() ) {
+		if (listWrapButtons.isSelectionEmpty()) {
 			return "";
 		}
 
@@ -133,17 +135,17 @@ public class PluginConfiguration {
 	/**
 	 * Handler when clicking the "Add button" button
 	 *
-	 * @param	e	ActionEvent
+	 * @param   e   ActionEvent
 	 */
 	void onClickSaveWrapButton(ActionEvent e) {
-		String buttonLabel	= getTextFieldButtonLabel().trim();
+		String buttonLabel = getTextFieldButtonLabel().trim();
 
-		if( 	buttonLabel.equals("") ) {
-			JOptionPane.showMessageDialog(null,"Please name the new button with a label.","No Button Label", JOptionPane.ERROR_MESSAGE);
+		if (buttonLabel.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please name the new button with a label.", "No Button Label", JOptionPane.ERROR_MESSAGE);
 		} else {
-				// Store the button config
-			String prefix		= getTextFieldPrefix();
-			String postfix		= getTextFieldPostfix();
+			// Store the button config
+			String prefix = getTextFieldPrefix();
+			String postfix = getTextFieldPostfix();
 
 			Settings.saveWrapButtonItemToStore(buttonLabel, prefix, postfix);
 
@@ -154,12 +156,12 @@ public class PluginConfiguration {
 	/**
 	 * Handler when clicking the "Remove selected button" button
 	 *
-	 * @param	e	ActionEvent
+	 * @param   e   ActionEvent
 	 */
 	void onClickRemoveButton(ActionEvent e) {
-		String buttonLabel	= getSelectedButtonItemLabel();
+		String buttonLabel = getSelectedButtonItemLabel();
 
-		if( !buttonLabel.equals("") ) {
+		if (!buttonLabel.equals("")) {
 			Settings.removeWrapButtonItemFromStore(buttonLabel);
 //			Settings.clearStoredWrapButtonItemsConfig();
 			updateWrapButtonsListItems();
@@ -169,7 +171,7 @@ public class PluginConfiguration {
 	/**
 	 * Get button label
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	String getTextFieldButtonLabel() {
 		return textFieldNewLabel.getText();
@@ -185,7 +187,7 @@ public class PluginConfiguration {
 	/**
 	 * Get wrap LHS
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	String getTextFieldPrefix() {
 		return textFieldNewPrefix.getText();
@@ -201,7 +203,7 @@ public class PluginConfiguration {
 	/**
 	 * Get wrap RHS
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	String getTextFieldPostfix() {
 		return textFieldNewPostfix.getText();

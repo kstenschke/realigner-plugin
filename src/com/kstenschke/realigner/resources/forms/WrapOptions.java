@@ -43,54 +43,53 @@ public class WrapOptions extends JDialog {
 	private JButton buttonUnwrap;
 
 	public static final int OPERATION_CANCEL = 0;
-	public static final int OPERATION_WRAP   = 1;
+	public static final int OPERATION_WRAP = 1;
 	public static final int OPERATION_UNWRAP = 2;
 
-	public Integer clickedOperation	= OPERATION_CANCEL;
-
+	public Integer clickedOperation = OPERATION_CANCEL;
 
 
 	/**
 	 * Wrap Options constructor
 	 */
 	public WrapOptions() {
-		clickedOperation	= OPERATION_CANCEL;
+		clickedOperation = OPERATION_CANCEL;
 
 		setContentPane(contentPane);
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);
 
-			// Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
-		if( !Settings.areWrapButtonsConfigured() ) {
+		// Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
+		if (!Settings.areWrapButtonsConfigured()) {
 			panelQuickWrapButtons.setVisible(false);
 		} else {
-				// Add quick wrap buttons
-			Object[] allButtonsLabels					      = Settings.getAllWrapButtonLabels();
-			Object[] allButtonPrefixConfigs				   = Settings.getAllWrapButtonPrefixes();
-			Object[] allButtonPostfixConfigs			      = Settings.getAllWrapButtonPostfixes();
+			// Add quick wrap buttons
+			Object[] allButtonsLabels = Settings.getAllWrapButtonLabels();
+			Object[] allButtonPrefixConfigs = Settings.getAllWrapButtonPrefixes();
+			Object[] allButtonPostfixConfigs = Settings.getAllWrapButtonPostfixes();
 
-				// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
+			// Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
 			panelWrapButtonsContainer.removeAll();
 			panelWrapButtonsContainer.setLayout(
-				new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false)
+					  new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false)
 			);
 
-			for( int i = 0; i < allButtonsLabels.length; i++ ) {
-				String buttonLabel	= allButtonsLabels[i].toString();
-				JButton wrapButton	= new javax.swing.JButton( buttonLabel );
-				panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false) );
+			for (int i = 0; i < allButtonsLabels.length; i++) {
+				String buttonLabel = allButtonsLabels[i].toString();
+				JButton wrapButton = new javax.swing.JButton(buttonLabel);
+				panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
-					// Add button action
-				final String prefix  = allButtonPrefixConfigs[i].toString();
+				// Add button action
+				final String prefix = allButtonPrefixConfigs[i].toString();
 				final String postfix = allButtonPostfixConfigs[i].toString();
 
 				wrapButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// Set all options from parameters of clicked button
-					setTextFieldPrefix(prefix);
-					setTextFieldPostfix(postfix);
-					onOK();
+						setTextFieldPrefix(prefix);
+						setTextFieldPostfix(postfix);
+						onOK();
 					}
 				});
 			}
@@ -106,15 +105,15 @@ public class WrapOptions extends JDialog {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-					// When leaving prefix field containing an HTML tag: fill with postfix field with resp. pendent
-				String prefix  = textFieldPrefix.getText();
+				// When leaving prefix field containing an HTML tag: fill with postfix field with resp. pendent
+				String prefix = textFieldPrefix.getText();
 				if (TextualHelper.containsHtmlTag(prefix)) {
 					textFieldPostfix.setText(TextualHelper.getClosingTagPendent(prefix));
 				}
 			}
 		});
 
-			// Setup button action listeners
+		// Setup button action listeners
 		buttonOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onOK();
@@ -152,7 +151,7 @@ public class WrapOptions extends JDialog {
 	 * Handle click ok event
 	 */
 	private void onOK() {
-		clickedOperation	= OPERATION_WRAP;
+		clickedOperation = OPERATION_WRAP;
 		dispose();
 	}
 
@@ -160,7 +159,7 @@ public class WrapOptions extends JDialog {
 	 * Handle click Unwrap event
 	 */
 	private void onUnwrap() {
-		clickedOperation	= OPERATION_UNWRAP;
+		clickedOperation = OPERATION_UNWRAP;
 		dispose();
 	}
 
@@ -168,14 +167,14 @@ public class WrapOptions extends JDialog {
 	 * Handle click cancel event
 	 */
 	private void onCancel() {
-		clickedOperation	= OPERATION_CANCEL;
+		clickedOperation = OPERATION_CANCEL;
 		dispose();
 	}
 
 	/**
 	 * Get wrap LHS
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	public String getTextFieldPrefix() {
 		return textFieldPrefix.getText();
@@ -191,7 +190,7 @@ public class WrapOptions extends JDialog {
 	/**
 	 * Get wrap RHS
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	public String getTextFieldPostfix() {
 		return textFieldPostfix.getText();
@@ -205,7 +204,7 @@ public class WrapOptions extends JDialog {
 	}
 
 	/**
-	 * @param	args	Arguments
+	 * @param   args   Arguments
 	 */
 	public static void main(String[] args) {
 		WrapOptions dialog = new WrapOptions();
