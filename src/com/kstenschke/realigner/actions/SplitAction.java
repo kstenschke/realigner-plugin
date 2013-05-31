@@ -99,8 +99,7 @@ public class SplitAction extends AnAction {
 												String lineText = TextualHelper.extractLine(document, lineNumber);
 												int offsetLineEnd = offsetLineStart + lineText.length() - 1;
 
-												String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
-												String explodedText = lineText.replace(delimiter, replacement);
+												String explodedText = getExplodedLineText(delimiter, delimiterDisposalMethod, lineText);
 												document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
 											}
 										}
@@ -116,8 +115,7 @@ public class SplitAction extends AnAction {
 										if (!lineText.contains(delimiter)) {
 											JOptionPane.showMessageDialog(null, "Delimiter not found.");
 										} else {
-											String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
-											String explodedText = lineText.replace(delimiter, replacement);
+											String explodedText = getExplodedLineText(delimiter, delimiterDisposalMethod, lineText);
 											document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
 										}
 									}
@@ -126,21 +124,24 @@ public class SplitAction extends AnAction {
 									if (!hasSelection) {
 										int caretOffset = editor.getCaretModel().getOffset();
 										int lineNumber = document.getLineNumber(caretOffset);
-
 										int offsetLineStart = document.getLineStartOffset(lineNumber);
 										String lineText = TextualHelper.extractLine(document, lineNumber);
 										Integer textLength = getTextWidth(lineText, editor);
+
 										if (textLength > 120) {
 											int offsetLineEnd = offsetLineStart + lineText.length() - 1;
 											int wrapPosition = 120;
 											String wrapChar = lineText.substring(wrapPosition, wrapPosition + 1);
-											while (wrapPosition > 0 && !wrapChar.equals(" ") && !wrapChar.equals("\t")) {
+											while (wrapPosition > 0 && !isSplittableChar(wrapChar)) {
 												wrapPosition--;
 												wrapChar = lineText.substring(wrapPosition, wrapPosition + 1);
 											}
 											if (wrapPosition > 1) {
-												String explodedText = lineText.substring(0, wrapPosition) + "\n" + lineText.substring(wrapPosition + 1, lineText.length());
+												String explodedText = lineText.substring(0, wrapPosition) +
+														  (wrapChar.equals(",") ? wrapChar : "") +  "\n" +
+														  lineText.substring(wrapPosition + 1, lineText.length());
 												document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
+
 												editor.getCaretModel().moveToOffset(document.getLineStartOffset(lineNumber + 1));
 												editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
 											}
@@ -150,10 +151,23 @@ public class SplitAction extends AnAction {
 							}
 						}
 					}
+
+					private String getExplodedLineText(String delimiter, Integer delimiterDisposalMethod, String lineText) {
+						String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
+						return lineText.replace(delimiter, replacement);
+					}
 				});
 
 			}
 		}, "Split into Lines", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+	}
+
+	/**
+	 * @param   charStr
+	 * @return  Does the given character allow splitting the line at?
+	 */
+	private static Boolean isSplittableChar(String charStr) {
+		return charStr.equals(" ") || charStr.equals("\t") || charStr.equals(",");
 	}
 
 	/**
@@ -175,7 +189,7 @@ public class SplitAction extends AnAction {
 		CommonCodeStyleSettings.IndentOptions indentOptions = commonCodeStyleSettings.getIndentOptions();
 
 		if (indentOptions != null) {
-			tabSize = commonCodeStyleSettings.getIndentOptions().TAB_SIZE;
+			tabSize = indentOptions.TAB_SIZE;
 		}
 		if (tabSize == 0) {
 			tabSize = editor.getSettings().getTabSize(editor.getProject());
