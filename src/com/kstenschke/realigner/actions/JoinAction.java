@@ -27,7 +27,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.IconLoader;
 import com.kstenschke.realigner.Preferences;
-import com.kstenschke.realigner.TextualHelper;
+import com.kstenschke.realigner.StaticTexts;
+import com.kstenschke.realigner.UtilsTextual;
 
 import javax.swing.*;
 import java.util.List;
@@ -72,9 +73,7 @@ public class JoinAction extends AnAction {
 	 * @param   event   Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
-
 		final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
-		//Project currentProject = (Project) event.getDataContext().getData(DataConstants.PROJECT);
 
 		CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 			public void run() {
@@ -82,7 +81,6 @@ public class JoinAction extends AnAction {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
 						Editor editor = event.getData(PlatformDataKeys.EDITOR);
-						//Editor editor = (Editor) event.getDataContext().getData(DataConstants.EDITOR);
 
 						if (editor != null) {
 							boolean cannotJoin = false;
@@ -95,8 +93,6 @@ public class JoinAction extends AnAction {
 								int offsetEnd = selectionModel.getSelectionEnd();
 
 								final Document document = editor.getDocument();
-								//CharSequence editorText = document.getCharsSequence();
-								//int caretOffset = editor.getCaretModel().getOffset();
 
 								int lineNumberSelStart = document.getLineNumber(offsetStart);
 								int lineNumberSelEnd = document.getLineNumber(offsetEnd);
@@ -117,7 +113,7 @@ public class JoinAction extends AnAction {
 									if (glue != null) {
 										Preferences.saveJoinProperties(glue);
 
-										List<String> linesList = TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+										List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
 										String linesStr = "";
 										int amountLines = linesList.size();
 										for (int i = 0; i < amountLines; i++) {
@@ -142,14 +138,13 @@ public class JoinAction extends AnAction {
 
 							// No selection or only one line of selection? Display resp. message
 							if (cannotJoin) {
-								JOptionPane.showMessageDialog(editor.getComponent(), "Please select lines to be joined.");
+								JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
 							}
 						}
 					}
 				});
 
 			}
-		}, "Join Lines with Glue", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+		}, StaticTexts.UNDO_HISTORY_JOIN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
-
 }

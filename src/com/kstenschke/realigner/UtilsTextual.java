@@ -24,15 +24,15 @@ import java.util.List;
 /**
  * Static helper methods for analysis and manipulation of texts
  */
-public class TextualHelper {
+public class UtilsTextual {
 
 	/**
 	 * Get sub sequence from given offset region
 	 *
-	 * @param   haystack      Text from which the sub string is to be extracted
-	 * @param   offsetStart   Starting offset
-	 * @param   offsetEnd   Ending offset
-	 * @return String
+	 * @param   haystack        Text from which the sub string is to be extracted
+	 * @param   offsetStart     Starting offset
+	 * @param   offsetEnd       Ending offset
+	 * @return  String
 	 */
 	public static String getSubString(CharSequence haystack, int offsetStart, int offsetEnd) {
 		if (haystack.length() == 0) return null;
@@ -44,13 +44,13 @@ public class TextualHelper {
 	 * @param   doc            The full document
 	 * @param   startLine      Starting line number
 	 * @param   endLine         Ending line number
-	 * @return List<String>
+	 * @return  List<String>
 	 */
 	public static List<String> extractLines(Document doc, int startLine, int endLine) {
 		List<String> lines = new ArrayList<String>(endLine - startLine);
 
 		for (int i = startLine; i <= endLine; i++) {
-			String line = TextualHelper.extractLine(doc, i);
+			String line = UtilsTextual.extractLine(doc, i);
 
 			lines.add(line);
 		}
@@ -60,8 +60,8 @@ public class TextualHelper {
 
 	/**
 	 * @param   doc            The full document
-	 * @param   lineNumber      Number of line to be extracted
-	 * @return String         The extracted line
+	 * @param   lineNumber     Number of line to be extracted
+	 * @return  String         The extracted line
 	 */
 	public static String extractLine(Document doc, int lineNumber) {
 		int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
@@ -81,8 +81,8 @@ public class TextualHelper {
 	}
 
 	/**
-	 * @param str String to be checked for containing an HTML tag
-	 * @return Does the given string contain an HTML tag?
+	 * @param   str         String to be checked for containing an HTML tag
+	 * @return  Boolean     Does the given string contain an HTML tag?
 	 */
 	public static Boolean containsHtmlTag(String str) {
 		String regex = "<[a-z|A-Z]+(.| )*>.*";
@@ -90,6 +90,10 @@ public class TextualHelper {
 		return str.matches(regex);
 	}
 
+    /**
+     * @param   prefix
+     * @return  String
+     */
 	public static String getClosingTagPendent(String prefix) {
 		prefix = prefix.replaceAll("<", "");
 		String[] tag = prefix.split("\\W+");
@@ -98,9 +102,9 @@ public class TextualHelper {
 	}
 
 	/**
-	 * @param str     String to be transformed
-	 * @param prefix  Prefix to be removed
-	 * @param postfix Postfix to be removed
+	 * @param   str     String to be transformed
+	 * @param   prefix  Prefix to be removed
+	 * @param   postfix Postfix to be removed
 	 * @return Given string with prefix and postfix removed
 	 */
 	public static String unwrap(String str, String prefix, String postfix) {
@@ -115,8 +119,8 @@ public class TextualHelper {
 	}
 
 	/**
-	 * @param str
-	 * @param subStr
+	 * @param   str
+	 * @param   subStr
 	 * @return Amount of occurrences of given substring in given string
 	 */
 	public static Integer countSubstringOccurrences(String str, String subStr) {

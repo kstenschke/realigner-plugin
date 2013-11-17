@@ -19,7 +19,7 @@ package com.kstenschke.realigner.resources.forms;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class SplitOptions extends JDialog {
+public class DialogSplitOptions extends JDialog {
 
 	private JPanel contentPane;
 
@@ -48,7 +48,7 @@ public class SplitOptions extends JDialog {
 	/**
 	 * Split options constructor
 	 */
-	public SplitOptions() {
+	public DialogSplitOptions() {
 		clickedOk = false;
 
 		setContentPane(contentPane);
@@ -104,7 +104,7 @@ public class SplitOptions extends JDialog {
 	 * @param   args   Arguments
 	 */
 	public static void main(String[] args) {
-		SplitOptions dialog = new SplitOptions();
+		DialogSplitOptions dialog = new DialogSplitOptions();
 		dialog.pack();
 		dialog.setVisible(true);
 		System.exit(0);

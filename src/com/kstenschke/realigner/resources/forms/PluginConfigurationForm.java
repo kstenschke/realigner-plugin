@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 
 
-public class PluginConfiguration {
+public class PluginConfigurationForm {
 
 	public JPanel rootPanel;
 
@@ -44,7 +44,7 @@ public class PluginConfiguration {
 	/**
 	 * Constructor
 	 */
-	public PluginConfiguration() {
+	public PluginConfigurationForm() {
 
 		// When leaving prefix/postfix - auto-generate button label suggestion
 		FocusListener focusListenerPrefixPostfix = new FocusListener() {

@@ -25,7 +25,8 @@ import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.Preferences;
-import com.kstenschke.realigner.resources.forms.WrapOptions;
+import com.kstenschke.realigner.StaticTexts;
+import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
 
 /**
@@ -57,28 +58,27 @@ public class WrapAction extends AnAction {
 
 				if (editor != null) {
 					final Wrapper wrapper = new Wrapper(editor);
-					WrapOptions wrapOptionsDialog = wrapper.showWrapOptions();
+					DialogWrapOptions wrapOptionsDialogDialog = wrapper.showWrapOptions();
 
-					final String prefix = wrapOptionsDialog.getTextFieldPrefix();
-					final String postfix = wrapOptionsDialog.getTextFieldPostfix();
+					final String prefix = wrapOptionsDialogDialog.getTextFieldPrefix();
+					final String postfix = wrapOptionsDialogDialog.getTextFieldPostfix();
 
-					// Store preferences
 					Preferences.saveWrapProperties(prefix, postfix);
 
-					// Perform actual wrap or unwrap
-					if (wrapOptionsDialog.clickedOperation == WrapOptions.OPERATION_WRAP) {
+					    // Perform actual wrap or unwrap
+					if (wrapOptionsDialogDialog.clickedOperation == DialogWrapOptions.OPERATION_WRAP) {
 						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 							public void run() {
 								wrapper.wrap(prefix, postfix);
 							}
-						}, "Wrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+						}, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 
-					} else if (wrapOptionsDialog.clickedOperation == WrapOptions.OPERATION_UNWRAP) {
+					} else if (wrapOptionsDialogDialog.clickedOperation == DialogWrapOptions.OPERATION_UNWRAP) {
 						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 							public void run() {
 								wrapper.unwrap(prefix, postfix);
 							}
-						}, "Unwrap", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+						}, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 
 					}
 				}
