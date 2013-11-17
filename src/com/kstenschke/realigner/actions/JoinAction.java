@@ -28,7 +28,10 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.IconLoader;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.StaticTexts;
+import com.kstenschke.realigner.UtilsEnvironment;
 import com.kstenschke.realigner.UtilsTextual;
+import com.kstenschke.realigner.resources.forms.DialogJoinOptions;
+import com.kstenschke.realigner.resources.forms.DialogSplitOptions;
 
 import javax.swing.*;
 import java.util.List;
@@ -39,6 +42,9 @@ import java.util.List;
  */
 public class JoinAction extends AnAction {
 
+    Project project;
+    Editor editor;
+
 	/**
 	 * Disable when no project open
 	 *
@@ -47,16 +53,16 @@ public class JoinAction extends AnAction {
 	public void update(AnActionEvent event) {
 		boolean enabled = false;
 
-		final Project project = event.getData(PlatformDataKeys.PROJECT);
-		Editor editor = event.getData(PlatformDataKeys.EDITOR);
-		if (project != null && editor != null) {
-			SelectionModel selectionModel = editor.getSelectionModel();
-			boolean hasSelection = selectionModel.hasSelection();
-			if (hasSelection) {
-				final Document document = editor.getDocument();
+		this.project    = event.getData(PlatformDataKeys.PROJECT);
+		this.editor     = event.getData(PlatformDataKeys.EDITOR);
 
-				int lineNumberSelStart = document.getLineNumber(selectionModel.getSelectionStart());
-				int lineNumberSelEnd = document.getLineNumber(selectionModel.getSelectionEnd());
+		if (this.project != null && this.editor != null) {
+			SelectionModel selectionModel = this.editor.getSelectionModel();
+			if ( selectionModel.hasSelection() ) {
+				final Document document = this.editor.getDocument();
+
+				int lineNumberSelStart  = document.getLineNumber(selectionModel.getSelectionStart());
+				int lineNumberSelEnd    = document.getLineNumber(selectionModel.getSelectionEnd());
 
 				if (lineNumberSelEnd > lineNumberSelStart) {
 					enabled = true;
@@ -73,15 +79,10 @@ public class JoinAction extends AnAction {
 	 * @param   event   Action system event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
-		final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
-
-		CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+		CommandProcessor.getInstance().executeCommand(project, new Runnable() {
 			public void run() {
-
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-						Editor editor = event.getData(PlatformDataKeys.EDITOR);
-
 						if (editor != null) {
 							boolean cannotJoin = false;
 
@@ -102,33 +103,15 @@ public class JoinAction extends AnAction {
 								}
 
 								if (lineNumberSelEnd > lineNumberSelStart) {
-									// Join selected lines
-									String glue = Messages.showInputDialog(
-											  currentProject,
-											  "Enter Glue (Optional)", "Join Lines With Glue",
-											  IconLoader.getIcon("/com/kstenschke/realigner/resources/images/arrow-join.png"),
-											  Preferences.getJoinGlue(), null
-									);
+                                    DialogJoinOptions optionsDialog = showOptionsDialog();
 
-									if (glue != null) {
-										Preferences.saveJoinProperties(glue);
-
-										List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-										String linesStr = "";
-										int amountLines = linesList.size();
-										for (int i = 0; i < amountLines; i++) {
-											linesStr = linesStr + linesList.get(i) + (i < (amountLines - 1) ? glue : "");
-										}
-
-										// Remove newlines
-										String joinedLines = linesStr.replaceAll("(\\n)+", "");
-
-										// Replace the full lines with themselves joined
-										offsetStart = document.getLineStartOffset(lineNumberSelStart);
-										offsetEnd = document.getLineEndOffset(lineNumberSelEnd);
-
-										document.replaceString(offsetStart, offsetEnd, joinedLines);
-									}
+                                    if (optionsDialog.clickedOk) {
+                                        String glue = optionsDialog.textFieldGlue.getText();
+                                        if (glue != null) {
+                                            Preferences.saveJoinProperties(glue);
+                                            joinLines(document, lineNumberSelStart, lineNumberSelEnd, glue);
+                                        }
+                                    }
 								} else {
 									cannotJoin = true;
 								}
@@ -136,15 +119,56 @@ public class JoinAction extends AnAction {
 								cannotJoin = true;
 							}
 
-							// No selection or only one line of selection? Display resp. message
+							    // No selection or only one line of selection? Display resp. message
 							if (cannotJoin) {
 								JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
 							}
 						}
 					}
-				});
+
+                    /**
+                     * @param   document
+                     * @param   lineNumberSelStart
+                     * @param   lineNumberSelEnd
+                     * @param   glue
+                     */
+                    private void joinLines(Document document, int lineNumberSelStart, int lineNumberSelEnd, String glue) {
+                        int offsetStart;
+                        int offsetEnd;List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+                        String linesStr = "";
+                        int amountLines = linesList.size();
+                        for (int i = 0; i < amountLines; i++) {
+                            linesStr = linesStr + linesList.get(i) + (i < (amountLines - 1) ? glue : "");
+                        }
+
+                            // Remove newlines
+                        String joinedLines = linesStr.replaceAll("(\\n)+", "");
+
+                            // Replace the full lines with themselves joined
+                        offsetStart = document.getLineStartOffset(lineNumberSelStart);
+                        offsetEnd   = document.getLineEndOffset(lineNumberSelEnd);
+
+                        document.replaceString(offsetStart, offsetEnd, joinedLines);
+                    }
+                });
 
 			}
 		}, StaticTexts.UNDO_HISTORY_JOIN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
+
+    /**
+     * Setup and display options dialog for split action
+     *
+     * @return Split options dialog
+     */
+    private DialogJoinOptions showOptionsDialog() {
+        DialogJoinOptions optionsDialog = new DialogJoinOptions();
+
+            // Load and init dialog options from preferences
+        optionsDialog.setGlue(Preferences.getJoinGlue());
+
+        UtilsEnvironment.setDialogVisible(editor, optionsDialog, StaticTexts.MESSAGE_TITLE_JOIN);
+
+        return optionsDialog;
+    }
 }

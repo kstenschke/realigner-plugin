@@ -25,6 +25,8 @@ public class StaticTexts {
     public static final String MESSAGE_TITLE_SPLIT = "Split by Delimiter";
     @NonNls
     public static final String MESSAGE_TITLE_WRAP = "Wrap Text";
+    @NonNls
+    public static final String MESSAGE_TITLE_JOIN = "Join Lines with Glue";
 
         // Notification messages
     @NonNls

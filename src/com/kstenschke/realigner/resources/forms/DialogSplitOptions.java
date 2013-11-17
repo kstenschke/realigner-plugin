@@ -49,8 +49,6 @@ public class DialogSplitOptions extends JDialog {
 	 * Split options constructor
 	 */
 	public DialogSplitOptions() {
-		clickedOk = false;
-
 		setContentPane(contentPane);
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);

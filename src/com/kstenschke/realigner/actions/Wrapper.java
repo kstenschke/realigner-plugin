@@ -73,15 +73,15 @@ public class Wrapper {
 	 * @return Wrap options dialog
 	 */
 	public DialogWrapOptions showWrapOptions() {
-		DialogWrapOptions wrapOptionsDialogDialog = new DialogWrapOptions();
+		DialogWrapOptions optionsDialog = new DialogWrapOptions();
 
             // Load and init from preferences
-        wrapOptionsDialogDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
-        wrapOptionsDialogDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
+        optionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
+        optionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
 
-        UtilsEnvironment.setDialogVisible(editor, wrapOptionsDialogDialog, StaticTexts.MESSAGE_TITLE_WRAP);
+        UtilsEnvironment.setDialogVisible(editor, optionsDialog, StaticTexts.MESSAGE_TITLE_WRAP);
 
-		return wrapOptionsDialogDialog;
+		return optionsDialog;
 	}
 
 	/**

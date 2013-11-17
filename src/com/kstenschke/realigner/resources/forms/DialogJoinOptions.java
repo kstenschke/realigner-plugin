@@ -4,10 +4,17 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class DialogJoinOptions extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
 
+    public JPanel contentPane;
+    public JButton buttonOK;
+    public JButton buttonCancel;
+    public JTextField textFieldGlue;
+
+    public Boolean clickedOk = false;
+
+    /**
+     * Constructor
+     */
     public DialogJoinOptions() {
         setContentPane(contentPane);
         setModal(true);
@@ -40,11 +47,20 @@ public class DialogJoinOptions extends JDialog {
     }
 
     private void onOK() {
+        clickedOk   = true;
         dispose();
     }
 
     private void onCancel() {
+        clickedOk   = false;
         dispose();
+    }
+
+    /**
+     * @param   glue
+     */
+    public void setGlue(String glue) {
+        textFieldGlue.setText(glue);
     }
 
     public static void main(String[] args) {

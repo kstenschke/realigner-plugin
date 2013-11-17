@@ -65,8 +65,8 @@ public class UtilsTextual {
 	 */
 	public static String extractLine(Document doc, int lineNumber) {
 		int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
-		int startOffset = doc.getLineStartOffset(lineNumber);
-		int endOffset = doc.getLineEndOffset(lineNumber) + lineSeparatorLength;
+		int startOffset         = doc.getLineStartOffset(lineNumber);
+		int endOffset           = doc.getLineEndOffset(lineNumber) + lineSeparatorLength;
 
 		String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
@@ -118,6 +118,18 @@ public class UtilsTextual {
 		return str;
 	}
 
+    /**
+     * @param   str
+     * @return  String
+     */
+    public static String ltrim(String str) {
+        int i = 0;
+        while (i < str.length() && Character.isWhitespace(str.charAt(i))) {
+            i++;
+        }
+        return str.substring(i);
+    }
+
 	/**
 	 * @param   str
 	 * @param   subStr
@@ -126,5 +138,13 @@ public class UtilsTextual {
 	public static Integer countSubstringOccurrences(String str, String subStr) {
 		return str.length() - str.replaceAll(subStr, "").length();
 	}
+
+    /**
+     * @param   text
+     * @return  String
+     */
+    public static String getLeadingWhitespace(String text) {
+        return text.replace( ltrim(text), "");
+    }
 
 }
