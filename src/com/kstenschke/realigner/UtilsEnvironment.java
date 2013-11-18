@@ -31,7 +31,12 @@ public class UtilsEnvironment {
         Point caretLocation  = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
         SwingUtilities.convertPointToScreen(caretLocation, editor.getComponent());
 
-        dialog.setLocation(caretLocation);
+        if( caretLocation.getY() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() ) {
+                // Comprehend for (idea ultimate edition) off-screen caret position
+            dialog.setLocationRelativeTo(null);
+        } else {
+            dialog.setLocation(caretLocation);
+        }
 
         dialog.setTitle(title);
 
