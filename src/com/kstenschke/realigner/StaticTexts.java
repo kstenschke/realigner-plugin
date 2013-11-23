@@ -28,6 +28,10 @@ public class StaticTexts {
     @NonNls
     public static final String MESSAGE_TITLE_JOIN = "Join Lines with Glue";
 
+        // Context menu items
+    @NonNls
+    public static final String POPUP_QUICKWRAP_REMOVE = "Remove this Button";
+
         // Notification messages
     @NonNls
     public static final String NOTIFICATION_SPLIT_DELIMITER_MISSING = "Delimiter not found.";
@@ -43,11 +47,4 @@ public class StaticTexts {
     public static final String UNDO_HISTORY_WRAP = "Wrap Text";
     @NonNls
     public static final String UNDO_HISTORY_UNWRAP = "Unwrap Text";
-
-        // Component names
-    @NonNls
-    public static final String COMPONENT_NAME_SETTINGS = "Realigner Settings";
-    @NonNls
-    public static final String DISPLAY_NAME_SETTINGS = "Realigner Quick Wraps";
-
 }

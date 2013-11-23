@@ -16,6 +16,7 @@
 
 package com.kstenschke.realigner.actions;
 
+import com.intellij.lang.Language;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
@@ -110,8 +111,9 @@ public class SplitAction extends AnAction {
                         int caretOffset     = editor.getCaretModel().getOffset();
                         int lineNumber      = document.getLineNumber(caretOffset);
                         int offsetLineStart = document.getLineStartOffset(lineNumber);
+
                         String lineText     = UtilsTextual.extractLine(document, lineNumber);
-                        Integer textLength  = getTextWidth(lineText, editor);
+                        Integer textLength  = getTextWidth(lineText);
 
                         if (textLength > 120) {
                             int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
@@ -201,7 +203,7 @@ public class SplitAction extends AnAction {
                         int startOffsetFirstLine    = document.getLineStartOffset(lineNumberSelectionStart);
                         int endOffsetFirstLine      = document.getLineEndOffset(lineNumberSelectionStart);
                         String firstLine            = document.getText(new TextRange(startOffsetFirstLine, endOffsetFirstLine));
-                        String indent               = firstLine.replace(UtilsTextual.ltrim(firstLine), "");
+                        String indent               = firstLine.replace(UtilsTextual.lTrim(firstLine), "");
 
                         String[] selectedLines    = document.getText(new TextRange(offsetSelectionStart, offsetSelectionEnd)).split("\n");
                         Integer index = 0;
@@ -241,31 +243,34 @@ public class SplitAction extends AnAction {
 	/**
 	 * Get visual length of given text, that is in editor where tabs resolve to the width of multiple characters
 	 *
-	 * @param text   Text to be "measured"
-	 * @param editor
-	 * @return Amount of characters
+	 * @param   text        Text to be "measured"
+	 * @return  Integer     Amount of characters
 	 */
-	private Integer getTextWidth(String text, Editor editor) {
+	private Integer getTextWidth(String text) {
 		Integer length = text.length();
 
-		// Get tab size
+		    // Get tab size
 		Integer tabSize = 0;
 
-		Project project = editor.getProject();
-		PsiFile psifile = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
-		CommonCodeStyleSettings commonCodeStyleSettings = new CommonCodeStyleSettings(psifile.getLanguage());
-		CommonCodeStyleSettings.IndentOptions indentOptions = commonCodeStyleSettings.getIndentOptions();
+        if( this.project != null ) {
+            PsiFile psiFile = PsiDocumentManager.getInstance(this.project).getPsiFile(this.editor.getDocument());
 
-		if (indentOptions != null) {
-			tabSize = indentOptions.TAB_SIZE;
-		}
-		if (tabSize == 0) {
-			tabSize = editor.getSettings().getTabSize(editor.getProject());
-		}
+            if( psiFile != null ) {
+                CommonCodeStyleSettings commonCodeStyleSettings = new CommonCodeStyleSettings(psiFile.getLanguage());
+                CommonCodeStyleSettings.IndentOptions indentOptions = commonCodeStyleSettings.getIndentOptions();
 
-		Integer amountTabs = UtilsTextual.countSubstringOccurrences(text, "\t");
+                if (indentOptions != null) {
+                    tabSize = indentOptions.TAB_SIZE;
+                }
+                if (tabSize == 0) {
+                    tabSize = this.editor.getSettings().getTabSize(this.project);
+                }
 
-		return length + amountTabs * (tabSize - 1);
+                return length + UtilsTextual.countTabOccurrences(text) * (tabSize - 1);
+            }
+        }
+
+        return null;
 	}
 
 	/**
@@ -273,7 +278,7 @@ public class SplitAction extends AnAction {
 	 *
 	 * @param   delimiter      Delimiter string
 	 * @param   disposalMethod   Before/At/After
-	 * @return String
+	 * @return  String
 	 */
 	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
 		if (disposalMethod == DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_BEFORE) {

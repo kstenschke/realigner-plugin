@@ -70,9 +70,9 @@ public class UtilsTextual {
 
 		String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
-		// If last line has no \n, add it one
-		// This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
-		// with \n... This is fixed after.
+		    // If last line has no \n, add it one
+		    // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
+		    // with \n... This is fixed after.
 		if (lineSeparatorLength == 0) {
 			line += "\n";
 		}
@@ -105,7 +105,7 @@ public class UtilsTextual {
 	 * @param   str     String to be transformed
 	 * @param   prefix  Prefix to be removed
 	 * @param   postfix Postfix to be removed
-	 * @return Given string with prefix and postfix removed
+	 * @return  String  Given string with prefix and postfix removed
 	 */
 	public static String unwrap(String str, String prefix, String postfix) {
 		if (str.startsWith(prefix)) {
@@ -122,7 +122,7 @@ public class UtilsTextual {
      * @param   str
      * @return  String
      */
-    public static String ltrim(String str) {
+    public static String lTrim(String str) {
         int i = 0;
         while (i < str.length() && Character.isWhitespace(str.charAt(i))) {
             i++;
@@ -132,19 +132,10 @@ public class UtilsTextual {
 
 	/**
 	 * @param   str
-	 * @param   subStr
-	 * @return Amount of occurrences of given substring in given string
+	 * @return  Amount of tabs in given string
 	 */
-	public static Integer countSubstringOccurrences(String str, String subStr) {
-		return str.length() - str.replaceAll(subStr, "").length();
+	public static Integer countTabOccurrences(String str) {
+		return str.length() - str.replaceAll("\t", "").length();
 	}
-
-    /**
-     * @param   text
-     * @return  String
-     */
-    public static String getLeadingWhitespace(String text) {
-        return text.replace( ltrim(text), "");
-    }
 
 }

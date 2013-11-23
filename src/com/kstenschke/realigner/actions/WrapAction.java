@@ -58,10 +58,12 @@ public class WrapAction extends AnAction {
 
 				if (editor != null) {
 					final Wrapper wrapper = new Wrapper(editor);
-					DialogWrapOptions optionsDialog = wrapper.showWrapOptions();
+                    final Boolean isSelectionMultiLine  = wrapper.isSelectionMultiLine;
+                    DialogWrapOptions optionsDialog = wrapper.showWrapOptions(isSelectionMultiLine);
 
-					final String prefix = optionsDialog.getTextFieldPrefix();
-					final String postfix = optionsDialog.getTextFieldPostfix();
+					final String prefix     = optionsDialog.getTextFieldPrefix();
+					final String postfix    = optionsDialog.getTextFieldPostfix();
+                    final Integer wrapMode  = optionsDialog.getWrapMode();
 
 					Preferences.saveWrapProperties(prefix, postfix);
 
@@ -69,14 +71,14 @@ public class WrapAction extends AnAction {
 					if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_WRAP) {
 						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 							public void run() {
-								wrapper.wrap(prefix, postfix);
+								wrapper.wrap(prefix, postfix, wrapMode);
 							}
 						}, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 
 					} else if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_UNWRAP) {
 						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 							public void run() {
-								wrapper.unwrap(prefix, postfix);
+								wrapper.unwrap(prefix, postfix, wrapMode);
 							}
 						}, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 

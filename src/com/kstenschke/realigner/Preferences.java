@@ -25,21 +25,22 @@ import org.jetbrains.annotations.NonNls;
  */
 public class Preferences {
 
-	//  @NonNls = element is not a string requiring internationalization and it does not contain such strings.
 	@NonNls
 	private static final String PROPERTY_JOIN_GLUE = "PluginRealiginer.JoinGlue";
-
 	@NonNls
 	private static final String PROPERTY_WRAP_PREFIX = "PluginRealiginer.WrapPrefix";
-
 	@NonNls
 	private static final String PROPERTY_WRAP_POSTFIX = "PluginRealiginer.WrapPostfix";
-
 	@NonNls
 	private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
-
 	@NonNls
 	private static final String PROPERTY_SPLIT_SPLITWHERE = "PluginRealiginer.SplitSplitWhere";
+
+        // Wrap modes
+    @NonNls
+    private static final String PROPERTY_MODE_WRAP_QUICK = "PluginRealiginer.QuickWrapMode";
+    @NonNls
+    private static final String PROPERTY_MODE_WRAP_MULTILINE = "PluginRealiginer.MultiLineWrapMode";
 
 
 	/**
@@ -54,6 +55,20 @@ public class Preferences {
 		propertiesComponent.setValue(PROPERTY_WRAP_PREFIX, prefix);
 		propertiesComponent.setValue(PROPERTY_WRAP_POSTFIX, postfix);
 	}
+
+    /**
+     * @param   mode    Un/wrap
+     */
+    public static void saveMultiLineWrapMode(Integer mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_MODE_WRAP_MULTILINE, mode.toString());
+    }
+
+    /**
+     * @param   mode    Un/wrap
+     */
+    public static void saveQuickWrapMode(Integer mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_MODE_WRAP_QUICK, mode.toString());
+    }
 
 	/**
 	 * Store split preferences
@@ -80,10 +95,10 @@ public class Preferences {
 	}
 
 	/**
-	 * @param propertyName      Name of the preference property
-	 * @param defaultValue      Default value to be set if null
-	 * @param setDefaultIfEmpty Set default also if empty?
-	 * @return String
+	 * @param   propertyName        Name of the preference property
+	 * @param   defaultValue        Default value to be set if null
+	 * @param   setDefaultIfEmpty   Set default also if empty?
+	 * @return  String
 	 */
 	private static String getProperty(String propertyName, String defaultValue, Boolean setDefaultIfEmpty) {
 		String value = PropertiesComponent.getInstance().getValue(propertyName);
@@ -97,12 +112,22 @@ public class Preferences {
 		return value;
 	}
 
-	public static String getProperty(String propertyName, String defaultValue) {
-		return getProperty(propertyName, defaultValue, false);
-	}
+    /**
+     * @return  Integer QuickWrap Mode
+     */
+    public static Integer getMultiLineWrapMode() {
+        return Integer.parseInt(getProperty(PROPERTY_MODE_WRAP_MULTILINE, "0", true));
+    }
+
+    /**
+     * @return  Integer QuickWrap Mode
+     */
+    public static Integer getQuickWrapMode() {
+        return Integer.parseInt(getProperty(PROPERTY_MODE_WRAP_QUICK, "1", true));
+    }
 
 	/**
-	 * @return Split delimiter
+	 * @return  String  Split delimiter
 	 */
 	public static String getSplitDelimiter() {
 		return getProperty(PROPERTY_SPLIT_DELIMITER, "", true);
@@ -111,28 +136,28 @@ public class Preferences {
 	/**
 	 * Get split option: split at/before/after delimiter
 	 *
-	 * @return String         "0" (default if not saved yet) / "1" / "2"
+	 * @return  String  "0" (default if not saved yet) / "1" / "2"
 	 */
 	public static String getSplitWhere() {
 		return getProperty(PROPERTY_SPLIT_SPLITWHERE, "0", true);
 	}
 
 	/**
-	 * @return Join glue preference
+	 * @return  String  Join glue preference
 	 */
 	public static String getJoinGlue() {
 		return getProperty(PROPERTY_JOIN_GLUE, "", false);
 	}
 
 	/**
-	 * @return Wrap prefix
+	 * @return  String  Wrap prefix
 	 */
 	public static String getWrapPrefix() {
 		return getProperty(PROPERTY_WRAP_PREFIX, ", ", false);
 	}
 
 	/**
-	 * @return Wrap postfix
+	 * @return  String  Wrap postfix
 	 */
 	public static String getWrapPostfix() {
 		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
