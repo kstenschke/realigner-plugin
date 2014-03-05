@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package com.kstenschke.realigner;
 
-import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
 import javax.swing.*;
@@ -26,7 +25,7 @@ import java.awt.event.MouseEvent;
 
 public class PopupWrapButton {
 
-    final JPopupMenu popup;
+    private final JPopupMenu popup;
 
     /**
      * Constructor
@@ -52,8 +51,6 @@ public class PopupWrapButton {
     public PopupListener getPopupListener() {
         return new PopupListener();
     }
-
-
 
     /**
      * PopupListener

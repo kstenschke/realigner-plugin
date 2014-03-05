@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -137,5 +137,23 @@ public class UtilsTextual {
 	public static Integer countTabOccurrences(String str) {
 		return str.length() - str.replaceAll("\t", "").length();
 	}
+
+    /**
+     * @param   text
+     * @return  String  All lines being trimmed from leading and trailing whitespace
+     */
+    public static String trimLines(String text, Boolean keepEmptyLines) {
+        String[] lines  = text.split("\n");
+
+        String result = "";
+        for(String line : lines) {
+            line    = line.trim();
+            if( !line.isEmpty() || keepEmptyLines ) {
+                result += line + "\n";
+            }
+        }
+
+        return result;
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,8 @@ import java.util.List;
  */
 public class JoinAction extends AnAction {
 
-    Project project;
-    Editor editor;
+    private Project project;
+    private Editor editor;
 
 	/**
 	 * Disable when no project open

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,26 +24,21 @@ public class DialogSplitOptions extends JDialog {
 	private JPanel contentPane;
 
 	private JButton buttonOK;
-
 	private JButton buttonCancel;
 
 	private JRadioButton splitAtDelimiterRadioButton;
-
 	private JRadioButton splitAfterDelimiterRadioButton;
-
 	private JRadioButton splitBeforeDelimiterRadioButton;
 
 	private JTextField textFieldDelimiter;
+    private JCheckBox checkboxTrimWhitespace;
 
-	// Delimiter disposal methods
-	public static final int METHOD_DELIMITER_DISPOSAL_AT = 0;
-
+        // Delimiter disposal methods
+	private static final int METHOD_DELIMITER_DISPOSAL_AT = 0;
 	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE = 1;
-
 	public static final int METHOD_DELIMITER_DISPOSAL_AFTER = 2;
 
 	public Boolean clickedOk = false;
-
 
 	/**
 	 * Split options constructor
@@ -72,7 +67,7 @@ public class DialogSplitOptions extends JDialog {
 			}
 		});
 
-		// call onCancel() on ESCAPE
+		    // call onCancel() on ESCAPE
 		contentPane.registerKeyboardAction(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onCancel();
@@ -111,7 +106,7 @@ public class DialogSplitOptions extends JDialog {
 	/**
 	 * Getter for delimiter text
 	 *
-	 * @return String
+	 * @return  String
 	 */
 	public String getDelimiter() {
 		return textFieldDelimiter.getText();
@@ -127,7 +122,7 @@ public class DialogSplitOptions extends JDialog {
 	/**
 	 * Getter for delimiter disposal method
 	 *
-	 * @return Integer
+	 * @return  Integer
 	 */
 	public Integer getDelimiterDisposalMethod() {
 		if (splitBeforeDelimiterRadioButton.isSelected()) {
@@ -144,7 +139,7 @@ public class DialogSplitOptions extends JDialog {
 	/**
 	 * Select given split-where (at/after/before delimiter) option radio box
 	 *
-	 * @param splitWhere At/before/after delimiter
+	 * @param   splitWhere  At/before/after delimiter
 	 */
 	public void setDelimiterDisposalMethod(Integer splitWhere) {
 		switch (splitWhere) {
@@ -162,5 +157,19 @@ public class DialogSplitOptions extends JDialog {
 				break;
 		}
 	}
+
+    /**
+     * @param   selected
+     */
+    public void setCheckboxTrimWhitespaceSelected(Boolean selected) {
+        checkboxTrimWhitespace.setSelected(selected);
+    }
+
+    /**
+     * @return  Boolean
+     */
+    public Boolean getIsSelectedTrimWhitespace() {
+        return checkboxTrimWhitespace.isSelected();
+    }
 
 }

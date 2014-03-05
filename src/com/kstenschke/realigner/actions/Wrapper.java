@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.kstenschke.realigner.actions;
 
-
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
@@ -26,15 +25,20 @@ import com.kstenschke.realigner.UtilsEnvironment;
 import com.kstenschke.realigner.UtilsTextual;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
-public class Wrapper {
+class Wrapper {
 
-	final Editor editor;
-	final Document document;
+	private final Editor editor;
+	private final Document document;
 
-    SelectionModel selectionModel;
+    private SelectionModel selectionModel;
     private Boolean hasSelection = false;
+
     public Boolean isSelectionMultiLine = false;
-	int offsetSelectionStart, offsetSelectionEnd, lineNumberSelectionStart, lineNumberSelectionEnd;
+
+	private int offsetSelectionStart;
+    private int offsetSelectionEnd;
+    private int lineNumberSelectionStart;
+    private int lineNumberSelectionEnd;
 
 	/**
 	 * Constructor
@@ -51,7 +55,7 @@ public class Wrapper {
 	/**
 	 * Initialize selection related wrapper properties
 	 */
-	public void initSelectionProperties() {
+    void initSelectionProperties() {
 		this.selectionModel = editor.getSelectionModel();
 
 		this.hasSelection = selectionModel.hasSelection();
@@ -125,9 +129,8 @@ public class Wrapper {
 	 *
 	 * @param   prefix
 	 * @param   postfix
-     * @param   wrapMode    If multi-line: unwrap each line / whole selection
 	 */
-	public void unwrap(String prefix, String postfix, Integer wrapMode) {
+	public void unwrap(String prefix, String postfix) {
 		if (hasSelection) {
 			if (document.getLineStartOffset(lineNumberSelectionEnd) == this.offsetSelectionEnd) {
 				lineNumberSelectionEnd--;

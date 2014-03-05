@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.kstenschke.realigner.actions;
 
-import com.intellij.lang.Language;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
@@ -39,14 +38,13 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 
-
 /**
  * Implode / Explode Action
  */
 public class SplitAction extends AnAction {
 
-    Editor  editor;
-    Project project;
+    private Editor  editor;
+    private Project project;
 
 	/**
 	 * Disable when no project open
@@ -81,16 +79,17 @@ public class SplitAction extends AnAction {
 
 							    // Clicked ok: conduct split
 							if (optionsDialog.clickedOk) {
-								String delimiter = optionsDialog.getDelimiter();
+								String delimiter                = optionsDialog.getDelimiter();
+                                Boolean trimWhitespace          = optionsDialog.getIsSelectedTrimWhitespace();
 								Integer delimiterDisposalMethod = optionsDialog.getDelimiterDisposalMethod();
 
-								Preferences.saveSplitProperties(delimiter, delimiterDisposalMethod);
+								Preferences.saveSplitProperties(delimiter, trimWhitespace, delimiterDisposalMethod);
 
 								if (delimiter != null && delimiter.length() > 0) {
 									if (hasSelection) {
-                                        splitSelection(document, selectionModel, delimiter, delimiterDisposalMethod);
+                                        splitSelection(document, selectionModel, delimiter, trimWhitespace, delimiterDisposalMethod);
 									} else {
-                                        splitLine(document, delimiter, delimiterDisposalMethod);
+                                        splitLine(document, delimiter, trimWhitespace, delimiterDisposalMethod);
                                     }
 
                                     alignSelectedLinesIndent(document, selectionModel);
@@ -142,9 +141,10 @@ public class SplitAction extends AnAction {
                      *
                      * @param   document
                      * @param   delimiter
+                     * @param   trimWhitespace
                      * @param   delimiterDisposalMethod
                      */
-                    private void splitLine(Document document, String delimiter, Integer delimiterDisposalMethod) {
+                    private void splitLine(Document document, String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod) {
                         int caretOffset = editor.getCaretModel().getOffset();
                         int lineNumber  = document.getLineNumber(caretOffset);
 
@@ -155,7 +155,7 @@ public class SplitAction extends AnAction {
                         if (!lineText.contains(delimiter)) {
                             JOptionPane.showMessageDialog(null, StaticTexts.NOTIFICATION_SPLIT_DELIMITER_MISSING);
                         } else {
-                            document.replaceString(offsetLineStart, offsetLineEnd, getExplodedLineText(delimiter, delimiterDisposalMethod, lineText));
+                            document.replaceString(offsetLineStart, offsetLineEnd, getExplodedLineText(delimiter, trimWhitespace, delimiterDisposalMethod, lineText));
                         }
                     }
 
@@ -163,9 +163,10 @@ public class SplitAction extends AnAction {
                      * @param   document
                      * @param   selectionModel
                      * @param   delimiter
+                     * @param   trimWhitespace
                      * @param   delimiterDisposalMethod
                      */
-                    private void splitSelection(Document document, SelectionModel selectionModel, String delimiter, Integer delimiterDisposalMethod) {
+                    private void splitSelection(Document document, SelectionModel selectionModel, String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod) {
                         int offsetStart = selectionModel.getSelectionStart();
                         int offsetEnd   = selectionModel.getSelectionEnd();
 
@@ -183,7 +184,7 @@ public class SplitAction extends AnAction {
                                 String lineText     = UtilsTextual.extractLine(document, lineNumber);
                                 int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
 
-                                String exploded  = getExplodedLineText(delimiter, delimiterDisposalMethod, lineText);
+                                String exploded  = getExplodedLineText(delimiter, trimWhitespace, delimiterDisposalMethod, lineText);
 
                                 document.replaceString(offsetLineStart, offsetLineEnd, exploded);
                             }
@@ -222,9 +223,16 @@ public class SplitAction extends AnAction {
                      * @param   lineText
                      * @return  String
                      */
-                    private String getExplodedLineText(String delimiter, Integer delimiterDisposalMethod, String lineText) {
+                    private String getExplodedLineText(String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod, String lineText) {
 						String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
-						return lineText.replace(delimiter, replacement);
+
+						String result = lineText.replace(delimiter, replacement);
+
+                        if( trimWhitespace ) {
+                            result  = UtilsTextual.trimLines(result, false);
+                        }
+
+                        return result;
 					}
 				});
 
@@ -300,6 +308,7 @@ public class SplitAction extends AnAction {
 
             // Load and init dialog options from preferences
         optionsDialog.setDelimiter(Preferences.getSplitDelimiter());
+        optionsDialog.setCheckboxTrimWhitespaceSelected(Preferences.getIsSplitIsSelectedTrimWhitespace());
         optionsDialog.setDelimiterDisposalMethod(Integer.parseInt(Preferences.getSplitWhere()));
 
         UtilsEnvironment.setDialogVisible(editor, optionsDialog, StaticTexts.MESSAGE_TITLE_SPLIT);

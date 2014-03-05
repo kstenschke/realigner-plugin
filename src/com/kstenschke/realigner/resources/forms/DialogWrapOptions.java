@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,13 +47,13 @@ public class DialogWrapOptions extends JDialog {
     private JPanel panelMultiLineOptions;
 
         // Wrap modes
-    public static final int MODE_WRAP_EACH_LINE = 0;
-    public static final int MODE_WRAP_WHOLE     = 1;
+    private static final int MODE_WRAP_EACH_LINE = 0;
+    public static final int MODE_WRAP_WHOLE      = 1;
 
         // Operations
-    public static final int OPERATION_CANCEL    = 0;
-	public static final int OPERATION_WRAP      = 1;
-	public static final int OPERATION_UNWRAP    = 2;
+    private static final int OPERATION_CANCEL    = 0;
+	public static final int OPERATION_WRAP       = 1;
+	public static final int OPERATION_UNWRAP     = 2;
 
 	public Integer clickedOperation = OPERATION_CANCEL;
 

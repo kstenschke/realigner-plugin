@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2012-2013 Kay Stenschke
+  ~ Copyright 2012-2014 Kay Stenschke
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -38,10 +38,13 @@
     <br/>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.2.1<ul>
+        <li>Extended splitting with option to trim whitespace from items</li>
+    </ul>
     1.2.0<ul>
         <li>Moved quick-wrap buttons configuration from plugin settings directly into wrap dialog</li>
         <li>Added un/wrap options: each line / whole selection</li>
@@ -108,13 +111,8 @@
     </ul>
   ]]></change-notes>
 
-    <application-components>
-
-    </application-components>
-
-    <project-components>
-
-    </project-components>
+    <application-components />
+    <project-components />
 
     <actions>
         <group id="RealignerActionGroup" text="Aligner" popup="false">

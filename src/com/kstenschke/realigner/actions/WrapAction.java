@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public class WrapAction extends AnAction {
 					} else if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_UNWRAP) {
 						CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
 							public void run() {
-								wrapper.unwrap(prefix, postfix, wrapMode);
+								wrapper.unwrap(prefix, postfix);
 							}
 						}, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Kay Stenschke
+ * Copyright 2012-2014 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,15 +33,16 @@ public class Preferences {
 	private static final String PROPERTY_WRAP_POSTFIX = "PluginRealiginer.WrapPostfix";
 	@NonNls
 	private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
+    @NonNls
+	private static final String PROPERTY_SPLIT_TRIM_WHITESPACE = "PluginRealiginer.SplitTrimWhitespace";
 	@NonNls
-	private static final String PROPERTY_SPLIT_SPLITWHERE = "PluginRealiginer.SplitSplitWhere";
+	private static final String PROPERTY_SPLIT_WHERE = "PluginRealiginer.SplitSplitWhere";
 
         // Wrap modes
     @NonNls
     private static final String PROPERTY_MODE_WRAP_QUICK = "PluginRealiginer.QuickWrapMode";
     @NonNls
     private static final String PROPERTY_MODE_WRAP_MULTILINE = "PluginRealiginer.MultiLineWrapMode";
-
 
 	/**
 	 * Store wrap preferences
@@ -73,16 +74,18 @@ public class Preferences {
 	/**
 	 * Store split preferences
 	 *
-	 * @param   delimiter                Delimiter string
-	 * @param   delimiterDisposalMethod      Split at/after/before?
+	 * @param   delimiter                   Delimiter string
+	 * @param   trimWhitespace              Trim items whitespace?
+	 * @param   delimiterDisposalMethod     Split at/after/before?
 	 */
-	public static void saveSplitProperties(String delimiter, Integer delimiterDisposalMethod) {
+	public static void saveSplitProperties(String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
 		propertiesComponent.setValue(PROPERTY_SPLIT_DELIMITER, delimiter);
+        propertiesComponent.setValue(PROPERTY_SPLIT_TRIM_WHITESPACE, trimWhitespace ? "1":"0");
 
 		if (delimiterDisposalMethod > 2) delimiterDisposalMethod = 0;
-		propertiesComponent.setValue(PROPERTY_SPLIT_SPLITWHERE, delimiterDisposalMethod.toString());
+		propertiesComponent.setValue(PROPERTY_SPLIT_WHERE, delimiterDisposalMethod.toString());
 	}
 
 	/**
@@ -134,12 +137,19 @@ public class Preferences {
 	}
 
 	/**
+	 * @return  String  Split delimiter
+	 */
+	public static Boolean getIsSplitIsSelectedTrimWhitespace() {
+		return getProperty(PROPERTY_SPLIT_TRIM_WHITESPACE, "1", true).equals("1");
+	}
+
+	/**
 	 * Get split option: split at/before/after delimiter
 	 *
 	 * @return  String  "0" (default if not saved yet) / "1" / "2"
 	 */
 	public static String getSplitWhere() {
-		return getProperty(PROPERTY_SPLIT_SPLITWHERE, "0", true);
+		return getProperty(PROPERTY_SPLIT_WHERE, "0", true);
 	}
 
 	/**
