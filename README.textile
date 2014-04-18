@@ -34,7 +34,7 @@ The icons used in this plugin are part of the "Fugue iconset by p.yusukekamiyama
 
 h2. Changelog
 
-Read full changelog:https://github.com/kstenschke/realigner-plugin/blob/master/CHANGELOG.textile
+Read full changelog: https://github.com/kstenschke/realigner-plugin/blob/master/CHANGELOG.textile
 
 
 
