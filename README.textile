@@ -13,6 +13,7 @@ The Realigner plugin adds three tools for reformatting text:
 * Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line
 or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.
 
+*Mac Users:* On Macs, the keyboard shortcuts are J, L or W together with Shift+Alt+Cmd
 
 
 Realigner is helpful e.g. for:
