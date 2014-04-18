@@ -22,6 +22,7 @@
         <li>Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.*</li>
         <li>Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.</li>
     </ul><br/>
+    <b>Mac Users: </b>On Macs, the keyboard shortcuts are J, L or W together with Shift+Alt+Cmd<br/><br/>
     *Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
     <br /><br />
     Realigner is helpful e.g. for:
@@ -43,7 +44,7 @@
 
     <change-notes><![CDATA[
     1.2.2<ul>
-        <li>Changed dialog handling: dialog locations are kept and restored now</li>
+        <li>Added save+restoring of dialog positions on screen</li>
     </ul>
     1.2.1<ul>
         <li>Extended splitting with option to trim whitespace from items</li>
