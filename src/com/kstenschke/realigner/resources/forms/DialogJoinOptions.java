@@ -5,9 +5,9 @@ import java.awt.event.*;
 
 public class DialogJoinOptions extends JDialog {
 
-    public JPanel contentPane;
-    public JButton buttonOK;
-    public JButton buttonCancel;
+    private JPanel contentPane;
+    private JButton buttonOK;
+    private JButton buttonCancel;
     public JTextField textFieldGlue;
 
     public Boolean clickedOk = false;

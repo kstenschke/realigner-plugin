@@ -20,12 +20,11 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.kstenschke.realigner.PopupWrapButton;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.SettingsQuickWraps;
-import com.kstenschke.realigner.UtilsTextual;
+import com.kstenschke.realigner.listeners.FocusListenerPrefix;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeListener;
 
 public class DialogWrapOptions extends JDialog {
 
@@ -36,7 +35,7 @@ public class DialogWrapOptions extends JDialog {
 	private JPanel panelWrapButtonsContainer;
 	private JTextField textFieldPostfix;
 	private JTextField textFieldPrefix;
-	public JPanel quickWrapButtonsPanel;
+	private JPanel quickWrapButtonsPanel;
     private JButton buttonSave;
     private JPanel defaultPanel;
     private JPanel jpanelMainButtons;
@@ -71,7 +70,7 @@ public class DialogWrapOptions extends JDialog {
         panelMultiLineOptions.setVisible(isMultiLineSelection);
         initQuickWrapButtons();
 
-        textFieldPrefix.addFocusListener(this.getFocusListenerPrefix());
+        textFieldPrefix.addFocusListener( new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
 
     		// Add button action listeners
         buttonSave.addActionListener(this.getActionListenerSaveQuickWrapButton());
@@ -119,27 +118,6 @@ public class DialogWrapOptions extends JDialog {
     }
 
     /**
-     * @return  FocusListener
-     */
-    private FocusListener getFocusListenerPrefix() {
-        return new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                // When leaving prefix field containing an HTML tag: fill with postfix field with resp. pendent
-                String prefix = textFieldPrefix.getText();
-                if (UtilsTextual.containsHtmlTag(prefix)) {
-                    textFieldPostfix.setText(UtilsTextual.getClosingTagPendent(prefix));
-                }
-            }
-        };
-    }
-
-    /**
      * Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
      *
      */
@@ -172,8 +150,8 @@ public class DialogWrapOptions extends JDialog {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String prefix = getTextFieldPrefix();
-                String postfix = getTextFieldPostfix();
+                String prefix = getPrefix();
+                String postfix= getPostfix();
 
                 SettingsQuickWraps.saveWrapButtonItemToStore(prefix + "..." + postfix, prefix, postfix);
 
@@ -275,7 +253,7 @@ public class DialogWrapOptions extends JDialog {
 	 *
 	 * @return String
 	 */
-	public String getTextFieldPrefix() {
+	public String getPrefix() {
 		return textFieldPrefix.getText();
 	}
 
@@ -291,7 +269,7 @@ public class DialogWrapOptions extends JDialog {
 	 *
 	 * @return String
 	 */
-	public String getTextFieldPostfix() {
+	public String getPostfix() {
 		return textFieldPostfix.getText();
 	}
 

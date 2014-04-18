@@ -29,10 +29,8 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.kstenschke.realigner.Preferences;
-import com.kstenschke.realigner.StaticTexts;
-import com.kstenschke.realigner.UtilsEnvironment;
-import com.kstenschke.realigner.UtilsTextual;
+import com.kstenschke.realigner.*;
+import com.kstenschke.realigner.listeners.ComponentListenerDialog;
 import com.kstenschke.realigner.resources.forms.DialogSplitOptions;
 import org.apache.commons.lang.StringUtils;
 
@@ -41,7 +39,7 @@ import javax.swing.*;
 /**
  * Implode / Explode Action
  */
-public class SplitAction extends AnAction {
+class SplitAction extends AnAction {
 
     private Editor  editor;
     private Project project;
@@ -229,7 +227,7 @@ public class SplitAction extends AnAction {
 						String result = lineText.replace(delimiter, replacement);
 
                         if( trimWhitespace ) {
-                            result  = UtilsTextual.trimLines(result, false);
+                            result  = UtilsTextual.trimLines(result);
                         }
 
                         return result;
@@ -311,7 +309,8 @@ public class SplitAction extends AnAction {
         optionsDialog.setCheckboxTrimWhitespaceSelected(Preferences.getIsSplitIsSelectedTrimWhitespace());
         optionsDialog.setDelimiterDisposalMethod(Integer.parseInt(Preferences.getSplitWhere()));
 
-        UtilsEnvironment.setDialogVisible(editor, optionsDialog, StaticTexts.MESSAGE_TITLE_SPLIT);
+        optionsDialog.addComponentListener( new ComponentListenerDialog(Preferences.ID_DIALOG_SPLIT) );
+        UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_SPLIT, optionsDialog, StaticTexts.MESSAGE_TITLE_SPLIT);
 
 		return optionsDialog;
 	}

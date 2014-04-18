@@ -24,18 +24,25 @@ import java.awt.*;
 public class UtilsEnvironment {
 
     /**
-     * @param editor
-     * @param dialog
+     * @param   editor
+     * @param   idDialog
+     * @param   dialog
+     * @param   title
      */
-    public static void setDialogVisible(Editor editor, JDialog dialog, String title) {
+    public static void setDialogVisible(Editor editor, String idDialog, JDialog dialog, String title) {
         Point caretLocation  = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
         SwingUtilities.convertPointToScreen(caretLocation, editor.getComponent());
 
-        if( caretLocation.getY() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() ) {
-                // Comprehend for (idea ultimate edition) off-screen caret position
+        Point location = null;
+        String[] position   = Preferences.getDialogPosition(idDialog).split("x");
+        if( ! (position[0].equals("0") && position[1].equals("0")) ) {
+            location    = new Point( Integer.parseInt(position[0]), Integer.parseInt(position[1]) );
+        }
+        if( location == null ) {
+            // Center to screen
             dialog.setLocationRelativeTo(null);
         } else {
-            dialog.setLocation(caretLocation);
+            dialog.setLocation(location.x, location.y);
         }
 
         dialog.setTitle(title);

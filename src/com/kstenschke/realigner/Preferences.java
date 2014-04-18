@@ -25,6 +25,21 @@ import org.jetbrains.annotations.NonNls;
  */
 public class Preferences {
 
+        // Dialog IDs
+    @NonNls
+    public static final String ID_DIALOG_JOIN = "PluginRealiginer.DialogJoin";
+    @NonNls
+    public static final String ID_DIALOG_SPLIT = "PluginRealiginer.DialogSplit";
+    @NonNls
+    public static final String ID_DIALOG_WRAP = "PluginRealiginer.DialogWrap";
+
+        // Wrap modes
+    @NonNls
+    private static final String PROPERTY_MODE_WRAP_QUICK = "PluginRealiginer.QuickWrapMode";
+    @NonNls
+    private static final String PROPERTY_MODE_WRAP_MULTILINE = "PluginRealiginer.MultiLineWrapMode";
+
+        // Various Options
 	@NonNls
 	private static final String PROPERTY_JOIN_GLUE = "PluginRealiginer.JoinGlue";
 	@NonNls
@@ -37,12 +52,6 @@ public class Preferences {
 	private static final String PROPERTY_SPLIT_TRIM_WHITESPACE = "PluginRealiginer.SplitTrimWhitespace";
 	@NonNls
 	private static final String PROPERTY_SPLIT_WHERE = "PluginRealiginer.SplitSplitWhere";
-
-        // Wrap modes
-    @NonNls
-    private static final String PROPERTY_MODE_WRAP_QUICK = "PluginRealiginer.QuickWrapMode";
-    @NonNls
-    private static final String PROPERTY_MODE_WRAP_MULTILINE = "PluginRealiginer.MultiLineWrapMode";
 
 	/**
 	 * Store wrap preferences
@@ -172,5 +181,21 @@ public class Preferences {
 	public static String getWrapPostfix() {
 		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
 	}
+
+    /**
+     * @param   idDialog
+     * @param   x
+     * @param   y
+     */
+    public static void saveDialogPosition(String idDialog, Integer x, Integer y) {
+        PropertiesComponent.getInstance().setValue(idDialog + ".Position", x.toString() + "x" + y.toString());
+    }
+
+    /**
+     * @param   idDialog
+     */
+    public static String getDialogPosition(String idDialog) {
+        return getProperty( idDialog + ".Position", "0x0", false );
+    }
 
 }

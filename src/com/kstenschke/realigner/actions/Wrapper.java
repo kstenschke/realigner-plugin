@@ -19,10 +19,8 @@ package com.kstenschke.realigner.actions;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.kstenschke.realigner.Preferences;
-import com.kstenschke.realigner.StaticTexts;
-import com.kstenschke.realigner.UtilsEnvironment;
-import com.kstenschke.realigner.UtilsTextual;
+import com.kstenschke.realigner.*;
+import com.kstenschke.realigner.listeners.ComponentListenerDialog;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
 class Wrapper {
@@ -95,7 +93,8 @@ class Wrapper {
             optionsDialog.quickUnwrapRadioButton.setSelected(true);
         }
 
-        UtilsEnvironment.setDialogVisible(editor, optionsDialog, StaticTexts.MESSAGE_TITLE_WRAP);
+        optionsDialog.addComponentListener( new ComponentListenerDialog(Preferences.ID_DIALOG_WRAP) );
+        UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_WRAP, optionsDialog, StaticTexts.MESSAGE_TITLE_WRAP);
 
 		return optionsDialog;
 	}

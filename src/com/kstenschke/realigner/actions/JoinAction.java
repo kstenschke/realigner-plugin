@@ -24,14 +24,9 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.IconLoader;
-import com.kstenschke.realigner.Preferences;
-import com.kstenschke.realigner.StaticTexts;
-import com.kstenschke.realigner.UtilsEnvironment;
-import com.kstenschke.realigner.UtilsTextual;
+import com.kstenschke.realigner.*;
+import com.kstenschke.realigner.listeners.ComponentListenerDialog;
 import com.kstenschke.realigner.resources.forms.DialogJoinOptions;
-import com.kstenschke.realigner.resources.forms.DialogSplitOptions;
 
 import javax.swing.*;
 import java.util.List;
@@ -40,7 +35,7 @@ import java.util.List;
 /**
  * Implode / Explode Action
  */
-public class JoinAction extends AnAction {
+class JoinAction extends AnAction {
 
     private Project project;
     private Editor editor;
@@ -167,7 +162,8 @@ public class JoinAction extends AnAction {
             // Load and init dialog options from preferences
         optionsDialog.setGlue(Preferences.getJoinGlue());
 
-        UtilsEnvironment.setDialogVisible(editor, optionsDialog, StaticTexts.MESSAGE_TITLE_JOIN);
+        optionsDialog.addComponentListener( new ComponentListenerDialog(Preferences.ID_DIALOG_JOIN) );
+        UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_JOIN, optionsDialog, StaticTexts.MESSAGE_TITLE_JOIN);
 
         return optionsDialog;
     }

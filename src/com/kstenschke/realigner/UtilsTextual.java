@@ -142,13 +142,13 @@ public class UtilsTextual {
      * @param   text
      * @return  String  All lines being trimmed from leading and trailing whitespace
      */
-    public static String trimLines(String text, Boolean keepEmptyLines) {
+    public static String trimLines(String text) {
         String[] lines  = text.split("\n");
 
         String result = "";
         for(String line : lines) {
             line    = line.trim();
-            if( !line.isEmpty() || keepEmptyLines ) {
+            if( !line.isEmpty() /*|| keepEmptyLines*/ ) {
                 result += line + "\n";
             }
         }

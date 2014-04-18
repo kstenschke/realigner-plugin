@@ -38,10 +38,13 @@
     <br/>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.2.2<ul>
+        <li>Changed dialog handling: dialog locations are kept and restored now</li>
+    </ul>
     1.2.1<ul>
         <li>Extended splitting with option to trim whitespace from items</li>
     </ul>
