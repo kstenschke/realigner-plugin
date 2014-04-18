@@ -32,6 +32,12 @@ The icons used in this plugin are part of the "Fugue iconset by p.yusukekamiyama
 
 
 
+h2. Changelog
+
+Read full changelog:https://github.com/kstenschke/realigner-plugin/blob/master/CHANGELOG.textile
+
+
+
 h2. License
 
 Copyright 2012-2014 Kay Stenschke

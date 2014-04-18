@@ -43,76 +43,10 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
-    1.2.2<ul>
-        <li>Added save+restoring of dialog positions on screen</li>
-    </ul>
-    1.2.1<ul>
-        <li>Extended splitting with option to trim whitespace from items</li>
-    </ul>
-    1.2.0<ul>
-        <li>Moved quick-wrap buttons configuration from plugin settings directly into wrap dialog</li>
-        <li>Added un/wrap options: each line / whole selection</li>
-        <li>Added mode option to quick-wrap buttons: wrap/unwrap</li>
-    </ul>
-    1.1.5<ul>
-        <li>Improved compatibility: Compiled with JDK target bytecode version 1.6 (was 1.7)</li>
-    </ul>
-    1.1.4<ul>
-        <li>Bugfix: added fallback for off-screen centering of dialogs (e.g. IDEA Ultimate Edition)</li>
-    </ul>
-    1.1.3<ul>
-        <li>Splitting now maintains selection indent over all lines</li>
-        <li>Improved multi monitor compatibility: dialogs are now positioned centered to caret</li>
-        <li>Made UI Darcula theme compatible</li>
-        <li>Moved texts into constants</li>
-        <li>Extended soft-wrap splitting to split after nearest LHS comma</li>
-    </ul>
-    1.1.2<ul>
-        <li>Fixed: Soft-wrap boundary overlap detection did not comprehend for tab size</li>
-    </ul>
-    1.1.1<ul>
-        <li>New: Splitting with an empty delimiter w/o selection inserts a linefeed at the soft-wrap boundary</li>
-    </ul>
-    1.1.0<ul>
-        <li>Extended wrap action with unwrap option: removal of prefix and postfix</li>
-        <li>Removed transformations (escaping, white-space removal) from wrap option</li>
-    </ul>
-    1.0.9<ul>
-        <li>Added detection of HTML tag in wrap prefix and presetting of postfix with resp. closing tag</li>
-    </ul>
-    1.0.8<ul>
-        <li>Changed default glue of join action to be always saved/restored instead of suggesting a comma</li>
-        <li>Added auto-generated button label suggestion to wrap options of plugin settings</li>
-        <li>Added plugin settings icons</li>
-    </ul>
-    1.0.7<ul>
-        <li>Bugfix: plugin settings compatibility issues with PhpStorm</li>
-    </ul>
-    1.0.6<ul>
-        <li>Added plugin settings: configuration for quick wrap buttons</li>
-    </ul>
-    1.0.5<ul>
-        <li>Added option to remove blank/white-space lines while wrapping</li>
-        <li>Added updating of text selection after wrapping</li>
-    </ul>
-    1.0.4<ul>
-        <li>Added retaining of options preferences (application level)</li>
-        <li>Added disabling of options when no project, editor or necessary selection given</li>
-    </ul>
-    1.0.3<ul>
-        <li>Added missing title text to dialog window of split and wrap option</li>
-        <li>Added error message when trying to join w/o multiple lines of selection</li>
-    </ul>
-    1.0.2<ul>
-        <li>Changed wrap tool to work also w/o any surrounding text (to allow being used for escaping only)</li>
-        <li>Added options to escape single/double quotes and backslashes while wrapping</li>
-    </ul>
-    1.0.1<ul>
-        <li>Added splitting options: split at / before / after delimiter</li>
-    </ul>
-    1.0.0<ul>
-        <li>Initial release</li>
-    </ul>
+    1.2.2<ul><li>Added save+restoring of dialog positions on screen</li></ul>
+    1.2.1<ul><li>Extended splitting with option to trim whitespace from items</li></ul>
+    <br/>
+    <a href="https://github.com/kstenschke/realigner-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
 
     <application-components />

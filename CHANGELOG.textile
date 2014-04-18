@@ -1,0 +1,42 @@
+h1. Realigner Plugin - Changelog
+
+* 1.2.2 Added save+restoring of dialog positions on screen
+* 1.2.1 Extended splitting with option to trim whitespace from items
+* 1.2.0
+    *# Moved quick-wrap buttons configuration from plugin settings directly into wrap dialog
+    *# Added un/wrap options: each line / whole selection
+    *# Added mode option to quick-wrap buttons: wrap/unwrap
+* 1.1.5 Improved compatibility: Compiled with JDK target bytecode version 1.6 (was 1.7)
+* 1.1.4 Bugfix: added fallback for off-screen centering of dialogs (e.g. IDEA Ultimate Edition)
+* 1.1.3
+    *# Splitting now maintains selection indent over all lines
+    *# Improved multi monitor compatibility: dialogs are now positioned centered to caret
+    *# Made UI Darcula theme compatible
+    *# Moved texts into constants
+    *# Extended soft-wrap splitting to split after nearest LHS comma
+* 1.1.2 Fixed: Soft-wrap boundary overlap detection did not comprehend for tab size
+* 1.1.1 New: Splitting with an empty delimiter w/o selection inserts a linefeed at the soft-wrap boundary
+* 1.1.0
+    *# Extended wrap action with unwrap option: removal of prefix and postfix
+    *# Removed transformations (escaping, white-space removal) from wrap option
+* 1.0.9 Added detection of HTML tag in wrap prefix and presetting of postfix with resp. closing tag
+* 1.0.8
+    *# Changed default glue of join action to be always saved/restored instead of suggesting a comma
+    *# Added auto-generated button label suggestion to wrap options of plugin settings
+    *# Added plugin settings icons
+* 1.0.7 Bugfix: plugin settings compatibility issues with PhpStorm
+* 1.0.6 Added plugin settings: configuration for quick wrap buttons
+* 1.0.5
+    *# Added option to remove blank/white-space lines while wrapping
+    *# Added updating of text selection after wrapping
+* 1.0.4
+    *# Added retaining of options preferences (application level)
+    *# Added disabling of options when no project, editor or necessary selection given
+* 1.0.3
+    *# Added missing title text to dialog window of split and wrap option
+    *# Added error message when trying to join w/o multiple lines of selection
+* 1.0.2
+    *# Changed wrap tool to work also w/o any surrounding text (to allow being used for escaping only)
+    *# Added options to escape single/double quotes and backslashes while wrapping
+* 1.0.1 Added splitting options: split at / before / after delimiter
+* 1.0.0 Initial release
