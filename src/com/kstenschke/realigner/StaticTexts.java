@@ -30,7 +30,7 @@ public class StaticTexts {
 
         // Context menu items
     @NonNls
-    public static final String POPUP_QUICKWRAP_REMOVE = "Remove this Button";
+    public static final String POPUP_QUICKWRAP_REMOVE = "Remove this Quickwrap";
 
         // Notification messages
     @NonNls
