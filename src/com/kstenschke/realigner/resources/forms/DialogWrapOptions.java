@@ -17,7 +17,7 @@ package com.kstenschke.realigner.resources.forms;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.kstenschke.realigner.PopupWrapButton;
+import com.kstenschke.realigner.popups.PopupWrapButton;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.SettingsQuickWraps;
 import com.kstenschke.realigner.listeners.FocusListenerPrefix;
@@ -219,8 +219,7 @@ public class DialogWrapOptions extends JDialog {
 
                 // Add Context menu
             PopupWrapButton popupWrapButton = new PopupWrapButton(wrapButton, this);
-            MouseListener popupListener = popupWrapButton.getPopupListener();
-            wrapButton.addMouseListener( popupListener );
+            wrapButton.addMouseListener( popupWrapButton.getPopupListener() );
         }
     }
 
@@ -289,10 +288,6 @@ public class DialogWrapOptions extends JDialog {
 		dialog.pack();
 		dialog.setVisible(true);
 		System.exit(0);
-	}
-
-	private void createUIComponents() {
-
 	}
 
     /**

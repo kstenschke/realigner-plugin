@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kstenschke.realigner;
+package com.kstenschke.realigner.popups;
 
+import com.kstenschke.realigner.SettingsQuickWraps;
+import com.kstenschke.realigner.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
 import javax.swing.*;
@@ -22,7 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.kstenschke.realigner.listeners.PopupListener;
 
-public class PopupWrapButton {
+public class PopupWrapButton extends PopupBase {
 
     private final JPopupMenu popup;
 
@@ -33,15 +35,17 @@ public class PopupWrapButton {
         this.popup = new JPopupMenu();
 
             // Remove QuickWrap Button
-        JMenuItem menuItemSelectedBookmarkAdd    = new JMenuItem(StaticTexts.POPUP_QUICKWRAP_REMOVE);
-        menuItemSelectedBookmarkAdd.addActionListener(new ActionListener() {
+        JMenuItem menuItemSelectedBookmarkRemove    = new JMenuItem(StaticTexts.POPUP_QUICKWRAP_REMOVE);
+        setJMenuItemIcon(menuItemSelectedBookmarkRemove, "resources/images/delete.png");
+        menuItemSelectedBookmarkRemove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SettingsQuickWraps.removeWrapButtonItemFromStore(button.getText());
                 dialog.refreshQuickWrapButtons();
             }
         });
-        this.popup.add(menuItemSelectedBookmarkAdd);
+
+        this.popup.add(menuItemSelectedBookmarkRemove);
     }
 
     /**
