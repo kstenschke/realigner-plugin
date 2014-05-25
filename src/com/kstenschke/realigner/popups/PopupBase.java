@@ -20,7 +20,7 @@ class PopupBase {
 
         try {
             Class baseClass= Preferences.class;
-            Image image    = ImageIO.read(baseClass.getResource(pathImage));
+            Image image    = ImageIO.read(baseClass.getResource("resources/images/" + pathImage));
             ImageIcon icon = new ImageIcon(image);
             jMenuItem.setIcon(icon);
         } catch(Exception exception) {

@@ -36,7 +36,7 @@ public class PopupWrapButton extends PopupBase {
 
             // Remove QuickWrap Button
         JMenuItem menuItemSelectedBookmarkRemove    = new JMenuItem(StaticTexts.POPUP_QUICKWRAP_REMOVE);
-        setJMenuItemIcon(menuItemSelectedBookmarkRemove, "resources/images/delete.png");
+        setJMenuItemIcon(menuItemSelectedBookmarkRemove, "delete.png");
         menuItemSelectedBookmarkRemove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
