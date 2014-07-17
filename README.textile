@@ -27,11 +27,11 @@ Realigner is helpful e.g. for:
 h2. Credits
 
 The icons used in this plugin in 16x16 pixel resolution are part of the "Fugue iconset by p.yusukekamiyamane":http://p.yusukekamiyamane.com/
-The retina icon variants have been created newly for this plugin, to resemble the Fugue icons, out of icons from the following iconsets:
-* "Farm Fresh Iconset":http://www.fatcow.com/ - join and split arrow
-* "Pixelmixer Basic Set":http://www.pixel-mixer.com/ - bookmark, delete
-* "Iconbeast Lite":http://www.iconbeast.com/ - Wrap
-* "Momentum Matte Icons":http://momentumdesignlab.com/ - Book
+The retina icon variants have been adapted (combined details, changed colors, contrast and proportions) for this plugin to resemble the Fugue icons, out of icons from the following iconsets:
+* "Farm Fresh Iconset":http://www.fatcow.com/ - join and split arrow icons
+* "Pixelmixer Basic Set":http://www.pixel-mixer.com/ - bookmark, delete icon
+* "Iconbeast Lite":http://www.iconbeast.com/ - wrap icon
+* "Momentum Matte Icons":http://momentumdesignlab.com/ - book icon
 
 
 h2. Changelog
