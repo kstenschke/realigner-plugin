@@ -9,8 +9,7 @@ h2. Description
 The Realigner plugin adds three tools for reformatting text:
 * Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.
 * Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines. Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
-* Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line
-or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.
+* Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.
 
 *Mac Users:* On Macs, the keyboard shortcuts are J, L or W together with Shift+Alt+Cmd
 
@@ -27,8 +26,12 @@ Realigner is helpful e.g. for:
 
 h2. Credits
 
-The icons used in this plugin are part of the "Fugue iconset by p.yusukekamiyamane":http://p.yusukekamiyamane.com/
-
+The icons used in this plugin in 16x16 pixel resolution are part of the "Fugue iconset by p.yusukekamiyamane":http://p.yusukekamiyamane.com/
+The retina icon variants have been created newly for this plugin, to resemble the Fugue icons, out of icons from the following iconsets:
+* Join and split arrow: Farm Fresh Iconset - http://www.fatcow.com/
+* Bookmark, delete: Pixelmixer Basic Set - http://www.pixel-mixer.com/
+* Wrap: Iconbeast Lite - http://www.iconbeast.com/
+* Book: Momentum Matte Icons - http://momentumdesignlab.com/resources/downloads/
 
 
 h2. Changelog
