@@ -28,10 +28,10 @@ h2. Credits
 
 The icons used in this plugin in 16x16 pixel resolution are part of the "Fugue iconset by p.yusukekamiyamane":http://p.yusukekamiyamane.com/
 The retina icon variants have been created newly for this plugin, to resemble the Fugue icons, out of icons from the following iconsets:
-* Join and split arrow: Farm Fresh Iconset - http://www.fatcow.com/
-* Bookmark, delete: Pixelmixer Basic Set - http://www.pixel-mixer.com/
-* Wrap: Iconbeast Lite - http://www.iconbeast.com/
-* Book: Momentum Matte Icons - http://momentumdesignlab.com/resources/downloads/
+* "Farm Fresh Iconset":http://www.fatcow.com/ - join and split arrow
+* "Pixelmixer Basic Set":http://www.pixel-mixer.com/ - bookmark, delete
+* "Iconbeast Lite":http://www.iconbeast.com/ - Wrap
+* "Momentum Matte Icons":http://momentumdesignlab.com/ - Book
 
 
 h2. Changelog
