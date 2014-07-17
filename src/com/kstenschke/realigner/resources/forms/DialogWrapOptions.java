@@ -45,8 +45,10 @@ public class DialogWrapOptions extends JDialog {
     public JRadioButton wholeSelectionRadioButton;
     public JRadioButton eachLineRadioButton;
     private JPanel panelMultiLineOptions;
+    private JLabel labelQuickWraps;
+    private JLabel labelWrap;
 
-        // Wrap modes
+    // Wrap modes
     private static final int MODE_WRAP_EACH_LINE = 0;
     public static final int MODE_WRAP_WHOLE      = 1;
 
@@ -120,7 +122,9 @@ public class DialogWrapOptions extends JDialog {
     }
 
     private void initIcons() {
+        labelWrap.setIcon( Icons.ICON_WRAP );
         buttonSave.setIcon( Icons.ICON_BOOKMARK_ADD );
+        labelQuickWraps.setIcon( Icons.ICON_BOOKMARKS );
     }
 
     /**

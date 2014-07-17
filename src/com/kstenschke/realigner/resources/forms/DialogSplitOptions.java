@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kstenschke.realigner.resources.forms;
 
 import com.kstenschke.realigner.resources.Icons;
