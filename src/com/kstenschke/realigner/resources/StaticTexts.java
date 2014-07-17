@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.kstenschke.realigner;
+package com.kstenschke.realigner.resources;
 
 import org.jetbrains.annotations.NonNls;
 

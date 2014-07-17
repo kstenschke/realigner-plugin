@@ -15,12 +15,12 @@ class PopupBase {
      */
     void setJMenuItemIcon(JMenuItem jMenuItem, @Nullable String pathImage) {
         if( pathImage == null ) {
-            pathImage = "resources/images/blank16x16.png";
+            pathImage = "resources/icons/blank16x16.png";
         }
 
         try {
             Class baseClass= Preferences.class;
-            Image image    = ImageIO.read(baseClass.getResource("resources/images/" + pathImage));
+            Image image    = ImageIO.read(baseClass.getResource("resources/icons/" + pathImage));
             ImageIcon icon = new ImageIcon(image);
             jMenuItem.setIcon(icon);
         } catch(Exception exception) {

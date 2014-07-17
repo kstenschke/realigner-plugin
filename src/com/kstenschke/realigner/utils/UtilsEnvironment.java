@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.kstenschke.realigner;
+package com.kstenschke.realigner.utils;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.realigner.Preferences;
 
 import javax.swing.*;
 import java.awt.*;

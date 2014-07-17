@@ -39,11 +39,12 @@
     <br/>The icons used in this plugin are part of the Fugue iconset (http://p.yusukekamiyamane.com/)
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.4 Added retina icons</li>
         <li>1.2.3 Added icon to popup menu</li>
         <li>1.2.2 Added save+restoring of dialog positions on screen</li>
         <li>1.2.1 Extended splitting with option to trim whitespace from items</li>

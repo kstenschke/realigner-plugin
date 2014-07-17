@@ -13,7 +13,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 package com.kstenschke.realigner.actions;
 
 import com.intellij.openapi.actionSystem.AnAction;
@@ -25,9 +24,8 @@ import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.Preferences;
-import com.kstenschke.realigner.StaticTexts;
+import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
-
 
 /**
  * Wrap Action
@@ -54,36 +52,36 @@ class WrapAction extends AnAction {
 
         ApplicationManager.getApplication().runWriteAction(new Runnable() {
             public void run() {
-                Editor editor = event.getData(PlatformDataKeys.EDITOR);
+            Editor editor = event.getData(PlatformDataKeys.EDITOR);
 
-                if (editor != null) {
-                    final Wrapper wrapper = new Wrapper(editor);
-                    final Boolean isSelectionMultiLine = wrapper.isSelectionMultiLine;
-                    DialogWrapOptions optionsDialog = wrapper.showWrapOptions(isSelectionMultiLine);
+            if (editor != null) {
+                final Wrapper wrapper = new Wrapper(editor);
+                final Boolean isSelectionMultiLine = wrapper.isSelectionMultiLine;
+                DialogWrapOptions optionsDialog = wrapper.showWrapOptions(isSelectionMultiLine);
 
-                    final String prefix = optionsDialog.getPrefix();
-                    final String postfix = optionsDialog.getPostfix();
-                    final Integer wrapMode = optionsDialog.getWrapMode();
+                final String prefix     = optionsDialog.getPrefix();
+                final String postfix    = optionsDialog.getPostfix();
+                final Integer wrapMode  = optionsDialog.getWrapMode();
 
-                    Preferences.saveWrapProperties(prefix, postfix);
+                Preferences.saveWrapProperties(prefix, postfix);
 
-// Perform actual wrap or unwrap
-                    if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_WRAP) {
-                        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                            public void run() {
-                                wrapper.wrap(prefix, postfix, wrapMode);
-                            }
-                        }, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                    // Perform actual wrap or unwrap
+                if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_WRAP) {
+                    CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+                        public void run() {
+                            wrapper.wrap(prefix, postfix, wrapMode);
+                        }
+                    }, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 
-                    } else if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_UNWRAP) {
-                        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                            public void run() {
-                                wrapper.unwrap(prefix, postfix);
-                            }
-                        }, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                } else if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_UNWRAP) {
+                    CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+                        public void run() {
+                            wrapper.unwrap(prefix, postfix);
+                        }
+                    }, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 
-                    }
                 }
+            }
             }
         });
 

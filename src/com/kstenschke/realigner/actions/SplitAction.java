@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kstenschke.realigner.actions;
 
 import com.intellij.openapi.actionSystem.*;
@@ -31,7 +30,10 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.kstenschke.realigner.*;
 import com.kstenschke.realigner.listeners.ComponentListenerDialog;
+import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogSplitOptions;
+import com.kstenschke.realigner.utils.UtilsEnvironment;
+import com.kstenschke.realigner.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;

@@ -21,6 +21,7 @@ import com.kstenschke.realigner.popups.PopupWrapButton;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.SettingsQuickWraps;
 import com.kstenschke.realigner.listeners.FocusListenerPrefix;
+import com.kstenschke.realigner.resources.Icons;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class DialogWrapOptions extends JDialog {
 	private JPanel quickWrapButtonsPanel;
     private JButton buttonSave;
     private JPanel defaultPanel;
-    private JPanel jpanelMainButtons;
+    private JPanel panelMainButtons;
     public JRadioButton quickUnwrapRadioButton;
     public JRadioButton quickWrapRadioButton;
     public JRadioButton wholeSelectionRadioButton;
@@ -67,9 +68,10 @@ public class DialogWrapOptions extends JDialog {
         setResizable(false);
 		getRootPane().setDefaultButton(buttonOK);
 
-        panelMultiLineOptions.setVisible(isMultiLineSelection);
+        initIcons();
         initQuickWrapButtons();
 
+        panelMultiLineOptions.setVisible(isMultiLineSelection);
         textFieldPrefix.addFocusListener( new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
 
     		// Add button action listeners
@@ -117,9 +119,12 @@ public class DialogWrapOptions extends JDialog {
         return eachLineRadioButton.isSelected() ? MODE_WRAP_EACH_LINE : MODE_WRAP_WHOLE;
     }
 
+    private void initIcons() {
+        buttonSave.setIcon( Icons.ICON_BOOKMARK_ADD );
+    }
+
     /**
      * Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
-     *
      */
     private void initQuickWrapButtons() {
         if ( !SettingsQuickWraps.areWrapButtonsConfigured() ) {

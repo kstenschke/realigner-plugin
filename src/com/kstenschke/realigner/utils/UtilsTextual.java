@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.realigner;
+package com.kstenschke.realigner.utils;
 
 import com.intellij.openapi.editor.Document;
 

@@ -1,5 +1,6 @@
 package com.kstenschke.realigner;
 
+import com.kstenschke.realigner.utils.UtilsTextual;
 import org.junit.*;
 
 import static org.junit.Assert.*;

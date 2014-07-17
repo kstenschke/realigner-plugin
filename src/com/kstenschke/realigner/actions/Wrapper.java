@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kstenschke.realigner.actions;
 
 import com.intellij.openapi.editor.Document;
@@ -21,7 +20,10 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.kstenschke.realigner.*;
 import com.kstenschke.realigner.listeners.ComponentListenerDialog;
+import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
+import com.kstenschke.realigner.utils.UtilsEnvironment;
+import com.kstenschke.realigner.utils.UtilsTextual;
 
 class Wrapper {
 

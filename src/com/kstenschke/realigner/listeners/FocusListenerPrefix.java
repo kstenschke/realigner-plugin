@@ -15,7 +15,7 @@
  */
 package com.kstenschke.realigner.listeners;
 
-import com.kstenschke.realigner.UtilsTextual;
+import com.kstenschke.realigner.utils.UtilsTextual;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;

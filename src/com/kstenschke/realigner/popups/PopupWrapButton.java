@@ -16,7 +16,7 @@
 package com.kstenschke.realigner.popups;
 
 import com.kstenschke.realigner.SettingsQuickWraps;
-import com.kstenschke.realigner.StaticTexts;
+import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
 import javax.swing.*;
