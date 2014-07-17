@@ -47,6 +47,7 @@ public class DialogWrapOptions extends JDialog {
     private JPanel panelMultiLineOptions;
     private JLabel labelQuickWraps;
     private JLabel labelWrap;
+    private JRadioButton quickAutodetectRadioButton;
 
     // Wrap modes
     private static final int MODE_WRAP_EACH_LINE = 0;

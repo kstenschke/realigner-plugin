@@ -21,10 +21,10 @@ import javax.swing.*;
 
 public class Icons {
 
-    public static Icon ICON_DELETE      = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/delete.png");
-    public static Icon ICON_BOOKMARK_ADD= IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/bookmark-plus.png");
-    public static Icon ICON_BOOKMARKS   = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/bookmarks.png");
-    public static Icon ICON_ARROW_SPLIT = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/arrow-split.png");
-    public static Icon ICON_ARROW_JOIN  = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/arrow-join.png");
-    public static Icon ICON_WRAP        = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/wrap-tight.png");
+    public static final Icon ICON_DELETE      = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/delete.png");
+    public static final Icon ICON_BOOKMARK_ADD= IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/bookmark-plus.png");
+    public static final Icon ICON_BOOKMARKS   = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/bookmarks.png");
+    public static final Icon ICON_ARROW_SPLIT = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/arrow-split.png");
+    public static final Icon ICON_ARROW_JOIN  = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/arrow-join.png");
+    public static final Icon ICON_WRAP        = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/wrap-tight.png");
 }
