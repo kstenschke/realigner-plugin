@@ -21,6 +21,8 @@ import javax.swing.*;
 
 public class Icons {
 
-    public static Icon ICON_BOOKMARK_ADD = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/bookmark-plus.png");
+    public static Icon ICON_DELETE      = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/delete.png");
+    public static Icon ICON_BOOKMARK_ADD= IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/bookmark-plus.png");
+    public static Icon ICON_ARROW_SPLIT = IconLoader.getIcon("/com/kstenschke/realigner/resources/icons/arrow-split.png");
 
 }

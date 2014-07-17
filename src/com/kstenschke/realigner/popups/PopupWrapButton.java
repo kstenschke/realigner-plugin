@@ -16,6 +16,7 @@
 package com.kstenschke.realigner.popups;
 
 import com.kstenschke.realigner.SettingsQuickWraps;
+import com.kstenschke.realigner.resources.Icons;
 import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
@@ -24,7 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.kstenschke.realigner.listeners.PopupListener;
 
-public class PopupWrapButton extends PopupBase {
+public class PopupWrapButton {
 
     private final JPopupMenu popup;
 
@@ -36,7 +37,7 @@ public class PopupWrapButton extends PopupBase {
 
             // Remove QuickWrap Button
         JMenuItem menuItemSelectedBookmarkRemove    = new JMenuItem(StaticTexts.POPUP_QUICKWRAP_REMOVE);
-        setJMenuItemIcon(menuItemSelectedBookmarkRemove, "delete.png");
+        menuItemSelectedBookmarkRemove.setIcon(Icons.ICON_DELETE);
         menuItemSelectedBookmarkRemove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

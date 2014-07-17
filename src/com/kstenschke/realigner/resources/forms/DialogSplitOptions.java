@@ -16,6 +16,8 @@
 
 package com.kstenschke.realigner.resources.forms;
 
+import com.kstenschke.realigner.resources.Icons;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -32,8 +34,9 @@ public class DialogSplitOptions extends JDialog {
 
 	private JTextField textFieldDelimiter;
     private JCheckBox checkboxTrimWhitespace;
+    private JLabel labelSplit;
 
-        // Delimiter disposal methods
+    // Delimiter disposal methods
 	private static final int METHOD_DELIMITER_DISPOSAL_AT = 0;
 	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE = 1;
 	public static final int METHOD_DELIMITER_DISPOSAL_AFTER = 2;
@@ -47,6 +50,8 @@ public class DialogSplitOptions extends JDialog {
 		setContentPane(contentPane);
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);
+
+        initIcons();
 
 		buttonOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,6 +79,10 @@ public class DialogSplitOptions extends JDialog {
 			}
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
+
+    private void initIcons() {
+        labelSplit.setIcon(Icons.ICON_ARROW_SPLIT);
+    }
 
 	/**
 	 * Handle click ok event
