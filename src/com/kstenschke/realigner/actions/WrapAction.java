@@ -65,26 +65,30 @@ class WrapAction extends AnAction {
 
                 Preferences.saveWrapProperties(prefix, postfix);
 
+                if( optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_AUTODETECT ) {
+                    // todo implement mode detection
+                }
                     // Perform actual wrap or unwrap
-                if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_WRAP) {
-                    CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                        public void run() {
-                            wrapper.wrap(prefix, postfix, wrapMode);
-                        }
-                    }, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                switch( optionsDialog.clickedOperation ) {
+                    case DialogWrapOptions.OPERATION_WRAP:
+                        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+                            public void run() {
+                                wrapper.wrap(prefix, postfix, wrapMode);
+                            }
+                        }, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                        break;
 
-                } else if (optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_UNWRAP) {
-                    CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                        public void run() {
-                            wrapper.unwrap(prefix, postfix);
-                        }
-                    }, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
-
+                    case DialogWrapOptions.OPERATION_UNWRAP:
+                        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+                            public void run() {
+                                wrapper.unwrap(prefix, postfix);
+                            }
+                        }, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                        break;
                 }
             }
             }
         });
-
     }
 
 }

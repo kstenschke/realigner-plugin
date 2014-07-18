@@ -32,22 +32,26 @@ public class DialogWrapOptions extends JDialog {
 	private JButton buttonCancel;
 	private JButton buttonOK;
 	private JButton buttonUnwrap;
-	private JPanel contentPane;
-	private JPanel panelWrapButtonsContainer;
-	private JTextField textFieldPostfix;
-	private JTextField textFieldPrefix;
-	private JPanel quickWrapButtonsPanel;
     private JButton buttonSave;
+
+    private JPanel contentPane;
+	private JPanel panelWrapButtonsContainer;
+    private JPanel quickWrapButtonsPanel;
     private JPanel defaultPanel;
     private JPanel panelMainButtons;
+    private JPanel panelMultiLineOptions;
+
+    private JTextField textFieldPostfix;
+	private JTextField textFieldPrefix;
+
+    public JRadioButton quickAutodetectRadioButton;
     public JRadioButton quickUnwrapRadioButton;
     public JRadioButton quickWrapRadioButton;
     public JRadioButton wholeSelectionRadioButton;
     public JRadioButton eachLineRadioButton;
-    private JPanel panelMultiLineOptions;
+
     private JLabel labelQuickWraps;
     private JLabel labelWrap;
-    private JRadioButton quickAutodetectRadioButton;
 
     // Wrap modes
     private static final int MODE_WRAP_EACH_LINE = 0;
@@ -57,6 +61,7 @@ public class DialogWrapOptions extends JDialog {
     private static final int OPERATION_CANCEL    = 0;
 	public static final int OPERATION_WRAP       = 1;
 	public static final int OPERATION_UNWRAP     = 2;
+	public static final int OPERATION_AUTODETECT = 3;
 
 	public Integer clickedOperation = OPERATION_CANCEL;
 
@@ -100,6 +105,7 @@ public class DialogWrapOptions extends JDialog {
         wholeSelectionRadioButton.addActionListener(this.getActionListenerMulitLineModeRadio(MODE_WRAP_WHOLE));
         quickWrapRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_WRAP));
         quickUnwrapRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_UNWRAP) );
+        quickAutodetectRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_AUTODETECT) );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

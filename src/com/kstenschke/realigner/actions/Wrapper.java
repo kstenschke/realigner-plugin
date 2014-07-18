@@ -89,10 +89,18 @@ class Wrapper {
             optionsDialog.eachLineRadioButton.setSelected(true);
         }
 
-        if( Preferences.getQuickWrapMode().equals(DialogWrapOptions.OPERATION_WRAP)) {
-            optionsDialog.quickWrapRadioButton.setSelected(true);
-        } else {
-            optionsDialog.quickUnwrapRadioButton.setSelected(true);
+        switch( Preferences.getQuickWrapMode() ) {
+            case DialogWrapOptions.OPERATION_WRAP:
+                optionsDialog.quickWrapRadioButton.setSelected(true);
+                break;
+
+            case DialogWrapOptions.OPERATION_UNWRAP:
+                optionsDialog.quickUnwrapRadioButton.setSelected(true);
+                break;
+
+            default:
+                optionsDialog.quickAutodetectRadioButton.setSelected(true);
+                break;
         }
 
         optionsDialog.addComponentListener( new ComponentListenerDialog(Preferences.ID_DIALOG_WRAP) );

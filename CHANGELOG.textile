@@ -1,5 +1,8 @@
 h1. Realigner Plugin - Changelog
 
+* 1.2.4
+    *# Added autodetect quick-wrap mode option
+    *# Added retina icons
 * 1.2.3 Added icon to popup menu
 * 1.2.2 Added save+restoring of dialog positions on screen
 * 1.2.1 Extended splitting with option to trim whitespace from items
