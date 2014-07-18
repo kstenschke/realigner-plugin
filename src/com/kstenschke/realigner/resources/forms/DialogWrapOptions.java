@@ -58,7 +58,7 @@ public class DialogWrapOptions extends JDialog {
     public static final int MODE_WRAP_WHOLE      = 1;
 
         // Operations
-    private static final int OPERATION_CANCEL    = 0;
+    public static final int OPERATION_CANCEL     = 0;
 	public static final int OPERATION_WRAP       = 1;
 	public static final int OPERATION_UNWRAP     = 2;
 	public static final int OPERATION_AUTODETECT = 3;
@@ -86,7 +86,7 @@ public class DialogWrapOptions extends JDialog {
         buttonSave.addActionListener(this.getActionListenerSaveQuickWrapButton());
 		buttonOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				onOK();
+				onOk();
 			}
 		});
 		buttonUnwrap.addActionListener(new ActionListener() {
@@ -101,8 +101,8 @@ public class DialogWrapOptions extends JDialog {
 		});
 
             // Add listeners to radio buttons
-        eachLineRadioButton.addActionListener(this.getActionListenerMulitLineModeRadio(MODE_WRAP_EACH_LINE));
-        wholeSelectionRadioButton.addActionListener(this.getActionListenerMulitLineModeRadio(MODE_WRAP_WHOLE));
+        eachLineRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_EACH_LINE));
+        wholeSelectionRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_WHOLE));
         quickWrapRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_WRAP));
         quickUnwrapRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_UNWRAP) );
         quickAutodetectRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_AUTODETECT) );
@@ -180,7 +180,7 @@ public class DialogWrapOptions extends JDialog {
      * @param   mode    Un/wrap
      * @return  ActionListener
      */
-    private ActionListener getActionListenerMulitLineModeRadio(final Integer mode) {
+    private ActionListener getActionListenerMultiLineModeRadio(final Integer mode) {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -214,7 +214,6 @@ public class DialogWrapOptions extends JDialog {
             panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
                 // Add button action
-            final DialogWrapOptions dialog    = this;
             final String prefix = allButtonPrefixConfigs[i].toString();
             final String postfix = allButtonPostfixConfigs[i].toString();
 
@@ -225,11 +224,14 @@ public class DialogWrapOptions extends JDialog {
                     setTextFieldPrefix(prefix);
                     setTextFieldPostfix(postfix);
 
-                    if( dialog.quickWrapRadioButton.isSelected() ) {
-                        onOK();
-                    } else {
-                        onUnwrap();
-                    }
+                    int operation = quickAutodetectRadioButton.isSelected()
+                        ? OPERATION_AUTODETECT
+                        : (quickWrapRadioButton.isSelected()
+                            ? OPERATION_WRAP
+                            : OPERATION_UNWRAP
+                        );
+
+                    onOK(operation);
                 }
             });
 
@@ -242,8 +244,12 @@ public class DialogWrapOptions extends JDialog {
     /**
 	 * Handle click ok event
 	 */
-	private void onOK() {
-		clickedOperation = OPERATION_WRAP;
+    void onOk() {
+        this.onOK(OPERATION_WRAP);
+    }
+
+	private void onOK(int clickedOperation) {
+		this.clickedOperation = clickedOperation;
 		dispose();
 	}
 

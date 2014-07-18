@@ -65,11 +65,12 @@ class WrapAction extends AnAction {
 
                 Preferences.saveWrapProperties(prefix, postfix);
 
+                int operation   = optionsDialog.clickedOperation;
                 if( optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_AUTODETECT ) {
-                    // todo implement mode detection
+                    operation   = wrapper.isWrapped(prefix, postfix) ? DialogWrapOptions.OPERATION_UNWRAP : DialogWrapOptions.OPERATION_WRAP;
                 }
                     // Perform actual wrap or unwrap
-                switch( optionsDialog.clickedOperation ) {
+                switch( operation ) {
                     case DialogWrapOptions.OPERATION_WRAP:
                         CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
                             public void run() {

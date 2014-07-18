@@ -71,6 +71,24 @@ class Wrapper {
 		}
 	}
 
+    /**
+     * @return  int     Line number where the caret is
+     */
+    private int getCaretLineNumber() {
+        int caretOffset = editor.getCaretModel().getOffset();
+
+        return document.getLineNumber(caretOffset);
+    }
+
+    /**
+     * @return  String  Selected text
+     */
+    private String getSelectedText() {
+        CharSequence editorText = document.getCharsSequence();
+
+        return UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+    }
+
 	/**
 	 * Setup and display wrap options dialog
 	 *
@@ -83,7 +101,7 @@ class Wrapper {
         optionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
         optionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
 
-        if( Preferences.getMultiLineWrapMode().equals(DialogWrapOptions.MODE_WRAP_WHOLE)) {
+        if( Preferences.getMultiLineWrapMode().equals(DialogWrapOptions.MODE_WRAP_WHOLE) ) {
             optionsDialog.wholeSelectionRadioButton.setSelected(true);
         } else {
             optionsDialog.eachLineRadioButton.setSelected(true);
@@ -178,9 +196,11 @@ class Wrapper {
 			lineText = lineText.replaceAll("\n", "");
 			document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
 		}
-
 		    // Update selection: all lines of selection fully
-		selectionModel.setSelection(document.getLineStartOffset(lineNumberSelectionStart), document.getLineEndOffset(lineNumberSelectionEnd));
+		selectionModel.setSelection(
+            document.getLineStartOffset(lineNumberSelectionStart),
+            document.getLineEndOffset(lineNumberSelectionEnd)
+        );
 	}
 
 	/**
@@ -190,10 +210,7 @@ class Wrapper {
 	 * @param   postfix
 	 */
 	private void wrapSingleLinedSelection(String prefix, String postfix) {
-		CharSequence editorText = document.getCharsSequence();
-		String selectedText = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
-
-		String wrappedString = prefix + selectedText + postfix;
+		String wrappedString = prefix + getSelectedText() + postfix;
 		document.replaceString(offsetSelectionStart, offsetSelectionEnd, wrappedString);
 
 		    // Update selection
@@ -207,12 +224,10 @@ class Wrapper {
 	 * @param   postfix
 	 */
 	private void wrapCaretLine(String prefix, String postfix) {
-		int caretOffset = editor.getCaretModel().getOffset();
-		int lineNumber = document.getLineNumber(caretOffset);
-
+		int lineNumber      = getCaretLineNumber();
 		int offsetLineStart = document.getLineStartOffset(lineNumber);
-		String lineText = UtilsTextual.extractLine(document, lineNumber);
-		int offsetLineEnd = offsetLineStart + lineText.length() - 1;
+		String lineText     = UtilsTextual.extractLine(document, lineNumber);
+		int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
 
 		document.insertString(offsetLineEnd, postfix);
 		document.insertString(offsetLineStart, prefix);
@@ -233,15 +248,13 @@ class Wrapper {
 	 * @param   postfix
 	 */
 	private void unwrapCaretLine(String prefix, String postfix) {
-		int caretOffset = editor.getCaretModel().getOffset();
-		int lineNumber = document.getLineNumber(caretOffset);
-
+		int lineNumber      = getCaretLineNumber();
 		int offsetLineStart = document.getLineStartOffset(lineNumber);
-		String lineText = UtilsTextual.extractLine(document, lineNumber);
-		int offsetLineEnd = offsetLineStart + lineText.length() - 1;
+		String lineText     = UtilsTextual.extractLine(document, lineNumber);
+		int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
 
-		this.offsetSelectionStart = offsetLineStart;
-		this.offsetSelectionEnd = offsetLineEnd;
+		this.offsetSelectionStart   = offsetLineStart;
+		this.offsetSelectionEnd     = offsetLineEnd;
 
 		this.unwrapSingleLinedSelection(prefix, postfix);
 	}
@@ -254,7 +267,7 @@ class Wrapper {
 	 */
 	private void unwrapSingleLinedSelection(String prefix, String postfix) {
 		CharSequence editorText = document.getCharsSequence();
-		String unwrappedString = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+		String unwrappedString  = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
 		unwrappedString = UtilsTextual.unwrap(unwrappedString, prefix, postfix);
 
@@ -285,7 +298,31 @@ class Wrapper {
 		}
 
 		    // Update selection: all lines of selection fully
-		selectionModel.setSelection(document.getLineStartOffset(lineNumberSelectionStart), document.getLineEndOffset(lineNumberSelectionEnd));
+		selectionModel.setSelection(
+            document.getLineStartOffset(lineNumberSelectionStart),
+            document.getLineEndOffset(lineNumberSelectionEnd)
+        );
 	}
+
+    /**
+     * @param   prefix
+     * @param   postfix
+     * @return  boolean     Is caret line or selection wrapped into given pre/postfix?
+     */
+    public boolean isWrapped(String prefix, String postfix) {
+        String text = hasSelection
+                ? document.getText().substring(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd() )
+                : UtilsTextual.extractLine(document, getCaretLineNumber() );
+        text    = text.trim();
+
+        if( ! Preferences.getMultiLineWrapMode().equals(DialogWrapOptions.MODE_WRAP_WHOLE ) ) {
+            if( text.contains("\n") ) {
+                    // Wrap mode works on every line: Analyze first line only
+                text = text.split("\n")[0].trim();
+            }
+        }
+
+        return text.startsWith(prefix) && text.endsWith(postfix);
+    }
 
 }
