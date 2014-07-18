@@ -1,7 +1,7 @@
 h1. Realigner Plugin - Changelog
 
-* 1.2.4
-    *# Added autodetect quick-wrap mode option
+* 1.3.0
+    *# Added autodetect for quick-buttons: unwrap (if already wrapped) or wrap?
     *# Added retina icons
 * 1.2.3 Added icon to popup menu
 * 1.2.2 Added save+restoring of dialog positions on screen

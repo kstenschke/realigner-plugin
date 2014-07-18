@@ -44,7 +44,7 @@
     <ul>
         <li>1.3.0
             <ul>
-                <li>Added autodetect: unwrap (if already wrapped) or wrap?</li>
+                <li>Added autodetect for quick-buttons: unwrap (if already wrapped) or wrap?</li>
                 <li>Added retina icons</li>
             </ul>
         </li>
