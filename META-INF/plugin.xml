@@ -20,7 +20,7 @@
     The Realigner plugin adds three tools for reformatting text:
     <ul><li>Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.</li>
         <li>Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.*</li>
-        <li>Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored via the plugin settings.</li>
+        <li>Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored as quick-wrap buttons, hint: quick-wrap buttons can be selected via cursor up/down keys as well.</li>
     </ul><br/>
     <b>Mac Users: </b>On Macs, the keyboard shortcuts are J, L or W together with Shift+Alt+Cmd<br/><br/>
     *Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
@@ -37,11 +37,12 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.3.1 Added cursor acceleration to wrap dialog: navigate quick-wrap buttons using up/down keys</li>
         <li>1.3.0
             <ul>
                 <li>Added autodetect for quick-buttons: unwrap (if already wrapped) or wrap?</li>

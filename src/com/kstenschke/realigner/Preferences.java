@@ -87,7 +87,7 @@ public class Preferences {
 	 * @param   trimWhitespace              Trim items whitespace?
 	 * @param   delimiterDisposalMethod     Split at/after/before?
 	 */
-	public static void saveSplitProperties(String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod) {
+	public static void saveSplitProperties(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
 		propertiesComponent.setValue(PROPERTY_SPLIT_DELIMITER, delimiter);
@@ -112,7 +112,7 @@ public class Preferences {
 	 * @param   setDefaultIfEmpty   Set default also if empty?
 	 * @return  String
 	 */
-	private static String getProperty(String propertyName, String defaultValue, Boolean setDefaultIfEmpty) {
+	private static String getProperty(String propertyName, String defaultValue, boolean setDefaultIfEmpty) {
 		String value = PropertiesComponent.getInstance().getValue(propertyName);
 		if (value == null) {
 			value = defaultValue;
@@ -148,7 +148,7 @@ public class Preferences {
 	/**
 	 * @return  String  Split delimiter
 	 */
-	public static Boolean getIsSplitIsSelectedTrimWhitespace() {
+	public static boolean getIsSplitIsSelectedTrimWhitespace() {
 		return getProperty(PROPERTY_SPLIT_TRIM_WHITESPACE, "1", true).equals("1");
 	}
 

@@ -40,7 +40,7 @@ public class DialogSplitOptions extends JDialog {
 	public static final int METHOD_DELIMITER_DISPOSAL_BEFORE = 1;
 	public static final int METHOD_DELIMITER_DISPOSAL_AFTER = 2;
 
-	public Boolean clickedOk = false;
+	public boolean clickedOk = false;
 
 	/**
 	 * Split options constructor
@@ -169,14 +169,14 @@ public class DialogSplitOptions extends JDialog {
     /**
      * @param   selected
      */
-    public void setCheckboxTrimWhitespaceSelected(Boolean selected) {
+    public void setCheckboxTrimWhitespaceSelected(boolean selected) {
         checkboxTrimWhitespace.setSelected(selected);
     }
 
     /**
-     * @return  Boolean
+     * @return  boolean
      */
-    public Boolean getIsSelectedTrimWhitespace() {
+    public boolean getIsSelectedTrimWhitespace() {
         return checkboxTrimWhitespace.isSelected();
     }
 

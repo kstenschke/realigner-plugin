@@ -17,6 +17,7 @@ package com.kstenschke.realigner.resources.forms;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.kstenschke.realigner.listeners.KeyListenerCursorUpDown;
 import com.kstenschke.realigner.popups.PopupWrapButton;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.SettingsQuickWraps;
@@ -58,7 +59,7 @@ public class DialogWrapOptions extends JDialog {
     public static final int MODE_WRAP_WHOLE      = 1;
 
         // Operations
-    public static final int OPERATION_CANCEL     = 0;
+    private static final int OPERATION_CANCEL     = 0;
 	public static final int OPERATION_WRAP       = 1;
 	public static final int OPERATION_UNWRAP     = 2;
 	public static final int OPERATION_AUTODETECT = 3;
@@ -68,7 +69,7 @@ public class DialogWrapOptions extends JDialog {
 	/**
 	 * Constructor
 	 */
-	public DialogWrapOptions(Boolean isMultiLineSelection) {
+	public DialogWrapOptions(boolean isMultiLineSelection) {
 		clickedOperation = OPERATION_CANCEL;
 
 		setContentPane(contentPane);
@@ -151,6 +152,20 @@ public class DialogWrapOptions extends JDialog {
             panelWrapButtonsContainer.setLayout( new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false) );
 
             this.addQuickWrapButtons(allButtonsLabels, allButtonPrefixConfigs, allButtonPostfixConfigs);
+            int amountButtons = allButtonsLabels.length;
+            if( amountButtons > 0 ) {
+                    // Add acceleration via cursor up/down keys to prefix-field and all quick-buttons
+                textFieldPrefix.addKeyListener( new KeyListenerCursorUpDown(
+                        panelWrapButtonsContainer.getComponent(0), panelWrapButtonsContainer.getComponent(amountButtons - 1)
+                ));
+                for(int buttonIndex=0; buttonIndex< allButtonsLabels.length; buttonIndex++ ) {
+                    Component buttonCurrent = panelWrapButtonsContainer.getComponent( buttonIndex );
+                    Component buttonAbove   = panelWrapButtonsContainer.getComponent( buttonIndex > 0 ? buttonIndex-1 : amountButtons-1 );
+                    Component buttonUnder   = panelWrapButtonsContainer.getComponent( buttonIndex < amountButtons-1 ? buttonIndex+1 : 0 );
+
+                    buttonCurrent.addKeyListener(new KeyListenerCursorUpDown( buttonUnder, buttonAbove ));
+                }
+            }
 
             panelWrapButtonsContainer.revalidate();
             quickWrapButtonsPanel.setVisible(true);
@@ -211,7 +226,10 @@ public class DialogWrapOptions extends JDialog {
         for (int i = 0; i < allButtonsLabels.length; i++) {
             String buttonLabel = allButtonsLabels[i].toString();
             JButton wrapButton = new JButton(buttonLabel);
-            panelWrapButtonsContainer.add(wrapButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            panelWrapButtonsContainer.add(
+                    wrapButton,
+                    new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false)
+            );
 
                 // Add button action
             final String prefix = allButtonPrefixConfigs[i].toString();

@@ -173,9 +173,9 @@ public class SettingsQuickWraps {
 	}
 
 	/**
-	 * @return  Boolean     Are any wrap buttons configured?
+	 * @return  boolean     Are any wrap buttons configured?
 	 */
-	public static Boolean areWrapButtonsConfigured() {
+	public static boolean areWrapButtonsConfigured() {
 		return getAmountWrapButtons() > 0;
 	}
 

@@ -82,9 +82,9 @@ public class UtilsTextual {
 
 	/**
 	 * @param   str         String to be checked for containing an HTML tag
-	 * @return  Boolean     Does the given string contain an HTML tag?
+	 * @return  boolean     Does the given string contain an HTML tag?
 	 */
-	public static Boolean containsHtmlTag(String str) {
+	public static boolean containsHtmlTag(String str) {
 		String regex = "<[a-z|A-Z]+(.| )*>.*";
 
 		return str.matches(regex);

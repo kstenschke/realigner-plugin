@@ -80,7 +80,7 @@ class SplitAction extends AnAction {
 							    // Clicked ok: conduct split
 							if (optionsDialog.clickedOk) {
 								String delimiter                = optionsDialog.getDelimiter();
-                                Boolean trimWhitespace          = optionsDialog.getIsSelectedTrimWhitespace();
+                                boolean trimWhitespace          = optionsDialog.getIsSelectedTrimWhitespace();
 								Integer delimiterDisposalMethod = optionsDialog.getDelimiterDisposalMethod();
 
 								Preferences.saveSplitProperties(delimiter, trimWhitespace, delimiterDisposalMethod);
@@ -144,7 +144,7 @@ class SplitAction extends AnAction {
                      * @param   trimWhitespace
                      * @param   delimiterDisposalMethod
                      */
-                    private void splitLine(Document document, String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod) {
+                    private void splitLine(Document document, String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
                         int caretOffset = editor.getCaretModel().getOffset();
                         int lineNumber  = document.getLineNumber(caretOffset);
 
@@ -166,7 +166,7 @@ class SplitAction extends AnAction {
                      * @param   trimWhitespace
                      * @param   delimiterDisposalMethod
                      */
-                    private void splitSelection(Document document, SelectionModel selectionModel, String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod) {
+                    private void splitSelection(Document document, SelectionModel selectionModel, String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
                         int offsetStart = selectionModel.getSelectionStart();
                         int offsetEnd   = selectionModel.getSelectionEnd();
 
@@ -223,7 +223,7 @@ class SplitAction extends AnAction {
                      * @param   lineText
                      * @return  String
                      */
-                    private String getExplodedLineText(String delimiter, Boolean trimWhitespace, Integer delimiterDisposalMethod, String lineText) {
+                    private String getExplodedLineText(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod, String lineText) {
 						String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
 
 						String result = lineText.replace(delimiter, replacement);
@@ -244,7 +244,7 @@ class SplitAction extends AnAction {
 	 * @param   charStr
 	 * @return  Does the given character allow splitting the line at?
 	 */
-	private static Boolean isSplittableChar(String charStr) {
+	private static boolean isSplittableChar(String charStr) {
 		return charStr.equals(" ") || charStr.equals("\t") || charStr.equals(",");
 	}
 

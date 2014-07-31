@@ -27,8 +27,7 @@ public class DialogJoinOptions extends JDialog {
     private JButton buttonCancel;
     public JTextField textFieldGlue;
     private JLabel labelJoin;
-
-    public Boolean clickedOk = false;
+    public boolean clickedOk = false;
 
     /**
      * Constructor

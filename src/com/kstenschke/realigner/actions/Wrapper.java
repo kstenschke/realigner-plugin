@@ -31,10 +31,8 @@ class Wrapper {
 	private final Document document;
 
     private SelectionModel selectionModel;
-    private Boolean hasSelection = false;
-
-    public Boolean isSelectionMultiLine = false;
-
+    private boolean hasSelection = false;
+    public boolean isSelectionMultiLine = false;
 	private int offsetSelectionStart;
     private int offsetSelectionEnd;
     private int lineNumberSelectionStart;
@@ -94,7 +92,7 @@ class Wrapper {
 	 *
 	 * @return  Wrap options dialog
 	 */
-	public DialogWrapOptions showWrapOptions(Boolean isMultiLineSelection) {
+	public DialogWrapOptions showWrapOptions(boolean isMultiLineSelection) {
 		DialogWrapOptions optionsDialog = new DialogWrapOptions(isMultiLineSelection);
 
             // Load and init from preferences
