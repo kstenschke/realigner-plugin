@@ -79,34 +79,11 @@ public class DialogWrapOptions extends JDialog {
 
         initIcons();
         initQuickWrapButtons();
+        initButtonActionListeners();
+        initRadioButtonActionListeners();
 
         panelMultiLineOptions.setVisible(isMultiLineSelection);
         textFieldPrefix.addFocusListener( new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
-
-    		// Add button action listeners
-        buttonSave.addActionListener(this.getActionListenerSaveQuickWrapButton());
-		buttonOK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onOk();
-			}
-		});
-		buttonUnwrap.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onUnwrap();
-			}
-		});
-		buttonCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onCancel();
-			}
-		});
-
-            // Add listeners to radio buttons
-        eachLineRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_EACH_LINE));
-        wholeSelectionRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_WHOLE));
-        quickWrapRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_WRAP));
-        quickUnwrapRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_UNWRAP) );
-        quickAutodetectRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_AUTODETECT) );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -121,6 +98,39 @@ public class DialogWrapOptions extends JDialog {
 			}
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
+
+    /**
+     * Add listeners to radio buttons
+     */
+    private void initRadioButtonActionListeners() {
+        eachLineRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_EACH_LINE));
+        wholeSelectionRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_WHOLE));
+        quickWrapRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_WRAP));
+        quickUnwrapRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_UNWRAP) );
+        quickAutodetectRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_AUTODETECT) );
+    }
+
+    /**
+     * Add button action listeners
+     */
+    private void initButtonActionListeners() {
+        buttonSave.addActionListener(this.getActionListenerSaveQuickWrapButton());
+        buttonOK.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onOk();
+            }
+        });
+        buttonUnwrap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onUnwrap();
+            }
+        });
+        buttonCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+    }
 
     /**
      * @return  Integer     Wrap each line / whole multi-line selection

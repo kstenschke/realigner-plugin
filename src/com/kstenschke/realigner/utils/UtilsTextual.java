@@ -84,7 +84,7 @@ public class UtilsTextual {
 	 * @param   str         String to be checked for containing an HTML tag
 	 * @return  boolean     Does the given string contain an HTML tag?
 	 */
-	public static boolean containsHtmlTag(String str) {
+	private static boolean isHtmlTag(String str) {
 		String regex = "<[a-z|A-Z]+(.| )*>.*";
 
 		return str.matches(regex);
@@ -94,7 +94,7 @@ public class UtilsTextual {
      * @param   prefix
      * @return  String
      */
-	public static String getClosingTagPendent(String prefix) {
+	private static String getHtmlTagCounterpart(String prefix) {
 		prefix = prefix.replaceAll("<", "");
 		String[] tag = prefix.split("\\W+");
 
@@ -154,6 +154,48 @@ public class UtilsTextual {
         }
 
         return result;
+    }
+
+    /**
+     *
+     * @param   strLHS      Left hand side string
+     * @return  Right hand side (counterpart) string
+     */
+    public static String getWrapCounterpart(String strLHS) {
+        if( strLHS.isEmpty() ) {
+            return "";
+        }
+
+        strLHS = strLHS.trim();
+
+        if (UtilsTextual.isHtmlTag(strLHS)) {
+                // HTML tag: fill with postfix field with resp. pendent
+            return UtilsTextual.getHtmlTagCounterpart(strLHS);
+        } else {
+            if( strLHS.startsWith("(") && ! strLHS.contains(")") ) {
+                return ")";
+            } else if( strLHS.startsWith("[") && ! strLHS.contains("]") ) {
+                return "]";
+            } else if( strLHS.startsWith("{") && ! strLHS.contains("}") ) {
+                return "}";
+            } else if( strLHS.startsWith("«") && ! strLHS.contains("»") ) {
+                return "»";
+            } else if( strLHS.startsWith("„") && ! strLHS.contains("“") ) {
+                return "“";
+            } else if( strLHS.startsWith("“") && ! strLHS.contains("”") ) {
+                return "”";
+            } else if( strLHS.startsWith("‘") && ! strLHS.contains("’") ) {
+                return "’";
+            } else if( strLHS.startsWith("<!--") && ! strLHS.contains("-->") ) {
+                return "-->";
+            } else if( strLHS.startsWith("<") && ! strLHS.contains(">") ) {
+                return ">";
+            } else if( strLHS.startsWith("/*") && ! strLHS.contains("*/") ) {
+                return "*/";
+            }
+        }
+
+        return null;
     }
 
 }

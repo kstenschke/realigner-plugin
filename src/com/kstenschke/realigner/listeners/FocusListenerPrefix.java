@@ -43,10 +43,16 @@ public class FocusListenerPrefix implements FocusListener {
 
     @Override
     public void focusLost(FocusEvent e) {
-        // When leaving prefix field containing an HTML tag: fill with postfix field with resp. pendent
+        // When leaving prefix field containing...
         String prefix = textFieldPrefix.getText();
-        if (UtilsTextual.containsHtmlTag(prefix)) {
-            textFieldPostfix.setText(UtilsTextual.getClosingTagPendent(prefix));
+        String postfix= textFieldPostfix.getText();
+
+        // If postfix is empty: detect and insert counterpart of wrap LHS
+        if( postfix.isEmpty() ) {
+            postfix = UtilsTextual.getWrapCounterpart(prefix);
+            if( postfix != null ) {
+                textFieldPostfix.setText(postfix);
+            }
         }
     }
 }
