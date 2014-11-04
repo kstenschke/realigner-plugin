@@ -15,6 +15,7 @@
  */
 package com.kstenschke.realigner.resources.forms;
 
+import com.intellij.compiler.options.CompilerOptionsFilter;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.kstenschke.realigner.listeners.KeyListenerCursorUpDown;
@@ -149,13 +150,13 @@ public class DialogWrapOptions extends JDialog {
      * Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
      */
     private void initQuickWrapButtons() {
-        if ( !SettingsQuickWraps.areWrapButtonsConfigured() ) {
+        if ( !SettingsQuickWraps.areAnyButtonsConfigured() ) {
             quickWrapButtonsPanel.setVisible(false);
         } else {
                 // Create, add and show quick wrap buttons
-            Object[] allButtonsLabels           = SettingsQuickWraps.getAllWrapButtonLabels();
-            Object[] allButtonPrefixConfigs     = SettingsQuickWraps.getAllWrapButtonPrefixes();
-            Object[] allButtonPostfixConfigs    = SettingsQuickWraps.getAllWrapButtonPostfixes();
+            Object[] allButtonsLabels           = SettingsQuickWraps.getAllButtonLabels();
+            Object[] allButtonPrefixConfigs     = SettingsQuickWraps.getAllButtonPrefixes();
+            Object[] allButtonPostfixConfigs    = SettingsQuickWraps.getAllButtonPostfixes();
 
                 // Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
             panelWrapButtonsContainer.removeAll();
@@ -194,7 +195,7 @@ public class DialogWrapOptions extends JDialog {
                 String prefix = getPrefix();
                 String postfix= getPostfix();
 
-                SettingsQuickWraps.saveWrapButtonItemToStore(prefix + "..." + postfix, prefix, postfix);
+                SettingsQuickWraps.saveButton(prefix + "..." + postfix, prefix, postfix);
 
                 dialog.refreshQuickWrapButtons();
             }
@@ -235,7 +236,7 @@ public class DialogWrapOptions extends JDialog {
     private void addQuickWrapButtons(Object[] allButtonsLabels, Object[] allButtonPrefixConfigs, Object[] allButtonPostfixConfigs) {
         for (int i = 0; i < allButtonsLabels.length; i++) {
             String buttonLabel = allButtonsLabels[i].toString();
-            JButton wrapButton = new JButton(buttonLabel);
+            final JButton wrapButton = new JButton(buttonLabel);
             panelWrapButtonsContainer.add(
                     wrapButton,
                     new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false)
@@ -258,7 +259,8 @@ public class DialogWrapOptions extends JDialog {
                             ? OPERATION_WRAP
                             : OPERATION_UNWRAP
                         );
-
+                    String buttonLabel  = wrapButton.getText();
+                    SettingsQuickWraps.makeButtonTopMost(buttonLabel, prefix, postfix);
                     onOK(operation);
                 }
             });

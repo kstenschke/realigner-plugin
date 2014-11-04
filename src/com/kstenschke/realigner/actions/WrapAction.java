@@ -57,7 +57,7 @@ class WrapAction extends AnAction {
             if (editor != null) {
                 final Wrapper wrapper = new Wrapper(editor);
                 final boolean isSelectionMultiLine = wrapper.isSelectionMultiLine;
-                DialogWrapOptions optionsDialog = wrapper.showWrapOptions(isSelectionMultiLine);
+                DialogWrapOptions optionsDialog = wrapper.getWrapOptionsDialog(isSelectionMultiLine);
 
                 final String prefix     = optionsDialog.getPrefix();
                 final String postfix    = optionsDialog.getPostfix();

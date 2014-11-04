@@ -31,35 +31,46 @@ public class SettingsQuickWraps {
 	/**
 	 * Store given wrap button config into wrap buttons store
 	 *
-	 * @param   buttonLabel     Item label
+	 * @param   label     Item label
 	 * @param   prefix          Wrap LHS string
 	 * @param   postfix         Wrap RHS string
 	 */
-	public static void saveWrapButtonItemToStore(String buttonLabel, String prefix, String postfix) {
-		if (!buttonLabel.isEmpty()) {
+	public static void saveButton(String label, String prefix, String postfix, Boolean saveTopMost) {
+		if (!label.isEmpty()) {
 			// Delete pre-existing button config with same label, if stored already
-			removeWrapButtonItemFromStore(buttonLabel);
+			removeWrapButton(label);
 
 			// Get new button config, stored button items
-			String newButtonConfigStr = renderWrapButtonConfigStr(buttonLabel, prefix, postfix);
-			String storeWrapButtons = loadWrapButtonItemsConfig();
+			String newButtonConfigStr = renderButtonConfigStr(label, prefix, postfix);
+			String storeWrapButtons = loadButtonItemsConfig();
 
 			if (storeWrapButtons == null) {
 				storeWrapButtons = "";
 			}
 
 			// Store button config
-			storeWrapButtons = storeWrapButtons.concat(newButtonConfigStr);
-			saveWrapButtonItemsConfig(storeWrapButtons);
+			storeWrapButtons = saveTopMost
+                    ? newButtonConfigStr.concat(storeWrapButtons)
+                    : storeWrapButtons.concat(newButtonConfigStr);
+			saveButtonItemsConfig(storeWrapButtons);
 		}
 	}
+
+    public static void saveButton(String label, String prefix, String postfix) {
+        saveButton(label, prefix, postfix, false);
+    }
+
+    public static void makeButtonTopMost(String buttonLabel, String prefix, String postfix) {
+        removeWrapButton(buttonLabel);
+        saveButton(buttonLabel, prefix, postfix, true);
+    }
 
 	/**
 	 * Store given wrap buttons' items config
 	 *
 	 * @param   itemsConfig      Custom serialized items config string
 	 */
-	private static void saveWrapButtonItemsConfig(String itemsConfig) {
+	private static void saveButtonItemsConfig(String itemsConfig) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 		propertiesComponent.setValue(PROPERTY_WRAPBUTTONS, itemsConfig);
 	}
@@ -67,7 +78,7 @@ public class SettingsQuickWraps {
 	/**
 	 * @return  String      Wrap buttons setting
 	 */
-	private static String loadWrapButtonItemsConfig() {
+	private static String loadButtonItemsConfig() {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
 		return propertiesComponent.getValue(PROPERTY_WRAPBUTTONS);
@@ -76,21 +87,21 @@ public class SettingsQuickWraps {
 	/**
 	 * Find and remove button item with given label from store
 	 *
-	 * @param   buttonLabel     Label of button to be removed
+	 * @param   label     Label of button to be removed
 	 */
-	public static void removeWrapButtonItemFromStore(String buttonLabel) {
-		Object[] buttonLabels = getAllWrapButtonLabels();
+	public static void removeWrapButton(String label) {
+		Object[] buttonLabels = getAllButtonLabels();
 		if (buttonLabels != null) {
 			Integer deleteButtonIndex = null;
 			for (int i = 0; i < buttonLabels.length; i++) {
-				if (buttonLabels[i].equals(buttonLabel)) {
+				if (buttonLabels[i].equals(label)) {
 					deleteButtonIndex = i;
 				}
 			}
 
 			if (deleteButtonIndex != null) {
 				// Remove button config with found index
-				String storeItemsConfig = loadWrapButtonItemsConfig();
+				String storeItemsConfig = loadButtonItemsConfig();
 
 				String buttonsConfigWithoutDeletedButton = "";
 				String[] buttonsConfigs = storeItemsConfig.split("##WBUTTON####WBLABEL##");
@@ -99,58 +110,54 @@ public class SettingsQuickWraps {
 						buttonsConfigWithoutDeletedButton = buttonsConfigWithoutDeletedButton.concat("##WBUTTON####WBLABEL##" + buttonsConfigs[i]);
 					}
 				}
-				// Save
-				saveWrapButtonItemsConfig(buttonsConfigWithoutDeletedButton);
+				saveButtonItemsConfig(buttonsConfigWithoutDeletedButton);
 			}
 		}
 	}
 
 	/**
-	 * @param   buttonLabel     Item label
+	 * @param   label     Item label
 	 * @param   prefix          Wrap LHS string
 	 * @param   postfix         Wrap RHS string
 	 * @return  String          configuration string for given wrap button options
 	 */
-	private static String renderWrapButtonConfigStr(String buttonLabel, String prefix, String postfix) {
-		String configStr = "##WBUTTON##";
-
-		configStr = configStr.concat("##WBLABEL##" + buttonLabel + "##/WBLABEL##");
-		configStr = configStr.concat("##WBPREFIX##" + prefix + "##/WBPREFIX##");
-		configStr = configStr.concat("##WBPOSTFIX##" + postfix + "##/WBPOSTFIX##");
-		configStr = configStr.concat("##/WBUTTON##");
-
-		return configStr;
+	private static String renderButtonConfigStr(String label, String prefix, String postfix) {
+		return  "##WBUTTON##"
+          + "##WBLABEL##" + label + "##/WBLABEL##"
+          + "##WBPREFIX##" + prefix + "##/WBPREFIX##"
+          + "##WBPOSTFIX##" + postfix + "##/WBPOSTFIX##"
+          + "##/WBUTTON##";
 	}
 
 	/**
 	 * @return  Object[]    Array of stored buttons' labels
 	 */
-	public static Object[] getAllWrapButtonLabels() {
-		return getAllWrapButtonAttributesByType("WBLABEL");
+	public static Object[] getAllButtonLabels() {
+		return getAllButtonAttributesByType("WBLABEL");
 	}
 
 	/**
 	 * @return  Object[]    Array of stored buttons' prefix values
 	 */
-	public static Object[] getAllWrapButtonPrefixes() {
-		return getAllWrapButtonAttributesByType("WBPREFIX");
+	public static Object[] getAllButtonPrefixes() {
+		return getAllButtonAttributesByType("WBPREFIX");
 	}
 
 	/**
 	 * @return  Object[]    Array of stored buttons' postfix values
 	 */
-	public static Object[] getAllWrapButtonPostfixes() {
-		return getAllWrapButtonAttributesByType("WBPOSTFIX");
+	public static Object[] getAllButtonPostfixes() {
+		return getAllButtonAttributesByType("WBPOSTFIX");
 	}
 
 	/**
 	 * @param   typeName    String e.g. "WBPREFIX"
 	 * @return  Object[]    Array of stored buttons' prefix values
 	 */
-	private static Object[] getAllWrapButtonAttributesByType(String typeName) {
+	private static Object[] getAllButtonAttributesByType(String typeName) {
 		typeName = typeName.trim().toUpperCase();
 
-		String storeItemsConfig = loadWrapButtonItemsConfig();
+		String storeItemsConfig = loadButtonItemsConfig();
 
 		// Extract only item prefixes into array
 		List<String> items = new ArrayList<String>();
@@ -168,15 +175,15 @@ public class SettingsQuickWraps {
 	/**
 	 * @return  Integer     Amount of stored wrap buttons
 	 */
-	private static Integer getAmountWrapButtons() {
-		return getAllWrapButtonLabels().length;
+	private static Integer getAmountButtons() {
+		return getAllButtonLabels().length;
 	}
 
 	/**
 	 * @return  boolean     Are any wrap buttons configured?
 	 */
-	public static boolean areWrapButtonsConfigured() {
-		return getAmountWrapButtons() > 0;
+	public static boolean areAnyButtonsConfigured() {
+		return getAmountButtons() > 0;
 	}
 
 }

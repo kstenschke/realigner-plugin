@@ -92,7 +92,7 @@ class Wrapper {
 	 *
 	 * @return  Wrap options dialog
 	 */
-	public DialogWrapOptions showWrapOptions(boolean isMultiLineSelection) {
+	public DialogWrapOptions getWrapOptionsDialog(boolean isMultiLineSelection) {
 		DialogWrapOptions optionsDialog = new DialogWrapOptions(isMultiLineSelection);
 
             // Load and init from preferences

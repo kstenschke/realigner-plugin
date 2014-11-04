@@ -41,7 +41,7 @@ public class PopupWrapButton {
         menuItemSelectedBookmarkRemove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SettingsQuickWraps.removeWrapButtonItemFromStore(button.getText());
+                SettingsQuickWraps.removeWrapButton(button.getText());
                 dialog.refreshQuickWrapButtons();
             }
         });
