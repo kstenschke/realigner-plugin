@@ -1,3 +1,6 @@
+"!http://api.flattr.com/button/flattr-badge-large.png!":https://flattr.com/submit/auto?user_id=kstenschke&url=https://github.com/kstenschke/realigner-plugin/&title=realigner-plugin&language=java&tags=github,plugin,realigner&category=software
+
+
 h1. Realigner Plugin
 
 Source code of the intellij IDEA "Realigner plugin":http://plugins.intellij.net/plugin/index?pr=&pluginId=7082
