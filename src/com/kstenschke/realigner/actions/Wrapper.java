@@ -15,9 +15,7 @@
  */
 package com.kstenschke.realigner.actions;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.editor.*;
 import com.kstenschke.realigner.*;
 import com.kstenschke.realigner.listeners.ComponentListenerDialog;
 import com.kstenschke.realigner.resources.StaticTexts;
@@ -37,6 +35,8 @@ class Wrapper {
     private int offsetSelectionEnd;
     private int lineNumberSelectionStart;
     private int lineNumberSelectionEnd;
+	private CaretModel caretModel;
+	private int caretCount;
 
 	/**
 	 * Constructor
@@ -48,6 +48,7 @@ class Wrapper {
 		this.document = editor.getDocument();
 
 		this.initSelectionProperties();
+		this.initCaretProperties();
 	}
 
 	/**
@@ -69,6 +70,11 @@ class Wrapper {
 		}
 	}
 
+	private void initCaretProperties() {
+		this.caretModel = this.editor.getCaretModel();
+		this.caretCount = this.caretModel.getCaretCount();
+	}
+
     /**
      * @return  int     Line number where the caret is
      */
@@ -84,7 +90,7 @@ class Wrapper {
     private String getSelectedText() {
         CharSequence editorText = document.getCharsSequence();
 
-        return UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+        return UtilsTextual.getSubString(editorText, this.offsetSelectionStart, this.offsetSelectionEnd);
     }
 
 	/**
@@ -132,21 +138,38 @@ class Wrapper {
 	 * @param   postfix
 	 * @param   wrapMode    If multi-line: wrap each line / whole selection
 	 */
-	public void wrap(String prefix, String postfix, Integer wrapMode) {
-		if (hasSelection) {
-			if (document.getLineStartOffset(lineNumberSelectionEnd) == this.offsetSelectionEnd) {
-				lineNumberSelectionEnd--;
-			}
+	public void wrap(final String prefix, final String postfix, final Integer wrapMode) {
+		this.caretModel.runForEachCaret(new CaretAction() {
+			@Override
+			public void perform(Caret caret) {
+				if (hasSelection) {
+					updateCaretSelectionProperties(caret);	// get selection offsets and line numbers
 
-			if ( lineNumberSelectionStart == lineNumberSelectionEnd || wrapMode.equals(DialogWrapOptions.MODE_WRAP_WHOLE)) {
-				this.wrapSingleLinedSelection(prefix, postfix);
-			} else {
-				this.wrapMultiLineSelection(prefix, postfix);
+					if (document.getLineStartOffset(lineNumberSelectionEnd) == offsetSelectionEnd) {
+						lineNumberSelectionEnd--;
+					}
+
+					if ( lineNumberSelectionStart == lineNumberSelectionEnd || wrapMode.equals(DialogWrapOptions.MODE_WRAP_WHOLE)) {
+						String selectedText = getSelectedText();
+						wrapSingleLinedSelection(selectedText, prefix, postfix);
+					} else {
+						wrapMultiLineSelection(prefix, postfix);
+					}
+				} else {
+					// No selection: wrap the line where the caret is
+					wrapCaretLine(prefix, postfix);
+				}
 			}
-		} else {
-			    // No selection: wrap the line where the caret is
-			this.wrapCaretLine(prefix, postfix);
-		}
+		});
+
+	}
+
+	private void updateCaretSelectionProperties(Caret caret) {
+		offsetSelectionStart = caret.getSelectionStart();
+		offsetSelectionEnd = caret.getSelectionEnd();
+
+		lineNumberSelectionStart = document.getLineNumber(offsetSelectionStart);
+		lineNumberSelectionEnd = document.getLineNumber(offsetSelectionEnd);
 	}
 
 	/**
@@ -155,21 +178,28 @@ class Wrapper {
 	 * @param   prefix
 	 * @param   postfix
 	 */
-	public void unwrap(String prefix, String postfix) {
-		if (hasSelection) {
-			if (document.getLineStartOffset(lineNumberSelectionEnd) == this.offsetSelectionEnd) {
-				lineNumberSelectionEnd--;
-			}
+	public void unwrap(final String prefix, final String postfix) {
+		this.caretModel.runForEachCaret(new CaretAction() {
+			@Override
+			public void perform(Caret caret) {
+				updateCaretSelectionProperties(caret);
 
-			if ( lineNumberSelectionStart == lineNumberSelectionEnd ) {
-				this.unwrapSingleLinedSelection(prefix, postfix);
-			} else {
-				this.unwrapMultiLineSelection(prefix, postfix);
+				if (hasSelection) {
+					if (document.getLineStartOffset(lineNumberSelectionEnd) == offsetSelectionEnd) {
+						lineNumberSelectionEnd--;
+					}
+
+					if ( lineNumberSelectionStart == lineNumberSelectionEnd ) {
+						unwrapSingleLinedSelection(prefix, postfix);
+					} else {
+						unwrapMultiLineSelection(prefix, postfix);
+					}
+				} else {
+					// No selection: wrap the line where the caret is
+					unwrapCaretLine(prefix, postfix);
+				}
 			}
-		} else {
-			    // No selection: wrap the line where the caret is
-			this.unwrapCaretLine(prefix, postfix);
-		}
+		});
 	}
 
 	/**
@@ -207,8 +237,8 @@ class Wrapper {
 	 * @param   prefix
 	 * @param   postfix
 	 */
-	private void wrapSingleLinedSelection(String prefix, String postfix) {
-		String wrappedString = prefix + getSelectedText() + postfix;
+	private void wrapSingleLinedSelection(String selectedText, String prefix, String postfix) {
+		String wrappedString = prefix + selectedText + postfix;
 		document.replaceString(offsetSelectionStart, offsetSelectionEnd, wrappedString);
 
 		    // Update selection
