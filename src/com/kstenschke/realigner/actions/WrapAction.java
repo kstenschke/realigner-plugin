@@ -26,6 +26,7 @@ import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Wrap Action
@@ -37,7 +38,7 @@ class WrapAction extends AnAction {
      *
      * @param event Action system event
      */
-    public void update(AnActionEvent event) {
+    public void update(@NotNull AnActionEvent event) {
         event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
     }
 
@@ -47,7 +48,7 @@ class WrapAction extends AnAction {
      *
      * @param event Action system event
      */
-    public void actionPerformed(final AnActionEvent event) {
+    public void actionPerformed(@NotNull final AnActionEvent event) {
         final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
         ApplicationManager.getApplication().runWriteAction(new Runnable() {

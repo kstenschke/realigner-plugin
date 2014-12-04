@@ -29,6 +29,7 @@ import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogJoinOptions;
 import com.kstenschke.realigner.utils.UtilsEnvironment;
 import com.kstenschke.realigner.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.List;
@@ -46,7 +47,7 @@ class JoinAction extends AnAction {
 	 *
 	 * @param   event   Action system event
 	 */
-	public void update(AnActionEvent event) {
+	public void update(@NotNull AnActionEvent event) {
 		boolean enabled = false;
 
 		this.project    = event.getData(PlatformDataKeys.PROJECT);
@@ -74,7 +75,7 @@ class JoinAction extends AnAction {
 	 *
 	 * @param   event   Action system event
 	 */
-	public void actionPerformed(final AnActionEvent event) {
+	public void actionPerformed(@NotNull final AnActionEvent event) {
 		CommandProcessor.getInstance().executeCommand(project, new Runnable() {
 			public void run() {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {

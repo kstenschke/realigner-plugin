@@ -35,7 +35,7 @@ public class SettingsQuickWraps {
 	 * @param   prefix          Wrap LHS string
 	 * @param   postfix         Wrap RHS string
 	 */
-	public static void saveButton(String label, String prefix, String postfix, Boolean saveTopMost) {
+	private static void saveButton(String label, String prefix, String postfix, Boolean saveTopMost) {
 		if (!label.isEmpty()) {
 			// Delete pre-existing button config with same label, if stored already
 			removeWrapButton(label);

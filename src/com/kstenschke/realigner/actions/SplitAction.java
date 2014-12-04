@@ -35,6 +35,7 @@ import com.kstenschke.realigner.resources.forms.DialogSplitOptions;
 import com.kstenschke.realigner.utils.UtilsEnvironment;
 import com.kstenschke.realigner.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
@@ -51,7 +52,7 @@ class SplitAction extends AnAction {
 	 *
 	 * @param event Action system event
 	 */
-	public void update(AnActionEvent event) {
+	public void update(@NotNull AnActionEvent event) {
         this.editor = event.getData(PlatformDataKeys.EDITOR);
 
 		event.getPresentation().setEnabled(this.editor != null);
@@ -62,7 +63,7 @@ class SplitAction extends AnAction {
 	 *
 	 * @param   event   Action system event
 	 */
-	public void actionPerformed(final AnActionEvent event) {
+	public void actionPerformed(@NotNull final AnActionEvent event) {
 		this.project = event.getData(PlatformDataKeys.PROJECT);
 
 		CommandProcessor.getInstance().executeCommand(project, new Runnable() {

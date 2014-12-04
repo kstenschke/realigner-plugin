@@ -15,7 +15,6 @@
  */
 package com.kstenschke.realigner.resources.forms;
 
-import com.intellij.compiler.options.CompilerOptionsFilter;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.kstenschke.realigner.listeners.KeyListenerCursorUpDown;
