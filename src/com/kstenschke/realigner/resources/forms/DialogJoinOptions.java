@@ -15,6 +15,7 @@
  */
 package com.kstenschke.realigner.resources.forms;
 
+import com.kstenschke.realigner.managers.JTextFieldAddUndoManager;
 import com.kstenschke.realigner.resources.Icons;
 
 import javax.swing.*;
@@ -39,6 +40,7 @@ public class DialogJoinOptions extends JDialog {
 
         initIcons();
 
+        new JTextFieldAddUndoManager(this.textFieldGlue);
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();

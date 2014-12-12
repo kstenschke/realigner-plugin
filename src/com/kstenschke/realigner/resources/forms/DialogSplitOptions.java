@@ -15,6 +15,7 @@
  */
 package com.kstenschke.realigner.resources.forms;
 
+import com.kstenschke.realigner.managers.JTextFieldAddUndoManager;
 import com.kstenschke.realigner.resources.Icons;
 
 import javax.swing.*;
@@ -52,6 +53,7 @@ public class DialogSplitOptions extends JDialog {
 
         initIcons();
 
+		new JTextFieldAddUndoManager(this.textFieldDelimiter);
 		buttonOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onOK();

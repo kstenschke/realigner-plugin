@@ -1,5 +1,7 @@
 h1. Realigner Plugin - Changelog
 
+* 1.4.2 Added undo/redo capability to all text fields of realigner dialogs
+* 1.4.1 Compiled for JDK 1.6 (was 1.7 w/ 1.4.0), minor code optimization 
 * 1.4.0 Added multi-caret support to wrapping
 * 1.3.3 Added sorting of quick-wrap buttons by time of last usage
 * 1.3.2 Extended pair-completion of right hand side wrap part (brackets, braces, compounds, less/bigger than)

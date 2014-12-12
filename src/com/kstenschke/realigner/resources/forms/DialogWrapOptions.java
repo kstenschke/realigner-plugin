@@ -18,6 +18,7 @@ package com.kstenschke.realigner.resources.forms;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.kstenschke.realigner.listeners.KeyListenerCursorUpDown;
+import com.kstenschke.realigner.managers.JTextFieldAddUndoManager;
 import com.kstenschke.realigner.popups.PopupWrapButton;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.SettingsQuickWraps;
@@ -78,12 +79,16 @@ public class DialogWrapOptions extends JDialog {
 		getRootPane().setDefaultButton(buttonOK);
 
         initIcons();
+
+        textFieldPrefix.addFocusListener( new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
+        new JTextFieldAddUndoManager(this.textFieldPrefix);
+        new JTextFieldAddUndoManager(this.textFieldPostfix);
+
         initQuickWrapButtons();
         initButtonActionListeners();
         initRadioButtonActionListeners();
 
         panelMultiLineOptions.setVisible(isMultiLineSelection);
-        textFieldPrefix.addFocusListener( new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
