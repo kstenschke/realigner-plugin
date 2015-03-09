@@ -42,7 +42,7 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.5.0<
+        <li>1.5.0
             <ul>
                 <li>Improved keyboard accelerator: quick-wraps can now be applied w/ ENTER key</li>
                 <li>Improved UI: globalized mode options (instead of being quick-wrap exclusive)</li>

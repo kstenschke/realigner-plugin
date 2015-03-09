@@ -4,7 +4,7 @@
 h1. Realigner Plugin
 
 Source code of the intellij IDEA "Realigner plugin":http://plugins.intellij.net/plugin/index?pr=&pluginId=7082
-This is a plugin for the various intellij IDEs, working in IntelliJ IDEA, RubyMine, WebStorm, PhpStorm, PyCharm, PyCharm CE, AppCode, Android Studio and 0xDBE.
+This is a plugin for the various intellij IDEs, working in IntelliJ IDEA, RubyMine, WebStorm, PhpStorm, PyCharm, PyCharm CE, AppCode, Android Studio, 0xDBE and CLion.
 
 
 h2. Description
