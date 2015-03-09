@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -139,6 +139,7 @@ public class SettingsQuickWraps {
 	 * @return  Object[]    Array of stored buttons' prefix values
 	 */
 	public static Object[] getAllButtonPrefixes() {
+
 		return getAllButtonAttributesByType("WBPREFIX");
 	}
 
@@ -146,8 +147,21 @@ public class SettingsQuickWraps {
 	 * @return  Object[]    Array of stored buttons' postfix values
 	 */
 	public static Object[] getAllButtonPostfixes() {
-		return getAllButtonAttributesByType("WBPOSTFIX");
+
+        return getAllButtonAttributesByType("WBPOSTFIX");
 	}
+
+    public static String getButtonPrefix(int index) {
+        Object[] prefixes = getAllButtonPrefixes();
+
+        return prefixes.length >= index ? prefixes[index].toString() : "";
+    }
+
+    public static String getButtonPostfix(int index) {
+        Object[] postfixes = getAllButtonPostfixes();
+
+        return postfixes.length >= index ? postfixes[index].toString() : "";
+    }
 
 	/**
 	 * @param   typeName    String e.g. "WBPREFIX"

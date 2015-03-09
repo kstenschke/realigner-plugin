@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -126,14 +126,14 @@ public class Preferences {
     /**
      * @return  Integer QuickWrap Mode
      */
-    public static Integer getMultiLineWrapMode() {
+    public static int getMultiLineWrapMode() {
         return Integer.parseInt(getProperty(PROPERTY_MODE_WRAP_MULTILINE, "0", true));
     }
 
     /**
      * @return  Integer QuickWrap Mode
      */
-    public static Integer getQuickWrapMode() {
+    public static int getQuickWrapMode() {
         return Integer.parseInt(getProperty(PROPERTY_MODE_WRAP_QUICK, "1", true));
     }
 

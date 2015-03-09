@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.awt.event.KeyEvent;
 
 public class JTextFieldAddUndoManager {
 
-    private UndoManager undoManager;
+    final private UndoManager undoManager;
 
     /**
      * Constructor: add UndoManager to given jTextField and its inputMap

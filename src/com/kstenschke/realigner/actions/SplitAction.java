@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,7 +120,7 @@ class SplitAction extends AnAction {
                             int wrapPosition    = 120;
                             String wrapChar     = lineText.substring(wrapPosition, wrapPosition + 1);
 
-                            while (wrapPosition > 0 && !isSplittableChar(wrapChar)) {
+                            while (wrapPosition > 0 && isUnsplittableChar(wrapChar)) {
                                 wrapPosition--;
                                 wrapChar = lineText.substring(wrapPosition, wrapPosition + 1);
                             }
@@ -243,9 +243,9 @@ class SplitAction extends AnAction {
 
 	/**
 	 * @param   charStr
-	 * @return  Does the given character allow splitting the line at?
+	 * @return  Does the given character not allow splitting the line at?
 	 */
-	private static boolean isSplittableChar(String charStr) {
+	private static boolean isUnsplittableChar(String charStr) {
 		return charStr.equals(" ") || charStr.equals("\t") || charStr.equals(",");
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,9 +36,8 @@ class Wrapper {
     private int lineNumberSelectionStart;
     private int lineNumberSelectionEnd;
 	private CaretModel caretModel;
-	private int caretCount;
 
-	/**
+    /**
 	 * Constructor
 	 *
 	 * @param editor The editor
@@ -72,7 +71,6 @@ class Wrapper {
 
 	private void initCaretProperties() {
 		this.caretModel = this.editor.getCaretModel();
-		this.caretCount = this.caretModel.getCaretCount();
 	}
 
     /**
@@ -105,7 +103,7 @@ class Wrapper {
         optionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
         optionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
 
-        if( Preferences.getMultiLineWrapMode().equals(DialogWrapOptions.MODE_WRAP_WHOLE) ) {
+        if( Preferences.getMultiLineWrapMode() == (DialogWrapOptions.MODE_WRAP_WHOLE) ) {
             optionsDialog.wholeSelectionRadioButton.setSelected(true);
         } else {
             optionsDialog.eachLineRadioButton.setSelected(true);
@@ -343,7 +341,7 @@ class Wrapper {
                 : UtilsTextual.extractLine(document, getCaretLineNumber() );
         text    = text.trim();
 
-        if( ! Preferences.getMultiLineWrapMode().equals(DialogWrapOptions.MODE_WRAP_WHOLE ) ) {
+        if( Preferences.getMultiLineWrapMode() != DialogWrapOptions.MODE_WRAP_WHOLE ) {
             if( text.contains("\n") ) {
                     // Wrap mode works on every line: Analyze first line only
                 text = text.split("\n")[0].trim();

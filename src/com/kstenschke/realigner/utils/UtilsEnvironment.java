@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ public class UtilsEnvironment {
         if( ! (position[0].equals("0") && position[1].equals("0")) ) {
             location    = new Point( Integer.parseInt(position[0]), Integer.parseInt(position[1]) );
         }
+
         if( location == null ) {
             // Center to screen
             dialog.setLocationRelativeTo(null);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 Kay Stenschke
+ * Copyright 2012-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ public class DialogWrapOptions extends JDialog {
 
 	private JButton buttonCancel;
 	private JButton buttonOK;
-	private JButton buttonUnwrap;
     private JButton buttonSave;
 
     private JPanel contentPane;
@@ -41,7 +40,7 @@ public class DialogWrapOptions extends JDialog {
     private JPanel quickWrapButtonsPanel;
     private JPanel defaultPanel;
     private JPanel panelMainButtons;
-    private JPanel panelMultiLineOptions;
+    private JPanel panelOptions;
 
     private JTextField textFieldPostfix;
 	private JTextField textFieldPrefix;
@@ -54,24 +53,30 @@ public class DialogWrapOptions extends JDialog {
 
     private JLabel labelQuickWraps;
     private JLabel labelWrap;
+    private JPanel panelMultiLineOptions;
+
+    private String firedButtonLabel = null;
+    private String firedPrefix      = null;
+    private String firedPostfix     = null;
+
 
     // Wrap modes
     private static final int MODE_WRAP_EACH_LINE = 0;
     public static final int MODE_WRAP_WHOLE      = 1;
 
         // Operations
-    private static final int OPERATION_CANCEL     = 0;
+    private static final int OPERATION_CANCEL    = 0;
 	public static final int OPERATION_WRAP       = 1;
 	public static final int OPERATION_UNWRAP     = 2;
 	public static final int OPERATION_AUTODETECT = 3;
 
-	public Integer clickedOperation = OPERATION_CANCEL;
+	public Integer operation = OPERATION_CANCEL;
 
 	/**
 	 * Constructor
 	 */
 	public DialogWrapOptions(boolean isMultiLineSelection) {
-		clickedOperation = OPERATION_CANCEL;
+		this.operation = OPERATION_CANCEL;
 
 		setContentPane(contentPane);
 		setModal(true);
@@ -122,12 +127,7 @@ public class DialogWrapOptions extends JDialog {
         buttonSave.addActionListener(this.getActionListenerSaveQuickWrapButton());
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOk();
-            }
-        });
-        buttonUnwrap.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onUnwrap();
+                onOK();
             }
         });
         buttonCancel.addActionListener(new ActionListener() {
@@ -241,6 +241,7 @@ public class DialogWrapOptions extends JDialog {
         for (int i = 0; i < allButtonsLabels.length; i++) {
             String buttonLabel = allButtonsLabels[i].toString();
             final JButton wrapButton = new JButton(buttonLabel);
+            wrapButton.setName("quickWrapButton" + String.valueOf(i));
             panelWrapButtonsContainer.add(
                     wrapButton,
                     new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false)
@@ -248,7 +249,7 @@ public class DialogWrapOptions extends JDialog {
 
                 // Add button action
             final String prefix = allButtonPrefixConfigs[i].toString();
-            final String postfix = allButtonPostfixConfigs[i].toString();
+            final String postfix= allButtonPostfixConfigs[i].toString();
 
             wrapButton.addActionListener(new ActionListener() {
                 @Override
@@ -257,15 +258,7 @@ public class DialogWrapOptions extends JDialog {
                     setTextFieldPrefix(prefix);
                     setTextFieldPostfix(postfix);
 
-                    int operation = quickAutodetectRadioButton.isSelected()
-                        ? OPERATION_AUTODETECT
-                        : (quickWrapRadioButton.isSelected()
-                            ? OPERATION_WRAP
-                            : OPERATION_UNWRAP
-                        );
-                    String buttonLabel  = wrapButton.getText();
-                    SettingsQuickWraps.makeButtonTopMost(buttonLabel, prefix, postfix);
-                    onOK(operation);
+                    onOK();
                 }
             });
 
@@ -276,30 +269,43 @@ public class DialogWrapOptions extends JDialog {
     }
 
     /**
-	 * Handle click ok event
+	 * Handle click ok event: Un/wrap selection or caret line
 	 */
-    void onOk() {
-        this.onOK(OPERATION_WRAP);
-    }
+	private void onOK() {
+        int operation = quickAutodetectRadioButton.isSelected()
+                ? OPERATION_AUTODETECT
+                : (quickWrapRadioButton.isSelected() ? OPERATION_WRAP : OPERATION_UNWRAP);
 
-	private void onOK(int clickedOperation) {
-		this.clickedOperation = clickedOperation;
-		dispose();
-	}
+        Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+        if( focusOwner != null ) {
+            String focusOwnerName = focusOwner.getName();
+            if( focusOwnerName != null && focusOwnerName.startsWith("quickWrapButton") ) {
+                // Quick-wrap button was hit (clicked, or fired via SPACE or ENTER)
 
-	/**
-	 * Handle click Unwrap event
-	 */
-	private void onUnwrap() {
-		clickedOperation = OPERATION_UNWRAP;
-		dispose();
+                // ENTER would fire the outer [Wrap] button-
+                // to apply quick-wrap buttons also via ENTER update the wrapping preferences now
+                int indexWrap = Integer.parseInt(focusOwnerName.replace("quickWrapButton", ""));
+
+                String prefix = SettingsQuickWraps.getButtonPrefix(indexWrap);
+                String postfix= SettingsQuickWraps.getButtonPostfix(indexWrap);
+                setTextFieldPrefix(prefix);
+                setTextFieldPostfix(postfix);
+
+                this.firedButtonLabel   = ((JButton)focusOwner).getText();
+                this.firedPrefix        = prefix;
+                this.firedPostfix       = postfix;
+            }
+        }
+
+        this.operation = operation;
+        dispose();
 	}
 
 	/**
 	 * Handle click cancel event
 	 */
 	private void onCancel() {
-		clickedOperation = OPERATION_CANCEL;
+		operation = OPERATION_CANCEL;
 		dispose();
 	}
 
@@ -352,6 +358,11 @@ public class DialogWrapOptions extends JDialog {
     public void refreshQuickWrapButtons() {
         this.initQuickWrapButtons();
         this.pack();
+    }
+
+    public void makeFiredButtonTopMost() {
+        if( this.firedButtonLabel != null )
+        SettingsQuickWraps.makeButtonTopMost(this.firedButtonLabel, this.firedPrefix, this.firedPostfix);
     }
 
 }

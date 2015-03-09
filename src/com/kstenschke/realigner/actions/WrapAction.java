@@ -1,5 +1,5 @@
 /*
-* Copyright 2012-2014 Kay Stenschke
+* Copyright 2012-2015 Kay Stenschke
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -66,8 +66,8 @@ class WrapAction extends AnAction {
 
                 Preferences.saveWrapProperties(prefix, postfix);
 
-                int operation   = optionsDialog.clickedOperation;
-                if( optionsDialog.clickedOperation == DialogWrapOptions.OPERATION_AUTODETECT ) {
+                int operation   = optionsDialog.operation;
+                if( optionsDialog.operation == DialogWrapOptions.OPERATION_AUTODETECT ) {
                     operation   = wrapper.isWrapped(prefix, postfix) ? DialogWrapOptions.OPERATION_UNWRAP : DialogWrapOptions.OPERATION_WRAP;
                 }
                     // Perform actual wrap or unwrap
@@ -88,6 +88,8 @@ class WrapAction extends AnAction {
                         }, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
                         break;
                 }
+
+                optionsDialog.makeFiredButtonTopMost();
             }
             }
         });

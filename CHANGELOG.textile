@@ -1,5 +1,9 @@
 h1. Realigner Plugin - Changelog
 
+* 1.5.0
+    ** Improved keyboard accelerator: quick-wraps can now be applied w/ ENTER key
+    ** Improved UI: globalized mode options (instead of being quick-wrap exclusive)
+    ** Improved UI: removed explicit un/wrap buttons, renamed "Autodetect" to "Toggle"
 * 1.4.2 Added undo/redo capability to all text fields of realigner dialogs
 * 1.4.1 Compiled for JDK 1.6 (was 1.7 w/ 1.4.0), minor code optimization 
 * 1.4.0 Added multi-caret support to wrapping
