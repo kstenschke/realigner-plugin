@@ -1,5 +1,5 @@
 .idea
 .DS_Store
-realigner-plugin.iml
+*.iml
 atlassian-ide-plugin.xml
 out
