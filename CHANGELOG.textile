@@ -1,5 +1,6 @@
 h1. Realigner Plugin - Changelog
 
+* 1.5.1 Changed join: parts are now trimmed from whitespace before joining
 * 1.5.0
     ** Improved keyboard accelerator: quick-wraps can now be applied w/ ENTER key
     ** Improved UI: globalized mode options (instead of being quick-wrap exclusive)

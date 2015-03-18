@@ -71,7 +71,7 @@ class JoinAction extends AnAction {
 	}
 
 	/**
-	 * Perform implode / explode
+	 * Perform implode / explode (= join / split)
 	 *
 	 * @param   event   Action system event
 	 */
@@ -135,7 +135,7 @@ class JoinAction extends AnAction {
                         String linesStr = "";
                         int amountLines = linesList.size();
                         for (int i = 0; i < amountLines; i++) {
-                            linesStr = linesStr + linesList.get(i) + (i < (amountLines - 1) ? glue : "");
+                            linesStr = linesStr + (i > 0 ? linesList.get(i).trim() : linesList.get(i))  + (i < (amountLines - 1) ? glue : "");
                         }
 
                             // Remove newlines
