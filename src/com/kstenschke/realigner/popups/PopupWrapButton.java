@@ -16,14 +16,12 @@
 package com.kstenschke.realigner.popups;
 
 import com.kstenschke.realigner.SettingsQuickWraps;
+import com.kstenschke.realigner.listeners.PopupListener;
 import com.kstenschke.realigner.resources.Icons;
 import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import com.kstenschke.realigner.listeners.PopupListener;
 
 public class PopupWrapButton {
 
