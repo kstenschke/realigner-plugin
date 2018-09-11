@@ -76,46 +76,48 @@ class JoinAction extends AnAction {
     public void actionPerformed(@NotNull final AnActionEvent event) {
         CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
             public void run() {
-                if (editor != null) {
-                    boolean cannotJoin = false;
+                if (null == editor) {
+                    return;
+                }
 
-                    SelectionModel selectionModel = editor.getSelectionModel();
-                    boolean hasSelection = selectionModel.hasSelection();
+                boolean cannotJoin = false;
 
-                    if (hasSelection) {
-                        int offsetStart = selectionModel.getSelectionStart();
-                        int offsetEnd = selectionModel.getSelectionEnd();
+                SelectionModel selectionModel = editor.getSelectionModel();
+                boolean hasSelection = selectionModel.hasSelection();
 
-                        final Document document = editor.getDocument();
+                if (hasSelection) {
+                    int offsetStart = selectionModel.getSelectionStart();
+                    int offsetEnd = selectionModel.getSelectionEnd();
 
-                        int lineNumberSelStart = document.getLineNumber(offsetStart);
-                        int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+                    final Document document = editor.getDocument();
 
-                        if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
-                            lineNumberSelEnd--;
-                        }
+                    int lineNumberSelStart = document.getLineNumber(offsetStart);
+                    int lineNumberSelEnd = document.getLineNumber(offsetEnd);
 
-                        if (lineNumberSelEnd > lineNumberSelStart) {
-                            DialogJoinOptions optionsDialog = showOptionsDialog();
+                    if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+                        lineNumberSelEnd--;
+                    }
 
-                            if (optionsDialog.clickedOk) {
-                                String glue = optionsDialog.textFieldGlue.getText();
-                                if (glue != null) {
-                                    Preferences.saveJoinProperties(glue);
-                                    joinLines(document, lineNumberSelStart, lineNumberSelEnd, glue);
-                                }
+                    if (lineNumberSelEnd > lineNumberSelStart) {
+                        DialogJoinOptions optionsDialog = showOptionsDialog();
+
+                        if (optionsDialog.clickedOk) {
+                            String glue = optionsDialog.textFieldGlue.getText();
+                            if (null != glue) {
+                                Preferences.saveJoinProperties(glue);
+                                joinLines(document, lineNumberSelStart, lineNumberSelEnd, glue);
                             }
-                        } else {
-                            cannotJoin = true;
                         }
                     } else {
                         cannotJoin = true;
                     }
+                } else {
+                    cannotJoin = true;
+                }
 
-                    // No selection or only one line of selection? Display resp. message
-                    if (cannotJoin) {
-                        JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
-                    }
+                // No selection or only one line of selection? Display resp. message
+                if (cannotJoin) {
+                    JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
                 }
             }
 

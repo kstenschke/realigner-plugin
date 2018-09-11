@@ -55,7 +55,7 @@ class SplitAction extends AnAction {
     public void update(@NotNull AnActionEvent event) {
         this.editor = event.getData(PlatformDataKeys.EDITOR);
 
-        event.getPresentation().setEnabled(this.editor != null);
+        event.getPresentation().setEnabled(null != this.editor);
     }
 
     /**
@@ -90,7 +90,7 @@ class SplitAction extends AnAction {
 
                 Preferences.saveSplitProperties(delimiter, trimWhitespace, delimiterDisposalMethod);
 
-                if (delimiter != null && delimiter.length() > 0) {
+                if (null != delimiter && delimiter.length() > 0) {
                     if (hasSelection) {
                         splitSelection(document, selectionModel, delimiter, trimWhitespace, delimiterDisposalMethod);
                     } else {

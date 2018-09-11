@@ -18,8 +18,8 @@ package com.kstenschke.realigner.resources.forms;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.kstenschke.realigner.listeners.KeyListenerCursorUpDown;
-import com.kstenschke.realigner.managers.JTextFieldAddUndoManager;
-import com.kstenschke.realigner.popups.PopupWrapButton;
+import com.kstenschke.realigner.JTextFieldAddUndoManager;
+import com.kstenschke.realigner.PopupWrapButton;
 import com.kstenschke.realigner.Preferences;
 import com.kstenschke.realigner.SettingsQuickWraps;
 import com.kstenschke.realigner.listeners.FocusListenerPrefix;
@@ -248,9 +248,9 @@ public class DialogWrapOptions extends JDialog {
                 : (quickWrapRadioButton.isSelected() ? OPERATION_WRAP : OPERATION_UNWRAP);
 
         Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
-        if (focusOwner != null) {
+        if (null != focusOwner) {
             String focusOwnerName = focusOwner.getName();
-            if (focusOwnerName != null && focusOwnerName.startsWith("quickWrapButton")) {
+            if (null != focusOwnerName && focusOwnerName.startsWith("quickWrapButton")) {
                 // Quick-wrap button was hit (clicked, or fired via SPACE or ENTER)
 
                 // ENTER would fire the outer [Wrap] button-
@@ -332,7 +332,7 @@ public class DialogWrapOptions extends JDialog {
     }
 
     public void makeFiredButtonTopMost() {
-        if (this.firedButtonLabel != null) {
+        if (null != this.firedButtonLabel) {
             SettingsQuickWraps.makeButtonTopMost(this.firedButtonLabel, this.firedPrefix, this.firedPostfix);
         }
     }

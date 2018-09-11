@@ -89,29 +89,28 @@ public class SettingsQuickWraps {
      * @param   label     Label of button to be removed
      */
     public static void removeWrapButton(String label) {
-        Object[] buttonLabels = getAllButtonLabels();
-        if (buttonLabels != null) {
-            Integer deleteButtonIndex = null;
-            for (int i = 0; i < buttonLabels.length; i++) {
-                if (buttonLabels[i].equals(label)) {
-                    deleteButtonIndex = i;
-                }
-            }
-
-            if (deleteButtonIndex != null) {
-                // Remove button config with found index
-                String storeItemsConfig = loadButtonItemsConfig();
-
-                String buttonsConfigWithoutDeletedButton = "";
-                String[] buttonsConfigs = storeItemsConfig.split("##WBUTTON####WBLABEL##");
-                for (int i = 1; i < buttonsConfigs.length; i++) {
-                    if (i != (deleteButtonIndex + 1)) {
-                        buttonsConfigWithoutDeletedButton = buttonsConfigWithoutDeletedButton.concat("##WBUTTON####WBLABEL##" + buttonsConfigs[i]);
-                    }
-                }
-                saveButtonItemsConfig(buttonsConfigWithoutDeletedButton);
+        Object[] buttonLabels     = getAllButtonLabels();
+        Integer deleteButtonIndex = null;
+        for (int i = 0; i < buttonLabels.length; i++) {
+            if (buttonLabels[i].equals(label)) {
+                deleteButtonIndex = i;
             }
         }
+        if (null == deleteButtonIndex) {
+            return;
+        }
+
+        // Remove button config with found index
+        String storeItemsConfig = loadButtonItemsConfig();
+
+        String buttonsConfigWithoutDeletedButton = "";
+        String[] buttonsConfigs = storeItemsConfig.split("##WBUTTON####WBLABEL##");
+        for (int i = 1; i < buttonsConfigs.length; i++) {
+            if (i != (deleteButtonIndex + 1)) {
+                buttonsConfigWithoutDeletedButton = buttonsConfigWithoutDeletedButton.concat("##WBUTTON####WBLABEL##" + buttonsConfigs[i]);
+            }
+        }
+        saveButtonItemsConfig(buttonsConfigWithoutDeletedButton);
     }
 
     /**

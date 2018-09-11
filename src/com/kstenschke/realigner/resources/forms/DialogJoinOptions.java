@@ -15,7 +15,7 @@
  */
 package com.kstenschke.realigner.resources.forms;
 
-import com.kstenschke.realigner.managers.JTextFieldAddUndoManager;
+import com.kstenschke.realigner.JTextFieldAddUndoManager;
 import com.kstenschke.realigner.resources.Icons;
 
 import javax.swing.*;
@@ -68,9 +68,6 @@ public class DialogJoinOptions extends JDialog {
         dispose();
     }
 
-    /**
-     * @param   glue
-     */
     public void setGlue(String glue) {
         textFieldGlue.setText(glue);
     }
