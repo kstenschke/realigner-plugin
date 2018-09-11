@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,12 +59,11 @@ public class DialogWrapOptions extends JDialog {
     private String firedPrefix      = null;
     private String firedPostfix     = null;
 
-
     // Wrap modes
     private static final int MODE_WRAP_EACH_LINE = 0;
     public static final int MODE_WRAP_WHOLE      = 1;
 
-        // Operations
+    // Operations
     private static final int OPERATION_CANCEL    = 0;
 	public static final int OPERATION_WRAP       = 1;
 	public static final int OPERATION_UNWRAP     = 2;
@@ -85,7 +84,7 @@ public class DialogWrapOptions extends JDialog {
 
         initIcons();
 
-        textFieldPrefix.addFocusListener( new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
+        textFieldPrefix.addFocusListener(new FocusListenerPrefix(textFieldPrefix, textFieldPostfix));
         new JTextFieldAddUndoManager(this.textFieldPrefix);
         new JTextFieldAddUndoManager(this.textFieldPostfix);
 
@@ -102,11 +101,7 @@ public class DialogWrapOptions extends JDialog {
 			}
 		});
 
-		contentPane.registerKeyboardAction(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onCancel();
-			}
-		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
 
     /**
@@ -116,8 +111,8 @@ public class DialogWrapOptions extends JDialog {
         eachLineRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_EACH_LINE));
         wholeSelectionRadioButton.addActionListener(this.getActionListenerMultiLineModeRadio(MODE_WRAP_WHOLE));
         quickWrapRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_WRAP));
-        quickUnwrapRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_UNWRAP) );
-        quickAutodetectRadioButton.addActionListener( this.getActionListenerQuickModeRadio(OPERATION_AUTODETECT) );
+        quickUnwrapRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_UNWRAP));
+        quickAutodetectRadioButton.addActionListener(this.getActionListenerQuickModeRadio(OPERATION_AUTODETECT));
     }
 
     /**
@@ -125,16 +120,8 @@ public class DialogWrapOptions extends JDialog {
      */
     private void initButtonActionListeners() {
         buttonSave.addActionListener(this.getActionListenerSaveQuickWrapButton());
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
+        buttonCancel.addActionListener(e -> onCancel());
     }
 
     /**
@@ -145,40 +132,40 @@ public class DialogWrapOptions extends JDialog {
     }
 
     private void initIcons() {
-        labelWrap.setIcon( Icons.ICON_WRAP );
-        buttonSave.setIcon( Icons.ICON_BOOKMARK_ADD );
-        labelQuickWraps.setIcon( Icons.ICON_BOOKMARKS );
+        labelWrap.setIcon(Icons.ICON_WRAP);
+        buttonSave.setIcon(Icons.ICON_BOOKMARK_ADD);
+        labelQuickWraps.setIcon(Icons.ICON_BOOKMARKS);
     }
 
     /**
      * Init quick wrap buttons from stored wrap button item configs, or hide resp. sub panel
      */
     private void initQuickWrapButtons() {
-        if ( !SettingsQuickWraps.areAnyButtonsConfigured() ) {
+        if (!SettingsQuickWraps.areAnyButtonsConfigured()) {
             quickWrapButtonsPanel.setVisible(false);
         } else {
-                // Create, add and show quick wrap buttons
+            // Create, add and show quick wrap buttons
             Object[] allButtonsLabels           = SettingsQuickWraps.getAllButtonLabels();
             Object[] allButtonPrefixConfigs     = SettingsQuickWraps.getAllButtonPrefixes();
             Object[] allButtonPostfixConfigs    = SettingsQuickWraps.getAllButtonPostfixes();
 
-                // Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
+            // Cleanup wrap buttons panel, set layout: grid with a row per quick wrap button
             panelWrapButtonsContainer.removeAll();
-            panelWrapButtonsContainer.setLayout( new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false) );
+            panelWrapButtonsContainer.setLayout(new GridLayoutManager(allButtonsLabels.length, 1, new Insets(0, 0, 0, 0), 0, 0, true, false));
 
             this.addQuickWrapButtons(allButtonsLabels, allButtonPrefixConfigs, allButtonPostfixConfigs);
             int amountButtons = allButtonsLabels.length;
-            if( amountButtons > 0 ) {
-                    // Add acceleration via cursor up/down keys to prefix-field and all quick-buttons
-                textFieldPrefix.addKeyListener( new KeyListenerCursorUpDown(
+            if (amountButtons > 0) {
+                // Add acceleration via cursor up/down keys to prefix-field and all quick-buttons
+                textFieldPrefix.addKeyListener(new KeyListenerCursorUpDown(
                         panelWrapButtonsContainer.getComponent(0), panelWrapButtonsContainer.getComponent(amountButtons - 1)
                 ));
-                for(int buttonIndex=0; buttonIndex< allButtonsLabels.length; buttonIndex++ ) {
-                    Component buttonCurrent = panelWrapButtonsContainer.getComponent( buttonIndex );
-                    Component buttonAbove   = panelWrapButtonsContainer.getComponent( buttonIndex > 0 ? buttonIndex-1 : amountButtons-1 );
-                    Component buttonUnder   = panelWrapButtonsContainer.getComponent( buttonIndex < amountButtons-1 ? buttonIndex+1 : 0 );
+                for (int buttonIndex=0; buttonIndex< allButtonsLabels.length; buttonIndex++) {
+                    Component buttonCurrent = panelWrapButtonsContainer.getComponent(buttonIndex);
+                    Component buttonAbove   = panelWrapButtonsContainer.getComponent(buttonIndex > 0 ? buttonIndex-1 : amountButtons-1);
+                    Component buttonUnder   = panelWrapButtonsContainer.getComponent(buttonIndex < amountButtons-1 ? buttonIndex+1 : 0);
 
-                    buttonCurrent.addKeyListener(new KeyListenerCursorUpDown( buttonUnder, buttonAbove ));
+                    buttonCurrent.addKeyListener(new KeyListenerCursorUpDown(buttonUnder, buttonAbove));
                 }
             }
 
@@ -193,16 +180,13 @@ public class DialogWrapOptions extends JDialog {
     private ActionListener getActionListenerSaveQuickWrapButton() {
         final DialogWrapOptions dialog = this;
 
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String prefix = getPrefix();
-                String postfix= getPostfix();
+        return e -> {
+            String prefix = getPrefix();
+            String postfix= getPostfix();
 
-                SettingsQuickWraps.saveButton(prefix + "..." + postfix, prefix, postfix);
+            SettingsQuickWraps.saveButton(prefix + "..." + postfix, prefix, postfix);
 
-                dialog.refreshQuickWrapButtons();
-            }
+            dialog.refreshQuickWrapButtons();
         };
     }
 
@@ -211,12 +195,7 @@ public class DialogWrapOptions extends JDialog {
      * @return  ActionListener
      */
     private ActionListener getActionListenerMultiLineModeRadio(final Integer mode) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Preferences.saveMultiLineWrapMode(mode);
-            }
-        };
+        return e -> Preferences.saveMultiLineWrapMode(mode);
     }
 
     /**
@@ -224,12 +203,7 @@ public class DialogWrapOptions extends JDialog {
      * @return  ActionListener
      */
     private ActionListener getActionListenerQuickModeRadio(final Integer mode) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Preferences.saveQuickWrapMode(mode);
-            }
-        };
+        return e -> Preferences.saveQuickWrapMode(mode);
     }
 
     /**
@@ -247,24 +221,21 @@ public class DialogWrapOptions extends JDialog {
                     new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false)
             );
 
-                // Add button action
+            // Add button action
             final String prefix = allButtonPrefixConfigs[i].toString();
             final String postfix= allButtonPostfixConfigs[i].toString();
 
-            wrapButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        // Perform Un/Wrap
-                    setTextFieldPrefix(prefix);
-                    setTextFieldPostfix(postfix);
+            wrapButton.addActionListener(e -> {
+                // Perform Un/Wrap
+                setTextFieldPrefix(prefix);
+                setTextFieldPostfix(postfix);
 
-                    onOK();
-                }
+                onOK();
             });
 
-                // Add Context menu
+            // Add context menu
             PopupWrapButton popupWrapButton = new PopupWrapButton(wrapButton, this);
-            wrapButton.addMouseListener( popupWrapButton.getPopupListener() );
+            wrapButton.addMouseListener(popupWrapButton.getPopupListener());
         }
     }
 
@@ -277,9 +248,9 @@ public class DialogWrapOptions extends JDialog {
                 : (quickWrapRadioButton.isSelected() ? OPERATION_WRAP : OPERATION_UNWRAP);
 
         Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
-        if( focusOwner != null ) {
+        if (focusOwner != null) {
             String focusOwnerName = focusOwner.getName();
-            if( focusOwnerName != null && focusOwnerName.startsWith("quickWrapButton") ) {
+            if (focusOwnerName != null && focusOwnerName.startsWith("quickWrapButton")) {
                 // Quick-wrap button was hit (clicked, or fired via SPACE or ENTER)
 
                 // ENTER would fire the outer [Wrap] button-
@@ -361,8 +332,8 @@ public class DialogWrapOptions extends JDialog {
     }
 
     public void makeFiredButtonTopMost() {
-        if( this.firedButtonLabel != null )
-        SettingsQuickWraps.makeButtonTopMost(this.firedButtonLabel, this.firedPrefix, this.firedPostfix);
+        if (this.firedButtonLabel != null) {
+            SettingsQuickWraps.makeButtonTopMost(this.firedButtonLabel, this.firedPrefix, this.firedPostfix);
+        }
     }
-
 }

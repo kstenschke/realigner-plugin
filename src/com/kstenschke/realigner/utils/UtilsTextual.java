@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,9 @@ public class UtilsTextual {
 	 * @return  String
 	 */
 	public static String getSubString(CharSequence haystack, int offsetStart, int offsetEnd) {
-		if (haystack.length() == 0) return null;
-
-		return haystack.subSequence(offsetStart, offsetEnd).toString();
+		return haystack.length() == 0
+                ? null
+                : haystack.subSequence(offsetStart, offsetEnd).toString();
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class UtilsTextual {
 	 * @return  List<String>
 	 */
 	public static List<String> extractLines(Document doc, int startLine, int endLine) {
-		List<String> lines = new ArrayList<String>(endLine - startLine);
+		List<String> lines = new ArrayList<>(endLine - startLine);
 
 		for (int i = startLine; i <= endLine; i++) {
 			String line = UtilsTextual.extractLine(doc, i);
@@ -69,14 +69,12 @@ public class UtilsTextual {
 
 		String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
-		    // If last line has no \n, add it one
-		    // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
-		    // with \n... This is fixed after.
-		if (lineSeparatorLength == 0) {
-			line += "\n";
-		}
-
-		return line;
+        // If last line has no \n, add it one
+        // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
+        // with \n... This is fixed after.
+		return lineSeparatorLength == 0
+                ? line + "\n"
+                : line;
 	}
 
 	/**
@@ -126,6 +124,7 @@ public class UtilsTextual {
         while (i < str.length() && Character.isWhitespace(str.charAt(i))) {
             i++;
         }
+
         return str.substring(i);
     }
 
@@ -143,11 +142,10 @@ public class UtilsTextual {
      */
     public static String trimLines(String text) {
         String[] lines  = text.split("\n");
-
-        String result = "";
-        for(String line : lines) {
-            line    = line.trim();
-            if( !line.isEmpty() /*|| keepEmptyLines*/ ) {
+        String result   = "";
+        for (String line : lines) {
+            line = line.trim();
+            if (!line.isEmpty() /*|| keepEmptyLines*/) {
                 result += line + "\n";
             }
         }
@@ -161,40 +159,46 @@ public class UtilsTextual {
      * @return  Right hand side (counterpart) string
      */
     public static String getWrapCounterpart(String strLHS) {
-        if( strLHS.isEmpty() ) {
+        if (strLHS.isEmpty()) {
             return "";
         }
 
         strLHS = strLHS.trim();
-
         if (UtilsTextual.isHtmlTag(strLHS)) {
-                // HTML tag: fill with postfix field with resp. pendent
+            // HTML tag: fill with postfix field with resp. pendent
             return UtilsTextual.getHtmlTagCounterpart(strLHS);
-        } else {
-            if( strLHS.startsWith("(") && ! strLHS.contains(")") ) {
-                return ")";
-            } else if( strLHS.startsWith("[") && ! strLHS.contains("]") ) {
-                return "]";
-            } else if( strLHS.startsWith("{") && ! strLHS.contains("}") ) {
-                return "}";
-            } else if( strLHS.startsWith("«") && ! strLHS.contains("»") ) {
-                return "»";
-            } else if( strLHS.startsWith("„") && ! strLHS.contains("“") ) {
-                return "“";
-            } else if( strLHS.startsWith("“") && ! strLHS.contains("”") ) {
-                return "”";
-            } else if( strLHS.startsWith("‘") && ! strLHS.contains("’") ) {
-                return "’";
-            } else if( strLHS.startsWith("<!--") && ! strLHS.contains("-->") ) {
-                return "-->";
-            } else if( strLHS.startsWith("<") && ! strLHS.contains(">") ) {
-                return ">";
-            } else if( strLHS.startsWith("/*") && ! strLHS.contains("*/") ) {
-                return "*/";
-            }
         }
+		if (strLHS.startsWith("(") && ! strLHS.contains(")")) {
+			return ")";
+		}
+		if (strLHS.startsWith("[") && ! strLHS.contains("]")) {
+			return "]";
+		}
+		if (strLHS.startsWith("{") && ! strLHS.contains("}")) {
+			return "}";
+		}
+		if (strLHS.startsWith("«") && ! strLHS.contains("»")) {
+			return "»";
+		}
+		if (strLHS.startsWith("„") && ! strLHS.contains("“")) {
+			return "“";
+		}
+		if (strLHS.startsWith("“") && ! strLHS.contains("”")) {
+			return "”";
+		}
+		if (strLHS.startsWith("‘") && ! strLHS.contains("’")) {
+			return "’";
+		}
+		if (strLHS.startsWith("<!--") && ! strLHS.contains("-->")) {
+			return "-->";
+		}
+		if (strLHS.startsWith("<") && ! strLHS.contains(">")) {
+			return ">";
+		}
+		if (strLHS.startsWith("/*") && ! strLHS.contains("*/")) {
+			return "*/";
+		}
 
         return null;
     }
-
 }

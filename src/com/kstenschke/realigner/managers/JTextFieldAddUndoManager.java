@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class JTextFieldAddUndoManager {
                 new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if( undoManager.canRedo() ) {
+                        if (undoManager.canRedo()) {
                             undoManager.redo();
                         }
                     }
@@ -69,12 +69,11 @@ public class JTextFieldAddUndoManager {
                 new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if( undoManager.canUndo() ) {
+                        if (undoManager.canUndo()) {
                             undoManager.undo();
                         }
                     }
                 }
         );
     }
-
 }

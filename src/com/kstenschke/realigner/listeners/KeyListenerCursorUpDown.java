@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public class KeyListenerCursorUpDown implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        switch( e.getKeyCode() ) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 this.focusComponent(this.componentUnder);
                 break;
@@ -61,7 +61,7 @@ public class KeyListenerCursorUpDown implements KeyListener {
      * @param   component
      */
     private void focusComponent(Component component) {
-        if( component != null ) {
+        if (null != component) {
             component.requestFocusInWindow();
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,11 +48,13 @@ public class FocusListenerPrefix implements FocusListener {
         String postfix= textFieldPostfix.getText();
 
         // If postfix is empty: detect and insert counterpart of wrap LHS
-        if( postfix.isEmpty() ) {
-            postfix = UtilsTextual.getWrapCounterpart(prefix);
-            if( postfix != null ) {
-                textFieldPostfix.setText(postfix);
-            }
+        if (!postfix.isEmpty()) {
+            return;
+        }
+
+        postfix = UtilsTextual.getWrapCounterpart(prefix);
+        if (null != postfix) {
+            textFieldPostfix.setText(postfix);
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NonNls;
 
 public class StaticTexts {
 
-        // Dialogs
+    // Dialogs
     @NonNls
     public static final String MESSAGE_TITLE_SPLIT = "Split by Delimiter";
     @NonNls
@@ -27,17 +27,17 @@ public class StaticTexts {
     @NonNls
     public static final String MESSAGE_TITLE_JOIN = "Join Lines with Glue";
 
-        // Context menu items
+    // Context menu items
     @NonNls
     public static final String POPUP_QUICKWRAP_REMOVE = "Remove this Quickwrap";
 
-        // Notification messages
+    // Notification messages
     @NonNls
     public static final String NOTIFICATION_SPLIT_DELIMITER_MISSING = "Delimiter not found.";
     @NonNls
     public static final String NOTIFICATION_JOIN_NO_LINES_SELECTED = "Please select lines to be joined.";
 
-        // Undo history
+    // Undo history
     @NonNls
     public static final String UNDO_HISTORY_SPLIT = "Split into Lines";
     @NonNls

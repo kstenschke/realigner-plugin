@@ -1,5 +1,5 @@
 /*
-* Copyright 2012-2015 Kay Stenschke
+* Copyright 2012-2018 Kay Stenschke
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -51,48 +51,37 @@ class WrapAction extends AnAction {
     public void actionPerformed(@NotNull final AnActionEvent event) {
         final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
-        ApplicationManager.getApplication().runWriteAction(new Runnable() {
-            public void run() {
-            Editor editor = event.getData(PlatformDataKeys.EDITOR);
+        ApplicationManager.getApplication().runWriteAction(() -> {
+        Editor editor = event.getData(PlatformDataKeys.EDITOR);
 
-            if (editor != null) {
-                final Wrapper wrapper = new Wrapper(editor);
-                final boolean isSelectionMultiLine = wrapper.isSelectionMultiLine;
-                DialogWrapOptions optionsDialog = wrapper.getWrapOptionsDialog(isSelectionMultiLine);
+        if (editor != null) {
+            final Wrapper wrapper = new Wrapper(editor);
+            final boolean isSelectionMultiLine = wrapper.isSelectionMultiLine;
+            DialogWrapOptions optionsDialog = wrapper.getWrapOptionsDialog(isSelectionMultiLine);
 
-                final String prefix     = optionsDialog.getPrefix();
-                final String postfix    = optionsDialog.getPostfix();
-                final Integer wrapMode  = optionsDialog.getWrapMode();
+            final String prefix     = optionsDialog.getPrefix();
+            final String postfix    = optionsDialog.getPostfix();
+            final Integer wrapMode  = optionsDialog.getWrapMode();
 
-                Preferences.saveWrapProperties(prefix, postfix);
+            Preferences.saveWrapProperties(prefix, postfix);
 
-                int operation   = optionsDialog.operation;
-                if( optionsDialog.operation == DialogWrapOptions.OPERATION_AUTODETECT ) {
-                    operation   = wrapper.isWrapped(prefix, postfix) ? DialogWrapOptions.OPERATION_UNWRAP : DialogWrapOptions.OPERATION_WRAP;
-                }
-                    // Perform actual wrap or unwrap
-                switch( operation ) {
-                    case DialogWrapOptions.OPERATION_WRAP:
-                        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                            public void run() {
-                                wrapper.wrap(prefix, postfix, wrapMode);
-                            }
-                        }, StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
-                        break;
-
-                    case DialogWrapOptions.OPERATION_UNWRAP:
-                        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                            public void run() {
-                                wrapper.unwrap(prefix, postfix);
-                            }
-                        }, StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
-                        break;
-                }
-
-                optionsDialog.makeFiredButtonTopMost();
+            int operation = optionsDialog.operation;
+            if (DialogWrapOptions.OPERATION_AUTODETECT == optionsDialog.operation) {
+                operation   = wrapper.isWrapped(prefix, postfix) ? DialogWrapOptions.OPERATION_UNWRAP : DialogWrapOptions.OPERATION_WRAP;
             }
+
+            // Un/wrap
+            switch (operation) {
+                case DialogWrapOptions.OPERATION_WRAP:
+                    CommandProcessor.getInstance().executeCommand(currentProject, () -> wrapper.wrap(prefix, postfix, wrapMode), StaticTexts.UNDO_HISTORY_WRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                    break;
+                case DialogWrapOptions.OPERATION_UNWRAP:
+                    CommandProcessor.getInstance().executeCommand(currentProject, () -> wrapper.unwrap(prefix, postfix), StaticTexts.UNDO_HISTORY_UNWRAP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                    break;
             }
+
+            optionsDialog.makeFiredButtonTopMost();
+        }
         });
     }
-
 }

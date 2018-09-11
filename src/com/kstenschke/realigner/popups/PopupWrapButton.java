@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,15 +35,12 @@ public class PopupWrapButton {
     public PopupWrapButton(final JButton button, final DialogWrapOptions dialog) {
         this.popup = new JPopupMenu();
 
-            // Remove QuickWrap Button
+        // Remove QuickWrap Button
         JMenuItem menuItemSelectedBookmarkRemove    = new JMenuItem(StaticTexts.POPUP_QUICKWRAP_REMOVE);
         menuItemSelectedBookmarkRemove.setIcon(Icons.ICON_DELETE);
-        menuItemSelectedBookmarkRemove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SettingsQuickWraps.removeWrapButton(button.getText());
-                dialog.refreshQuickWrapButtons();
-            }
+        menuItemSelectedBookmarkRemove.addActionListener(e -> {
+            SettingsQuickWraps.removeWrapButton(button.getText());
+            dialog.refreshQuickWrapButtons();
         });
 
         this.popup.add(menuItemSelectedBookmarkRemove);
@@ -55,6 +52,4 @@ public class PopupWrapButton {
     public PopupListener getPopupListener() {
         return new PopupListener(this.popup);
     }
-
-
 }

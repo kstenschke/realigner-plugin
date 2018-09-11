@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NonNls;
  */
 public class Preferences {
 
-        // Dialog IDs
+	// Dialog IDs
     @NonNls
     public static final String ID_DIALOG_JOIN = "PluginRealiginer.DialogJoin";
     @NonNls
@@ -32,13 +32,13 @@ public class Preferences {
     @NonNls
     public static final String ID_DIALOG_WRAP = "PluginRealiginer.DialogWrap";
 
-        // Wrap modes
+	// Wrap modes
     @NonNls
     private static final String PROPERTY_MODE_WRAP_QUICK = "PluginRealiginer.QuickWrapMode";
     @NonNls
     private static final String PROPERTY_MODE_WRAP_MULTILINE = "PluginRealiginer.MultiLineWrapMode";
 
-        // Various Options
+	// Various Options
 	@NonNls
 	private static final String PROPERTY_JOIN_GLUE = "PluginRealiginer.JoinGlue";
 	@NonNls
@@ -113,7 +113,7 @@ public class Preferences {
 	 */
 	private static String getProperty(String propertyName, String defaultValue, boolean setDefaultIfEmpty) {
 		String value = PropertiesComponent.getInstance().getValue(propertyName);
-		if (value == null) {
+		if (null == value) {
 			value = defaultValue;
 		}
 		if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
@@ -181,20 +181,11 @@ public class Preferences {
 		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
 	}
 
-    /**
-     * @param   idDialog
-     * @param   x
-     * @param   y
-     */
     public static void saveDialogPosition(String idDialog, Integer x, Integer y) {
         PropertiesComponent.getInstance().setValue(idDialog + ".Position", x.toString() + "x" + y.toString());
     }
 
-    /**
-     * @param   idDialog
-     */
     public static String getDialogPosition(String idDialog) {
-        return getProperty( idDialog + ".Position", "0x0", false );
+        return getProperty(idDialog + ".Position", "0x0", false);
     }
-
 }

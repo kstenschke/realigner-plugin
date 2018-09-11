@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SettingsQuickWraps {
 
-	    // Wrap button items are stored custom serialized: each item as a config string
+    // Wrap button items are stored custom serialized: each item as a config string
 	@NonNls
 	private static final String PROPERTY_WRAPBUTTONS = "";
 
@@ -43,7 +43,7 @@ public class SettingsQuickWraps {
 			String newButtonConfigStr = renderButtonConfigStr(label, prefix, postfix);
 			String storeWrapButtons = loadButtonItemsConfig();
 
-			if (storeWrapButtons == null) {
+			if (null == storeWrapButtons) {
 				storeWrapButtons = "";
 			}
 
@@ -139,7 +139,6 @@ public class SettingsQuickWraps {
 	 * @return  Object[]    Array of stored buttons' prefix values
 	 */
 	public static Object[] getAllButtonPrefixes() {
-
 		return getAllButtonAttributesByType("WBPREFIX");
 	}
 
@@ -147,7 +146,6 @@ public class SettingsQuickWraps {
 	 * @return  Object[]    Array of stored buttons' postfix values
 	 */
 	public static Object[] getAllButtonPostfixes() {
-
         return getAllButtonAttributesByType("WBPOSTFIX");
 	}
 
@@ -173,7 +171,7 @@ public class SettingsQuickWraps {
 		String storeItemsConfig = loadButtonItemsConfig();
 
 		// Extract only item prefixes into array
-		List<String> items = new ArrayList<String>();
+		List<String> items = new ArrayList<>();
 		if (storeItemsConfig != null && !storeItemsConfig.isEmpty()) {
 			String[] buttonConfigs = storeItemsConfig.split("##" + typeName + "##");
 
@@ -198,5 +196,4 @@ public class SettingsQuickWraps {
 	public static boolean areAnyButtonsConfigured() {
 		return getAmountButtons() > 0;
 	}
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,180 +66,182 @@ class SplitAction extends AnAction {
 	public void actionPerformed(@NotNull final AnActionEvent event) {
 		this.project = event.getData(PlatformDataKeys.PROJECT);
 
-		CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-			public void run() {
-				ApplicationManager.getApplication().runWriteAction(new Runnable() {
-					public void run() {
-						if (editor != null) {
-							final Document document         = editor.getDocument();
-							SelectionModel selectionModel   = editor.getSelectionModel();
-							boolean hasSelection            = selectionModel.hasSelection();
+		CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            public void run() {
+                if (null == editor) {
+                    return;
+                }
 
-							    // Setup and display options dialog
-							DialogSplitOptions optionsDialog = showOptionsDialog();
+                final Document document         = editor.getDocument();
+                SelectionModel selectionModel   = editor.getSelectionModel();
+                boolean hasSelection            = selectionModel.hasSelection();
 
-							    // Clicked ok: conduct split
-							if (optionsDialog.clickedOk) {
-								String delimiter                = optionsDialog.getDelimiter();
-                                boolean trimWhitespace          = optionsDialog.getIsSelectedTrimWhitespace();
-								Integer delimiterDisposalMethod = optionsDialog.getDelimiterDisposalMethod();
+                // Setup and display options dialog
+                DialogSplitOptions optionsDialog = showOptionsDialog();
 
-								Preferences.saveSplitProperties(delimiter, trimWhitespace, delimiterDisposalMethod);
+                // Clicked ok: conduct split
+                if (!optionsDialog.clickedOk) {
+                    return;
+                }
 
-								if (delimiter != null && delimiter.length() > 0) {
-									if (hasSelection) {
-                                        splitSelection(document, selectionModel, delimiter, trimWhitespace, delimiterDisposalMethod);
-									} else {
-                                        splitLine(document, delimiter, trimWhitespace, delimiterDisposalMethod);
-                                    }
+                String delimiter       = optionsDialog.getDelimiter();
+                boolean trimWhitespace = optionsDialog.getIsSelectedTrimWhitespace();
+                Integer delimiterDisposalMethod = optionsDialog.getDelimiterDisposalMethod();
 
-                                    alignSelectedLinesIndent(document, selectionModel);
+                Preferences.saveSplitProperties(delimiter, trimWhitespace, delimiterDisposalMethod);
 
-								} else if (!hasSelection) {
-                                    splitLineAtSoftWrap(document);
-                                }
-							}
-						}
-					}
+                if (delimiter != null && delimiter.length() > 0) {
+                    if (hasSelection) {
+                        splitSelection(document, selectionModel, delimiter, trimWhitespace, delimiterDisposalMethod);
+                    } else {
+                        splitLine(document, delimiter, trimWhitespace, delimiterDisposalMethod);
+                    }
 
-                    /**
-                     * Split line at soft-wrap (no selection + empty delimiter)
-                     *
-                     * @param   document
-                     */
-                    private void splitLineAtSoftWrap(Document document) {
-                        int caretOffset     = editor.getCaretModel().getOffset();
-                        int lineNumber      = document.getLineNumber(caretOffset);
+                    alignSelectedLinesIndent(document, selectionModel);
+                } else if (!hasSelection) {
+                    splitLineAtSoftWrap(document);
+                }
+            }
+
+            /**
+             * Split line at soft-wrap (no selection + empty delimiter)
+             *
+             * @param document
+             */
+            private void splitLineAtSoftWrap(Document document) {
+                int caretOffset = editor.getCaretModel().getOffset();
+                int lineNumber = document.getLineNumber(caretOffset);
+                int offsetLineStart = document.getLineStartOffset(lineNumber);
+
+                String lineText = UtilsTextual.extractLine(document, lineNumber);
+                Integer textLength = getTextWidth(lineText);
+
+                if (null == textLength || textLength < 121) {
+                    return;
+                }
+
+                int offsetLineEnd = offsetLineStart + lineText.length() - 1;
+                int wrapPosition = 120;
+                String wrapChar = lineText.substring(wrapPosition, wrapPosition + 1);
+
+                while (wrapPosition > 0 && isUnsplittableChar(wrapChar)) {
+                    wrapPosition--;
+                    wrapChar = lineText.substring(wrapPosition, wrapPosition + 1);
+                }
+                if (wrapPosition <= 1) {
+                    return;
+                }
+
+                String explodedText = lineText.substring(0, wrapPosition) +
+                        (wrapChar.equals(",") ? wrapChar : "") + "\n" +
+                        lineText.substring(wrapPosition + 1, lineText.length());
+
+                document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
+
+                editor.getCaretModel().moveToOffset(document.getLineStartOffset(lineNumber + 1));
+                editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
+            }
+
+            /**
+             * Explode line containing the caret by delimiter
+             *
+             * @param document
+             * @param delimiter
+             * @param trimWhitespace
+             * @param delimiterDisposalMethod
+             */
+            private void splitLine(Document document, String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
+                int caretOffset = editor.getCaretModel().getOffset();
+                int lineNumber = document.getLineNumber(caretOffset);
+
+                int offsetLineStart = document.getLineStartOffset(lineNumber);
+                String lineText = UtilsTextual.extractLine(document, lineNumber);
+                int offsetLineEnd = offsetLineStart + lineText.length() - 1;
+
+                if (!lineText.contains(delimiter)) {
+                    JOptionPane.showMessageDialog(null, StaticTexts.NOTIFICATION_SPLIT_DELIMITER_MISSING);
+                } else {
+                    document.replaceString(offsetLineStart, offsetLineEnd, getExplodedLineText(delimiter, trimWhitespace, delimiterDisposalMethod, lineText));
+                }
+            }
+
+            /**
+             * @param document
+             * @param selectionModel
+             * @param delimiter
+             * @param trimWhitespace
+             * @param delimiterDisposalMethod
+             */
+            private void splitSelection(Document document, SelectionModel selectionModel, String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
+                int offsetStart = selectionModel.getSelectionStart();
+                int offsetEnd = selectionModel.getSelectionEnd();
+
+                CharSequence editorText = document.getCharsSequence();
+                String selectedText = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
+
+                if (null != selectedText && !selectedText.contains(delimiter)) {
+                    JOptionPane.showMessageDialog(null, StaticTexts.NOTIFICATION_SPLIT_DELIMITER_MISSING);
+                } else {
+                    int selectionStart = document.getLineNumber(selectionModel.getSelectionStart());
+                    int selectionEnd   = document.getLineNumber(selectionModel.getSelectionEnd());
+
+                    for (int lineNumber = selectionEnd; lineNumber >= selectionStart; lineNumber--) {
                         int offsetLineStart = document.getLineStartOffset(lineNumber);
+                        String lineText = UtilsTextual.extractLine(document, lineNumber);
+                        int offsetLineEnd = offsetLineStart + lineText.length() - 1;
 
-                        String lineText     = UtilsTextual.extractLine(document, lineNumber);
-                        Integer textLength  = getTextWidth(lineText);
+                        String exploded = getExplodedLineText(delimiter, trimWhitespace, delimiterDisposalMethod, lineText);
 
-                        if (textLength > 120) {
-                            int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
-                            int wrapPosition    = 120;
-                            String wrapChar     = lineText.substring(wrapPosition, wrapPosition + 1);
-
-                            while (wrapPosition > 0 && isUnsplittableChar(wrapChar)) {
-                                wrapPosition--;
-                                wrapChar = lineText.substring(wrapPosition, wrapPosition + 1);
-                            }
-                            if (wrapPosition > 1) {
-                                String explodedText = lineText.substring(0, wrapPosition) +
-                                          (wrapChar.equals(",") ? wrapChar : "") +  "\n" +
-                                          lineText.substring(wrapPosition + 1, lineText.length());
-
-                                document.replaceString(offsetLineStart, offsetLineEnd, explodedText);
-
-                                editor.getCaretModel().moveToOffset(document.getLineStartOffset(lineNumber + 1));
-                                editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
-                            }
-                        }
+                        document.replaceString(offsetLineStart, offsetLineEnd, exploded);
                     }
+                }
+            }
 
-                    /**
-                     * Explode line containing the caret by delimiter
-                     *
-                     * @param   document
-                     * @param   delimiter
-                     * @param   trimWhitespace
-                     * @param   delimiterDisposalMethod
-                     */
-                    private void splitLine(Document document, String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
-                        int caretOffset = editor.getCaretModel().getOffset();
-                        int lineNumber  = document.getLineNumber(caretOffset);
+            /**
+             * @param document
+             * @param selectionModel
+             */
+            private void alignSelectedLinesIndent(Document document, SelectionModel selectionModel) {
+                // Fetch leading whitespace of first line
+                int offsetSelectionStart = selectionModel.getSelectionStart();
+                int lineNumberSelectionStart = document.getLineNumber(offsetSelectionStart);
+                int offsetSelectionEnd = selectionModel.getSelectionEnd();
 
-                        int offsetLineStart = document.getLineStartOffset(lineNumber);
-                        String lineText     = UtilsTextual.extractLine(document, lineNumber);
-                        int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
+                int startOffsetFirstLine = document.getLineStartOffset(lineNumberSelectionStart);
+                int endOffsetFirstLine = document.getLineEndOffset(lineNumberSelectionStart);
+                String firstLine = document.getText(new TextRange(startOffsetFirstLine, endOffsetFirstLine));
+                String indent = firstLine.replace(UtilsTextual.lTrim(firstLine), "");
 
-                        if (!lineText.contains(delimiter)) {
-                            JOptionPane.showMessageDialog(null, StaticTexts.NOTIFICATION_SPLIT_DELIMITER_MISSING);
-                        } else {
-                            document.replaceString(offsetLineStart, offsetLineEnd, getExplodedLineText(delimiter, trimWhitespace, delimiterDisposalMethod, lineText));
-                        }
+                String[] selectedLines = document.getText(new TextRange(offsetSelectionStart, offsetSelectionEnd)).split("\n");
+                int index = 0;
+                for (String line : selectedLines) {
+                    if (index > 0 && !line.startsWith(indent)) {
+                        selectedLines[index] = indent + line;
                     }
+                    index++;
+                }
+                document.replaceString(offsetSelectionStart, offsetSelectionEnd, StringUtils.join(selectedLines, "\n"));
+            }
 
-                    /**
-                     * @param   document
-                     * @param   selectionModel
-                     * @param   delimiter
-                     * @param   trimWhitespace
-                     * @param   delimiterDisposalMethod
-                     */
-                    private void splitSelection(Document document, SelectionModel selectionModel, String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
-                        int offsetStart = selectionModel.getSelectionStart();
-                        int offsetEnd   = selectionModel.getSelectionEnd();
+            /**
+             * @param delimiter
+             * @param delimiterDisposalMethod
+             * @param lineText
+             * @return String
+             */
+            private String getExplodedLineText(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod, String lineText) {
+                String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
 
-                        CharSequence editorText = document.getCharsSequence();
-                        String selectedText     = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
+                String result = lineText.replace(delimiter, replacement);
 
-                        if (!selectedText.contains(delimiter)) {
-                            JOptionPane.showMessageDialog(null, StaticTexts.NOTIFICATION_SPLIT_DELIMITER_MISSING);
-                        } else {
-                            int selectionStart   = document.getLineNumber(selectionModel.getSelectionStart());
-                            int selectionEnd     = document.getLineNumber(selectionModel.getSelectionEnd());
+                if (trimWhitespace) {
+                    result = UtilsTextual.trimLines(result);
+                }
 
-                            for (int lineNumber = selectionEnd; lineNumber >= selectionStart; lineNumber--) {
-                                int offsetLineStart = document.getLineStartOffset(lineNumber);
-                                String lineText     = UtilsTextual.extractLine(document, lineNumber);
-                                int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
-
-                                String exploded  = getExplodedLineText(delimiter, trimWhitespace, delimiterDisposalMethod, lineText);
-
-                                document.replaceString(offsetLineStart, offsetLineEnd, exploded);
-                            }
-                        }
-                    }
-
-                    /**
-                     * @param   document
-                     * @param   selectionModel
-                     */
-                    private void alignSelectedLinesIndent(Document document, SelectionModel selectionModel) {
-                            // Fetch leading whitespace of first line
-                        int offsetSelectionStart    = selectionModel.getSelectionStart();
-                        int lineNumberSelectionStart= document.getLineNumber(offsetSelectionStart);
-                        int offsetSelectionEnd      = selectionModel.getSelectionEnd();
-
-                        int startOffsetFirstLine    = document.getLineStartOffset(lineNumberSelectionStart);
-                        int endOffsetFirstLine      = document.getLineEndOffset(lineNumberSelectionStart);
-                        String firstLine            = document.getText(new TextRange(startOffsetFirstLine, endOffsetFirstLine));
-                        String indent               = firstLine.replace(UtilsTextual.lTrim(firstLine), "");
-
-                        String[] selectedLines    = document.getText(new TextRange(offsetSelectionStart, offsetSelectionEnd)).split("\n");
-                        Integer index = 0;
-                        for(String line : selectedLines) {
-                            if( index>0 && !line.startsWith(indent)) {
-                                selectedLines[index]    = indent + line;
-                            }
-                            index++;
-                        }
-                        document.replaceString(offsetSelectionStart, offsetSelectionEnd, StringUtils.join(selectedLines, "\n"));
-                    }
-
-                    /**
-                     * @param   delimiter
-                     * @param   delimiterDisposalMethod
-                     * @param   lineText
-                     * @return  String
-                     */
-                    private String getExplodedLineText(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod, String lineText) {
-						String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
-
-						String result = lineText.replace(delimiter, replacement);
-
-                        if( trimWhitespace ) {
-                            result  = UtilsTextual.trimLines(result);
-                        }
-
-                        return result;
-					}
-				});
-
-			}
-		}, StaticTexts.UNDO_HISTORY_SPLIT, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
-	}
+                return result;
+            }
+        }), StaticTexts.UNDO_HISTORY_SPLIT, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+    }
 
 	/**
 	 * @param   charStr
@@ -256,30 +258,27 @@ class SplitAction extends AnAction {
 	 * @return  Integer     Amount of characters
 	 */
 	private Integer getTextWidth(String text) {
-		Integer length = text.length();
-
-		    // Get tab size
-		Integer tabSize = 0;
-
-        if( this.project != null ) {
-            PsiFile psiFile = PsiDocumentManager.getInstance(this.project).getPsiFile(this.editor.getDocument());
-
-            if( psiFile != null ) {
-                CommonCodeStyleSettings commonCodeStyleSettings = new CommonCodeStyleSettings(psiFile.getLanguage());
-                CommonCodeStyleSettings.IndentOptions indentOptions = commonCodeStyleSettings.getIndentOptions();
-
-                if (indentOptions != null) {
-                    tabSize = indentOptions.TAB_SIZE;
-                }
-                if (tabSize == 0) {
-                    tabSize = this.editor.getSettings().getTabSize(this.project);
-                }
-
-                return length + UtilsTextual.countTabOccurrences(text) * (tabSize - 1);
-            }
+        if (null == this.project) {
+            return null;
+        }
+        PsiFile psiFile = PsiDocumentManager.getInstance(this.project).getPsiFile(this.editor.getDocument());
+        if (null != psiFile) {
+            return null;
         }
 
-        return null;
+        CommonCodeStyleSettings commonCodeStyleSettings = new CommonCodeStyleSettings(psiFile.getLanguage());
+        CommonCodeStyleSettings.IndentOptions indentOptions = commonCodeStyleSettings.getIndentOptions();
+
+        // Get tab size
+        int tabSize = 0;
+        if (null != indentOptions) {
+            tabSize = indentOptions.TAB_SIZE;
+        }
+        if (0 == tabSize) {
+            tabSize = this.editor.getSettings().getTabSize(this.project);
+        }
+
+        return text.length() + UtilsTextual.countTabOccurrences(text) * (tabSize - 1);
 	}
 
 	/**
@@ -290,9 +289,10 @@ class SplitAction extends AnAction {
 	 * @return  String
 	 */
 	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
-		if (disposalMethod == DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_BEFORE) {
+		if (DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_BEFORE == disposalMethod) {
 			return "\n" + delimiter;
-		} else if (disposalMethod == DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_AFTER) {
+		}
+		if (DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_AFTER == disposalMethod) {
 			return delimiter + "\n";
 		}
 
@@ -307,15 +307,14 @@ class SplitAction extends AnAction {
 	private DialogSplitOptions showOptionsDialog() {
 		DialogSplitOptions optionsDialog = new DialogSplitOptions();
 
-            // Load and init dialog options from preferences
+        // Load and init dialog options from preferences
         optionsDialog.setDelimiter(Preferences.getSplitDelimiter());
         optionsDialog.setCheckboxTrimWhitespaceSelected(Preferences.getIsSplitIsSelectedTrimWhitespace());
         optionsDialog.setDelimiterDisposalMethod(Integer.parseInt(Preferences.getSplitWhere()));
 
-        optionsDialog.addComponentListener( new ComponentListenerDialog(Preferences.ID_DIALOG_SPLIT) );
+        optionsDialog.addComponentListener(new ComponentListenerDialog(Preferences.ID_DIALOG_SPLIT));
         UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_SPLIT, optionsDialog, StaticTexts.MESSAGE_TITLE_SPLIT);
 
 		return optionsDialog;
 	}
-
 }

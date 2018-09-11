@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2015 Kay Stenschke
+ * Copyright 2012-2018 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,18 +54,10 @@ public class DialogSplitOptions extends JDialog {
         initIcons();
 
 		new JTextFieldAddUndoManager(this.textFieldDelimiter);
-		buttonOK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onOK();
-			}
-		});
-		buttonCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onCancel();
-			}
-		});
+		buttonOK.addActionListener(e -> onOK());
+		buttonCancel.addActionListener(e -> onCancel());
 
-		// call onCancel() when cross is clicked
+		// Call onCancel() when cross is clicked
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -73,12 +65,8 @@ public class DialogSplitOptions extends JDialog {
 			}
 		});
 
-		    // call onCancel() on ESCAPE
-		contentPane.registerKeyboardAction(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onCancel();
-			}
-		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		// Call onCancel() on ESCAPE
+		contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	}
 
     private void initIcons() {
@@ -138,7 +126,6 @@ public class DialogSplitOptions extends JDialog {
 		if (splitBeforeDelimiterRadioButton.isSelected()) {
 			return METHOD_DELIMITER_DISPOSAL_BEFORE;
 		}
-
 		if (splitAfterDelimiterRadioButton.isSelected()) {
 			return METHOD_DELIMITER_DISPOSAL_AFTER;
 		}
@@ -181,5 +168,4 @@ public class DialogSplitOptions extends JDialog {
     public boolean getIsSelectedTrimWhitespace() {
         return checkboxTrimWhitespace.isSelected();
     }
-
 }
