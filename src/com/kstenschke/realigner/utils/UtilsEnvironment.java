@@ -23,12 +23,6 @@ import java.awt.*;
 
 public class UtilsEnvironment {
 
-    /**
-     * @param   editor
-     * @param   idDialog
-     * @param   dialog
-     * @param   title
-     */
     public static void setDialogVisible(Editor editor, String idDialog, JDialog dialog, String title) {
         Point caretLocation  = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
         SwingUtilities.convertPointToScreen(caretLocation, editor.getComponent());

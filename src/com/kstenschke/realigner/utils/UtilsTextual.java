@@ -87,10 +87,6 @@ public class UtilsTextual {
         return str.matches(regex);
     }
 
-    /**
-     * @param   prefix
-     * @return  String
-     */
     private static String getHtmlTagCounterpart(String prefix) {
         prefix = prefix.replaceAll("<", "");
         String[] tag = prefix.split("\\W+");
@@ -115,10 +111,6 @@ public class UtilsTextual {
         return str;
     }
 
-    /**
-     * @param   str
-     * @return  String
-     */
     public static String lTrim(String str) {
         int i = 0;
         while (i < str.length() && Character.isWhitespace(str.charAt(i))) {
