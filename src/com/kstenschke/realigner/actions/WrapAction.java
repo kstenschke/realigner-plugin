@@ -52,9 +52,11 @@ class WrapAction extends AnAction {
         final Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
         ApplicationManager.getApplication().runWriteAction(() -> {
-        Editor editor = event.getData(PlatformDataKeys.EDITOR);
+            Editor editor = event.getData(PlatformDataKeys.EDITOR);
+            if (null == editor) {
+                return;
+            }
 
-        if (editor != null) {
             final Wrapper wrapper = new Wrapper(editor);
             final boolean isSelectionMultiLine = wrapper.isSelectionMultiLine;
             DialogWrapOptions optionsDialog = wrapper.getWrapOptionsDialog(isSelectionMultiLine);
@@ -81,7 +83,6 @@ class WrapAction extends AnAction {
             }
 
             optionsDialog.makeFiredButtonTopMost();
-        }
         });
     }
 }

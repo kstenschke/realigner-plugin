@@ -47,26 +47,26 @@ class SplitAction extends AnAction {
     private Editor  editor;
     private Project project;
 
-	/**
-	 * Disable when no project open
-	 *
-	 * @param event Action system event
-	 */
-	public void update(@NotNull AnActionEvent event) {
+    /**
+     * Disable when no project open
+     *
+     * @param event Action system event
+     */
+    public void update(@NotNull AnActionEvent event) {
         this.editor = event.getData(PlatformDataKeys.EDITOR);
 
-		event.getPresentation().setEnabled(this.editor != null);
-	}
+        event.getPresentation().setEnabled(this.editor != null);
+    }
 
-	/**
-	 * Perform split into lines
-	 *
-	 * @param   event   Action system event
-	 */
-	public void actionPerformed(@NotNull final AnActionEvent event) {
-		this.project = event.getData(PlatformDataKeys.PROJECT);
+    /**
+     * Perform split into lines
+     *
+     * @param   event   Action system event
+     */
+    public void actionPerformed(@NotNull final AnActionEvent event) {
+        this.project = event.getData(PlatformDataKeys.PROJECT);
 
-		CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
+        CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
             public void run() {
                 if (null == editor) {
                     return;
@@ -243,21 +243,21 @@ class SplitAction extends AnAction {
         }), StaticTexts.UNDO_HISTORY_SPLIT, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
     }
 
-	/**
-	 * @param   charStr
-	 * @return  Does the given character not allow splitting the line at?
-	 */
-	private static boolean isUnsplittableChar(String charStr) {
-		return charStr.equals(" ") || charStr.equals("\t") || charStr.equals(",");
-	}
+    /**
+     * @param   charStr
+     * @return  Does the given character not allow splitting the line at?
+     */
+    private static boolean isUnsplittableChar(String charStr) {
+        return charStr.equals(" ") || charStr.equals("\t") || charStr.equals(",");
+    }
 
-	/**
-	 * Get visual length of given text, that is in editor where tabs resolve to the width of multiple characters
-	 *
-	 * @param   text        Text to be "measured"
-	 * @return  Integer     Amount of characters
-	 */
-	private Integer getTextWidth(String text) {
+    /**
+     * Get visual length of given text, that is in editor where tabs resolve to the width of multiple characters
+     *
+     * @param   text        Text to be "measured"
+     * @return  Integer     Amount of characters
+     */
+    private Integer getTextWidth(String text) {
         if (null == this.project) {
             return null;
         }
@@ -270,42 +270,39 @@ class SplitAction extends AnAction {
         CommonCodeStyleSettings.IndentOptions indentOptions = commonCodeStyleSettings.getIndentOptions();
 
         // Get tab size
-        int tabSize = 0;
-        if (null != indentOptions) {
-            tabSize = indentOptions.TAB_SIZE;
-        }
+        int tabSize = null != indentOptions ? indentOptions.TAB_SIZE : 0;
         if (0 == tabSize) {
             tabSize = this.editor.getSettings().getTabSize(this.project);
         }
 
         return text.length() + UtilsTextual.countTabOccurrences(text) * (tabSize - 1);
-	}
+    }
 
-	/**
-	 * Get split replacement string, according to given delimiter and delimiter disposal method
-	 *
-	 * @param   delimiter      Delimiter string
-	 * @param   disposalMethod   Before/At/After
-	 * @return  String
-	 */
-	private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
-		if (DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_BEFORE == disposalMethod) {
-			return "\n" + delimiter;
-		}
-		if (DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_AFTER == disposalMethod) {
-			return delimiter + "\n";
-		}
+    /**
+     * Get split replacement string, according to given delimiter and delimiter disposal method
+     *
+     * @param   delimiter      Delimiter string
+     * @param   disposalMethod   Before/At/After
+     * @return  String
+     */
+    private String getSplitReplacementByDelimiterDisposalMethod(String delimiter, Integer disposalMethod) {
+        if (DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_BEFORE == disposalMethod) {
+            return "\n" + delimiter;
+        }
+        if (DialogSplitOptions.METHOD_DELIMITER_DISPOSAL_AFTER == disposalMethod) {
+            return delimiter + "\n";
+        }
 
-		return "\n";
-	}
+        return "\n";
+    }
 
-	/**
-	 * Setup and display options dialog for split action
-	 *
-	 * @return Split options dialog
-	 */
-	private DialogSplitOptions showOptionsDialog() {
-		DialogSplitOptions optionsDialog = new DialogSplitOptions();
+    /**
+     * Setup and display options dialog for split action
+     *
+     * @return Split options dialog
+     */
+    private DialogSplitOptions showOptionsDialog() {
+        DialogSplitOptions optionsDialog = new DialogSplitOptions();
 
         // Load and init dialog options from preferences
         optionsDialog.setDelimiter(Preferences.getSplitDelimiter());
@@ -315,6 +312,6 @@ class SplitAction extends AnAction {
         optionsDialog.addComponentListener(new ComponentListenerDialog(Preferences.ID_DIALOG_SPLIT));
         UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_SPLIT, optionsDialog, StaticTexts.MESSAGE_TITLE_SPLIT);
 
-		return optionsDialog;
-	}
+        return optionsDialog;
+    }
 }

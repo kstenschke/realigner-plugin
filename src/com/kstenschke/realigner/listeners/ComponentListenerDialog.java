@@ -49,11 +49,9 @@ public class ComponentListenerDialog implements ComponentListener {
 
     @Override
     public void componentShown(ComponentEvent e) {
-
     }
 
     @Override
     public void componentHidden(ComponentEvent e) {
-
     }
 }

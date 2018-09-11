@@ -42,110 +42,110 @@ class JoinAction extends AnAction {
     private Project project;
     private Editor editor;
 
-	/**
-	 * Disable when no project open
-	 *
-	 * @param   event   Action system event
-	 */
-	public void update(@NotNull AnActionEvent event) {
-		boolean enabled = false;
-		this.project    = event.getData(PlatformDataKeys.PROJECT);
-		this.editor     = event.getData(PlatformDataKeys.EDITOR);
-		if (this.project != null && this.editor != null) {
-			SelectionModel selectionModel = this.editor.getSelectionModel();
-			if (selectionModel.hasSelection()) {
-				final Document document = this.editor.getDocument();
+    /**
+     * Disable when no project open
+     *
+     * @param   event   Action system event
+     */
+    public void update(@NotNull AnActionEvent event) {
+        boolean enabled = false;
+        this.project    = event.getData(PlatformDataKeys.PROJECT);
+        this.editor     = event.getData(PlatformDataKeys.EDITOR);
+        if (this.project != null && this.editor != null) {
+            SelectionModel selectionModel = this.editor.getSelectionModel();
+            if (selectionModel.hasSelection()) {
+                final Document document = this.editor.getDocument();
 
-				int lineNumberSelStart  = document.getLineNumber(selectionModel.getSelectionStart());
-				int lineNumberSelEnd    = document.getLineNumber(selectionModel.getSelectionEnd());
+                int lineNumberSelStart  = document.getLineNumber(selectionModel.getSelectionStart());
+                int lineNumberSelEnd    = document.getLineNumber(selectionModel.getSelectionEnd());
 
-				if (lineNumberSelEnd > lineNumberSelStart) {
-					enabled = true;
-				}
-			}
-		}
+                if (lineNumberSelEnd > lineNumberSelStart) {
+                    enabled = true;
+                }
+            }
+        }
 
-		event.getPresentation().setEnabled(enabled);
-	}
+        event.getPresentation().setEnabled(enabled);
+    }
 
-	/**
-	 * Perform implode / explode (= join / split)
-	 *
-	 * @param   event   Action system event
-	 */
-	public void actionPerformed(@NotNull final AnActionEvent event) {
-		CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
-			public void run() {
-				if (editor != null) {
-					boolean cannotJoin = false;
+    /**
+     * Perform implode / explode (= join / split)
+     *
+     * @param   event   Action system event
+     */
+    public void actionPerformed(@NotNull final AnActionEvent event) {
+        CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            public void run() {
+                if (editor != null) {
+                    boolean cannotJoin = false;
 
-					SelectionModel selectionModel = editor.getSelectionModel();
-					boolean hasSelection = selectionModel.hasSelection();
+                    SelectionModel selectionModel = editor.getSelectionModel();
+                    boolean hasSelection = selectionModel.hasSelection();
 
-					if (hasSelection) {
-						int offsetStart = selectionModel.getSelectionStart();
-						int offsetEnd = selectionModel.getSelectionEnd();
+                    if (hasSelection) {
+                        int offsetStart = selectionModel.getSelectionStart();
+                        int offsetEnd = selectionModel.getSelectionEnd();
 
-						final Document document = editor.getDocument();
+                        final Document document = editor.getDocument();
 
-						int lineNumberSelStart = document.getLineNumber(offsetStart);
-						int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+                        int lineNumberSelStart = document.getLineNumber(offsetStart);
+                        int lineNumberSelEnd = document.getLineNumber(offsetEnd);
 
-						if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
-							lineNumberSelEnd--;
-						}
+                        if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+                            lineNumberSelEnd--;
+                        }
 
-						if (lineNumberSelEnd > lineNumberSelStart) {
-							DialogJoinOptions optionsDialog = showOptionsDialog();
+                        if (lineNumberSelEnd > lineNumberSelStart) {
+                            DialogJoinOptions optionsDialog = showOptionsDialog();
 
-							if (optionsDialog.clickedOk) {
-								String glue = optionsDialog.textFieldGlue.getText();
-								if (glue != null) {
-									Preferences.saveJoinProperties(glue);
-									joinLines(document, lineNumberSelStart, lineNumberSelEnd, glue);
-								}
-							}
-						} else {
-							cannotJoin = true;
-						}
-					} else {
-						cannotJoin = true;
-					}
+                            if (optionsDialog.clickedOk) {
+                                String glue = optionsDialog.textFieldGlue.getText();
+                                if (glue != null) {
+                                    Preferences.saveJoinProperties(glue);
+                                    joinLines(document, lineNumberSelStart, lineNumberSelEnd, glue);
+                                }
+                            }
+                        } else {
+                            cannotJoin = true;
+                        }
+                    } else {
+                        cannotJoin = true;
+                    }
 
-					// No selection or only one line of selection? Display resp. message
-					if (cannotJoin) {
-						JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
-					}
-				}
-			}
+                    // No selection or only one line of selection? Display resp. message
+                    if (cannotJoin) {
+                        JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
+                    }
+                }
+            }
 
-			/**
-			 * @param document
-			 * @param lineNumberSelStart
-			 * @param lineNumberSelEnd
-			 * @param glue
-			 */
-			private void joinLines(Document document, int lineNumberSelStart, int lineNumberSelEnd, String glue) {
-				int offsetStart;
-				int offsetEnd;
-				List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-				String linesStr = "";
-				int amountLines = linesList.size();
-				for (int i = 0; i < amountLines; i++) {
-					linesStr = linesStr + (i > 0 ? linesList.get(i).trim() : linesList.get(i)) + (i < (amountLines - 1) ? glue : "");
-				}
+            /**
+             * @param document
+             * @param lineNumberSelStart
+             * @param lineNumberSelEnd
+             * @param glue
+             */
+            private void joinLines(Document document, int lineNumberSelStart, int lineNumberSelEnd, String glue) {
+                int offsetStart;
+                int offsetEnd;
+                List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+                String linesStr = "";
+                int amountLines = linesList.size();
+                for (int i = 0; i < amountLines; i++) {
+                    linesStr = linesStr + (i > 0 ? linesList.get(i).trim() : linesList.get(i)) + (i < (amountLines - 1) ? glue : "");
+                }
 
-				// Remove newlines
-				String joinedLines = linesStr.replaceAll("(\\n)+", "");
+                // Remove newlines
+                String joinedLines = linesStr.replaceAll("(\\n)+", "");
 
                 // Replace the full lines with themselves joined
-				offsetStart = document.getLineStartOffset(lineNumberSelStart);
-				offsetEnd = document.getLineEndOffset(lineNumberSelEnd);
+                offsetStart = document.getLineStartOffset(lineNumberSelStart);
+                offsetEnd = document.getLineEndOffset(lineNumberSelEnd);
 
-				document.replaceString(offsetStart, offsetEnd, joinedLines);
-			}
-		}), StaticTexts.UNDO_HISTORY_JOIN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
-	}
+                document.replaceString(offsetStart, offsetEnd, joinedLines);
+            }
+        }), StaticTexts.UNDO_HISTORY_JOIN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+    }
 
     /**
      * Setup and display options dialog for split action

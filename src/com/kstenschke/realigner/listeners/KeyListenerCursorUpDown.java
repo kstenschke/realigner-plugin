@@ -36,12 +36,10 @@ public class KeyListenerCursorUpDown implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
     }
 
     @Override
@@ -50,7 +48,6 @@ public class KeyListenerCursorUpDown implements KeyListener {
             case KeyEvent.VK_DOWN:
                 this.focusComponent(this.componentUnder);
                 break;
-
             case KeyEvent.VK_UP:
                 this.focusComponent(this.componentAbove);
                 break;

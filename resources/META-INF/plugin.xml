@@ -16,7 +16,7 @@
 <idea-plugin version="2" url="http://www.coexec.com/en/tools-software-development/">
     <name>Realigner</name>
     <description><![CDATA[
-    The Realigner plugin adds three tools for reformatting text:
+    The Realigner plugin adds three tools for reformatting code:
     <ul><li>Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.</li>
         <li>Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines.*</li>
         <li>Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored as quick-wrap buttons, hint: quick-wrap buttons can be selected via cursor up/down keys as well.</li>

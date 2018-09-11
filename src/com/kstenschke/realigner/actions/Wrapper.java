@@ -25,53 +25,53 @@ import com.kstenschke.realigner.utils.UtilsTextual;
 
 class Wrapper {
 
-	private final Editor editor;
-	private final Document document;
+    private final Editor editor;
+    private final Document document;
 
     private SelectionModel selectionModel;
     private boolean hasSelection = false;
     public boolean isSelectionMultiLine = false;
-	private int offsetSelectionStart;
+    private int offsetSelectionStart;
     private int offsetSelectionEnd;
     private int lineNumberSelectionStart;
     private int lineNumberSelectionEnd;
-	private CaretModel caretModel;
+    private CaretModel caretModel;
 
     /**
-	 * Constructor
-	 *
-	 * @param editor The editor
-	 */
-	public Wrapper(Editor editor) {
-		this.editor = editor;
-		this.document = editor.getDocument();
+     * Constructor
+     *
+     * @param editor The editor
+     */
+    public Wrapper(Editor editor) {
+        this.editor = editor;
+        this.document = editor.getDocument();
 
-		this.initSelectionProperties();
-		this.initCaretProperties();
-	}
+        this.initSelectionProperties();
+        this.initCaretProperties();
+    }
 
-	/**
-	 * Initialize selection related wrapper properties
-	 */
-	private void initSelectionProperties() {
-		this.selectionModel = editor.getSelectionModel();
+    /**
+     * Initialize selection related wrapper properties
+     */
+    private void initSelectionProperties() {
+        this.selectionModel = editor.getSelectionModel();
 
-		this.hasSelection = selectionModel.hasSelection();
+        this.hasSelection = selectionModel.hasSelection();
 
-		if (this.hasSelection) {
-			this.offsetSelectionStart   = this.selectionModel.getSelectionStart();
-			this.offsetSelectionEnd     = this.selectionModel.getSelectionEnd();
+        if (this.hasSelection) {
+            this.offsetSelectionStart   = this.selectionModel.getSelectionStart();
+            this.offsetSelectionEnd     = this.selectionModel.getSelectionEnd();
 
-			this.lineNumberSelectionStart   = this.document.getLineNumber(this.offsetSelectionStart);
-			this.lineNumberSelectionEnd     = this.document.getLineNumber(this.offsetSelectionEnd);
+            this.lineNumberSelectionStart   = this.document.getLineNumber(this.offsetSelectionStart);
+            this.lineNumberSelectionEnd     = this.document.getLineNumber(this.offsetSelectionEnd);
 
             this.isSelectionMultiLine = lineNumberSelectionStart < lineNumberSelectionEnd;
-		}
-	}
+        }
+    }
 
-	private void initCaretProperties() {
-		this.caretModel = this.editor.getCaretModel();
-	}
+    private void initCaretProperties() {
+        this.caretModel = this.editor.getCaretModel();
+    }
 
     /**
      * @return  int     Line number where the caret is
@@ -91,13 +91,13 @@ class Wrapper {
         return UtilsTextual.getSubString(editorText, this.offsetSelectionStart, this.offsetSelectionEnd);
     }
 
-	/**
-	 * Setup and display wrap options dialog
-	 *
-	 * @return  Wrap options dialog
-	 */
-	public DialogWrapOptions getWrapOptionsDialog(boolean isMultiLineSelection) {
-		DialogWrapOptions optionsDialog = new DialogWrapOptions(isMultiLineSelection);
+    /**
+     * Setup and display wrap options dialog
+     *
+     * @return  Wrap options dialog
+     */
+    public DialogWrapOptions getWrapOptionsDialog(boolean isMultiLineSelection) {
+        DialogWrapOptions optionsDialog = new DialogWrapOptions(isMultiLineSelection);
 
         // Load and init from preferences
         optionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
@@ -113,11 +113,9 @@ class Wrapper {
             case DialogWrapOptions.OPERATION_WRAP:
                 optionsDialog.quickWrapRadioButton.setSelected(true);
                 break;
-
             case DialogWrapOptions.OPERATION_UNWRAP:
                 optionsDialog.quickUnwrapRadioButton.setSelected(true);
                 break;
-
             default:
                 optionsDialog.quickAutodetectRadioButton.setSelected(true);
                 break;
@@ -126,18 +124,18 @@ class Wrapper {
         optionsDialog.addComponentListener(new ComponentListenerDialog(Preferences.ID_DIALOG_WRAP));
         UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_WRAP, optionsDialog, StaticTexts.MESSAGE_TITLE_WRAP);
 
-		return optionsDialog;
-	}
+        return optionsDialog;
+    }
 
-	/**
-	 * Perform wrapping of line around caret, single- or multi-line selection
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 * @param   wrapMode    If multi-line: wrap each line / whole selection
-	 */
-	public void wrap(final String prefix, final String postfix, final Integer wrapMode) {
-		this.caretModel.runForEachCaret(caret -> {
+    /**
+     * Perform wrapping of line around caret, single- or multi-line selection
+     *
+     * @param   prefix
+     * @param   postfix
+     * @param   wrapMode    If multi-line: wrap each line / whole selection
+     */
+    public void wrap(final String prefix, final String postfix, final Integer wrapMode) {
+        this.caretModel.runForEachCaret(caret -> {
             if (hasSelection) {
                 // get selection offsets and line numbers
                 updateCaretSelectionProperties(caret);
@@ -157,25 +155,24 @@ class Wrapper {
                 wrapCaretLine(prefix, postfix);
             }
         });
+    }
 
-	}
+    private void updateCaretSelectionProperties(Caret caret) {
+        offsetSelectionStart = caret.getSelectionStart();
+        offsetSelectionEnd = caret.getSelectionEnd();
 
-	private void updateCaretSelectionProperties(Caret caret) {
-		offsetSelectionStart = caret.getSelectionStart();
-		offsetSelectionEnd = caret.getSelectionEnd();
+        lineNumberSelectionStart = document.getLineNumber(offsetSelectionStart);
+        lineNumberSelectionEnd = document.getLineNumber(offsetSelectionEnd);
+    }
 
-		lineNumberSelectionStart = document.getLineNumber(offsetSelectionStart);
-		lineNumberSelectionEnd = document.getLineNumber(offsetSelectionEnd);
-	}
-
-	/**
-	 * Perform unwrapping of line around caret, single- or multi-line selection
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	public void unwrap(final String prefix, final String postfix) {
-		this.caretModel.runForEachCaret(caret -> {
+    /**
+     * Perform unwrapping of line around caret, single- or multi-line selection
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    public void unwrap(final String prefix, final String postfix) {
+        this.caretModel.runForEachCaret(caret -> {
             updateCaretSelectionProperties(caret);
 
             if (hasSelection) {
@@ -193,137 +190,137 @@ class Wrapper {
                 unwrapCaretLine(prefix, postfix);
             }
         });
-	}
+    }
 
-	/**
-	 * Wrap selection over multiple lines with given prefix and postfix, do given transformations on selection
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	private void wrapMultiLineSelection(String prefix, String postfix) {
+    /**
+     * Wrap selection over multiple lines with given prefix and postfix, do given transformations on selection
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    private void wrapMultiLineSelection(String prefix, String postfix) {
         // Wrap each line, begin/end at selection offsets
-		int prefixLen = prefix.length();
-		lineNumberSelectionEnd = document.getLineNumber(selectionModel.getSelectionEnd());
+        int prefixLen = prefix.length();
+        lineNumberSelectionEnd = document.getLineNumber(selectionModel.getSelectionEnd());
 
-		for (int lineNumber = lineNumberSelectionEnd; lineNumber >= lineNumberSelectionStart; lineNumber--) {
-			int offsetLineStart = document.getLineStartOffset(lineNumber);
-			String lineText = UtilsTextual.extractLine(document, lineNumber);
-			int offsetLineEnd = offsetLineStart + lineText.length() - 1;
+        for (int lineNumber = lineNumberSelectionEnd; lineNumber >= lineNumberSelectionStart; lineNumber--) {
+            int offsetLineStart = document.getLineStartOffset(lineNumber);
+            String lineText = UtilsTextual.extractLine(document, lineNumber);
+            int offsetLineEnd = offsetLineStart + lineText.length() - 1;
 
-			document.insertString(offsetLineEnd, postfix);
-			document.insertString(offsetLineStart, prefix);
+            document.insertString(offsetLineEnd, postfix);
+            document.insertString(offsetLineStart, prefix);
 
-			lineText = lineText.replaceAll("\n", "");
-			document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
-		}
+            lineText = lineText.replaceAll("\n", "");
+            document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
+        }
         // Update selection: all lines of selection fully
-		selectionModel.setSelection(
+        selectionModel.setSelection(
             document.getLineStartOffset(lineNumberSelectionStart),
             document.getLineEndOffset(lineNumberSelectionEnd)
         );
-	}
+    }
 
-	/**
-	 * Unwrap selection within a single line with given prefix and postfix, do given transformations on selection
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	private void wrapSingleLinedSelection(String selectedText, String prefix, String postfix) {
-		String wrappedString = prefix + selectedText + postfix;
-		document.replaceString(offsetSelectionStart, offsetSelectionEnd, wrappedString);
+    /**
+     * Unwrap selection within a single line with given prefix and postfix, do given transformations on selection
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    private void wrapSingleLinedSelection(String selectedText, String prefix, String postfix) {
+        String wrappedString = prefix + selectedText + postfix;
+        document.replaceString(offsetSelectionStart, offsetSelectionEnd, wrappedString);
 
         // Update selection
-		selectionModel.setSelection(offsetSelectionStart, offsetSelectionStart + wrappedString.length());
-	}
+        selectionModel.setSelection(offsetSelectionStart, offsetSelectionStart + wrappedString.length());
+    }
 
-	/**
-	 * Wrap the line where the caret is with given prefix and postfix, do given transformations on the line
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	private void wrapCaretLine(String prefix, String postfix) {
-		int lineNumber      = getCaretLineNumber();
-		int offsetLineStart = document.getLineStartOffset(lineNumber);
-		String lineText     = UtilsTextual.extractLine(document, lineNumber);
-		int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
+    /**
+     * Wrap the line where the caret is with given prefix and postfix, do given transformations on the line
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    private void wrapCaretLine(String prefix, String postfix) {
+        int lineNumber      = getCaretLineNumber();
+        int offsetLineStart = document.getLineStartOffset(lineNumber);
+        String lineText     = UtilsTextual.extractLine(document, lineNumber);
+        int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
 
-		document.insertString(offsetLineEnd, postfix);
-		document.insertString(offsetLineStart, prefix);
+        document.insertString(offsetLineEnd, postfix);
+        document.insertString(offsetLineStart, prefix);
 
-		lineText = lineText.replaceAll("\n", "");
-		int prefixLen = prefix.length();
+        lineText = lineText.replaceAll("\n", "");
+        int prefixLen = prefix.length();
 
-		document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
+        document.replaceString(offsetLineStart + prefixLen, offsetLineEnd + prefixLen, lineText);
 
         // Update selection: whole line
-		selectionModel.setSelection(document.getLineStartOffset(lineNumber), document.getLineEndOffset(lineNumber));
-	}
+        selectionModel.setSelection(document.getLineStartOffset(lineNumber), document.getLineEndOffset(lineNumber));
+    }
 
-	/**
-	 * Unwrap the line the caret is in
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	private void unwrapCaretLine(String prefix, String postfix) {
-		int lineNumber      = getCaretLineNumber();
-		int offsetLineStart = document.getLineStartOffset(lineNumber);
-		String lineText     = UtilsTextual.extractLine(document, lineNumber);
-		int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
+    /**
+     * Unwrap the line the caret is in
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    private void unwrapCaretLine(String prefix, String postfix) {
+        int lineNumber      = getCaretLineNumber();
+        int offsetLineStart = document.getLineStartOffset(lineNumber);
+        String lineText     = UtilsTextual.extractLine(document, lineNumber);
+        int offsetLineEnd   = offsetLineStart + lineText.length() - 1;
 
-		this.offsetSelectionStart   = offsetLineStart;
-		this.offsetSelectionEnd     = offsetLineEnd;
+        this.offsetSelectionStart   = offsetLineStart;
+        this.offsetSelectionEnd     = offsetLineEnd;
 
-		this.unwrapSingleLinedSelection(prefix, postfix);
-	}
+        this.unwrapSingleLinedSelection(prefix, postfix);
+    }
 
-	/**
-	 * Remove given strings from the beginning and ending of current selection
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	private void unwrapSingleLinedSelection(String prefix, String postfix) {
-		CharSequence editorText = document.getCharsSequence();
-		String unwrappedString  = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+    /**
+     * Remove given strings from the beginning and ending of current selection
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    private void unwrapSingleLinedSelection(String prefix, String postfix) {
+        CharSequence editorText = document.getCharsSequence();
+        String unwrappedString  = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
-		unwrappedString = UtilsTextual.unwrap(unwrappedString, prefix, postfix);
+        unwrappedString = UtilsTextual.unwrap(unwrappedString, prefix, postfix);
 
         // Update selected text with unwrapped version, update set selection
-		document.replaceString(offsetSelectionStart, offsetSelectionEnd, unwrappedString);
-		selectionModel.setSelection(offsetSelectionStart, offsetSelectionStart + unwrappedString.length());
-	}
+        document.replaceString(offsetSelectionStart, offsetSelectionEnd, unwrappedString);
+        selectionModel.setSelection(offsetSelectionStart, offsetSelectionStart + unwrappedString.length());
+    }
 
-	/**
-	 * Unwrap selection over multiple lines with given prefix and postfix, do given transformations on selection
-	 *
-	 * @param   prefix
-	 * @param   postfix
-	 */
-	private void unwrapMultiLineSelection(String prefix, String postfix) {
+    /**
+     * Unwrap selection over multiple lines with given prefix and postfix, do given transformations on selection
+     *
+     * @param   prefix
+     * @param   postfix
+     */
+    private void unwrapMultiLineSelection(String prefix, String postfix) {
         // Unwrap each line, begin/end at selection offsets
-		lineNumberSelectionEnd = document.getLineNumber(selectionModel.getSelectionEnd());
+        lineNumberSelectionEnd = document.getLineNumber(selectionModel.getSelectionEnd());
 
-		for (int lineNumber = lineNumberSelectionEnd; lineNumber >= lineNumberSelectionStart; lineNumber--) {
-			int offsetLineStart = document.getLineStartOffset(lineNumber);
-			String lineText = UtilsTextual.extractLine(document, lineNumber);
-			int offsetLineEnd = offsetLineStart + lineText.length() - 1;
+        for (int lineNumber = lineNumberSelectionEnd; lineNumber >= lineNumberSelectionStart; lineNumber--) {
+            int offsetLineStart = document.getLineStartOffset(lineNumber);
+            String lineText = UtilsTextual.extractLine(document, lineNumber);
+            int offsetLineEnd = offsetLineStart + lineText.length() - 1;
 
-			lineText = lineText.replaceAll("\n", "");
-			lineText = UtilsTextual.unwrap(lineText, prefix, postfix);
+            lineText = lineText.replaceAll("\n", "");
+            lineText = UtilsTextual.unwrap(lineText, prefix, postfix);
 
-			document.replaceString(offsetLineStart, offsetLineEnd, lineText);
-		}
+            document.replaceString(offsetLineStart, offsetLineEnd, lineText);
+        }
 
         // Update selection: all lines of selection fully
-		selectionModel.setSelection(
+        selectionModel.setSelection(
             document.getLineStartOffset(lineNumberSelectionStart),
             document.getLineEndOffset(lineNumberSelectionEnd)
         );
-	}
+    }
 
     /**
      * @param   prefix

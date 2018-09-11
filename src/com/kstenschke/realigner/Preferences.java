@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NonNls;
  */
 public class Preferences {
 
-	// Dialog IDs
+    // Dialog IDs
     @NonNls
     public static final String ID_DIALOG_JOIN = "PluginRealiginer.DialogJoin";
     @NonNls
@@ -32,154 +32,154 @@ public class Preferences {
     @NonNls
     public static final String ID_DIALOG_WRAP = "PluginRealiginer.DialogWrap";
 
-	// Wrap modes
+    // Wrap modes
     @NonNls
     private static final String PROPERTY_MODE_WRAP_QUICK = "PluginRealiginer.QuickWrapMode";
     @NonNls
     private static final String PROPERTY_MODE_WRAP_MULTILINE = "PluginRealiginer.MultiLineWrapMode";
 
-	// Various Options
-	@NonNls
-	private static final String PROPERTY_JOIN_GLUE = "PluginRealiginer.JoinGlue";
-	@NonNls
-	private static final String PROPERTY_WRAP_PREFIX = "PluginRealiginer.WrapPrefix";
-	@NonNls
-	private static final String PROPERTY_WRAP_POSTFIX = "PluginRealiginer.WrapPostfix";
-	@NonNls
-	private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
+    // Various Options
     @NonNls
-	private static final String PROPERTY_SPLIT_TRIM_WHITESPACE = "PluginRealiginer.SplitTrimWhitespace";
-	@NonNls
-	private static final String PROPERTY_SPLIT_WHERE = "PluginRealiginer.SplitSplitWhere";
-
-	/**
-	 * Store wrap preferences
-	 *
-	 * @param   prefix      Wrap prefix string (LHS)
-	 * @param   postfix      Wrap postfix string (RHS)
-	 */
-	public static void saveWrapProperties(String prefix, String postfix) {
-		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-
-		propertiesComponent.setValue(PROPERTY_WRAP_PREFIX, prefix);
-		propertiesComponent.setValue(PROPERTY_WRAP_POSTFIX, postfix);
-	}
+    private static final String PROPERTY_JOIN_GLUE = "PluginRealiginer.JoinGlue";
+    @NonNls
+    private static final String PROPERTY_WRAP_PREFIX = "PluginRealiginer.WrapPrefix";
+    @NonNls
+    private static final String PROPERTY_WRAP_POSTFIX = "PluginRealiginer.WrapPostfix";
+    @NonNls
+    private static final String PROPERTY_SPLIT_DELIMITER = "PluginRealiginer.SplitDelimiter";
+    @NonNls
+    private static final String PROPERTY_SPLIT_TRIM_WHITESPACE = "PluginRealiginer.SplitTrimWhitespace";
+    @NonNls
+    private static final String PROPERTY_SPLIT_WHERE = "PluginRealiginer.SplitSplitWhere";
 
     /**
-     * @param   mode    Un/wrap
+     * Store wrap preferences
+     *
+     * @param prefix  Wrap prefix string (LHS)
+     * @param postfix Wrap postfix string (RHS)
+     */
+    public static void saveWrapProperties(String prefix, String postfix) {
+        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+
+        propertiesComponent.setValue(PROPERTY_WRAP_PREFIX, prefix);
+        propertiesComponent.setValue(PROPERTY_WRAP_POSTFIX, postfix);
+    }
+
+    /**
+     * @param mode Un/wrap
      */
     public static void saveMultiLineWrapMode(Integer mode) {
         PropertiesComponent.getInstance().setValue(PROPERTY_MODE_WRAP_MULTILINE, mode.toString());
     }
 
     /**
-     * @param   mode    Un/wrap
+     * @param mode Un/wrap
      */
     public static void saveQuickWrapMode(Integer mode) {
         PropertiesComponent.getInstance().setValue(PROPERTY_MODE_WRAP_QUICK, mode.toString());
     }
 
-	/**
-	 * Store split preferences
-	 *
-	 * @param   delimiter                   Delimiter string
-	 * @param   trimWhitespace              Trim items whitespace?
-	 * @param   delimiterDisposalMethod     Split at/after/before?
-	 */
-	public static void saveSplitProperties(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
-		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+    /**
+     * Store split preferences
+     *
+     * @param delimiter               Delimiter string
+     * @param trimWhitespace          Trim items whitespace?
+     * @param delimiterDisposalMethod Split at/after/before?
+     */
+    public static void saveSplitProperties(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod) {
+        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
-		propertiesComponent.setValue(PROPERTY_SPLIT_DELIMITER, delimiter);
-        propertiesComponent.setValue(PROPERTY_SPLIT_TRIM_WHITESPACE, trimWhitespace ? "1":"0");
+        propertiesComponent.setValue(PROPERTY_SPLIT_DELIMITER, delimiter);
+        propertiesComponent.setValue(PROPERTY_SPLIT_TRIM_WHITESPACE, trimWhitespace ? "1" : "0");
 
-		if (delimiterDisposalMethod > 2) delimiterDisposalMethod = 0;
-		propertiesComponent.setValue(PROPERTY_SPLIT_WHERE, delimiterDisposalMethod.toString());
-	}
-
-	/**
-	 * Store wrap preferences
-	 *
-	 * @param   glue   Join glue string
-	 */
-	public static void saveJoinProperties(String glue) {
-		PropertiesComponent.getInstance().setValue(PROPERTY_JOIN_GLUE, glue);
-	}
-
-	/**
-	 * @param   propertyName        Name of the preference property
-	 * @param   defaultValue        Default value to be set if null
-	 * @param   setDefaultIfEmpty   Set default also if empty?
-	 * @return  String
-	 */
-	private static String getProperty(String propertyName, String defaultValue, boolean setDefaultIfEmpty) {
-		String value = PropertiesComponent.getInstance().getValue(propertyName);
-		if (null == value) {
-			value = defaultValue;
-		}
-		if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
-			value = defaultValue;
-		}
-
-		return value;
-	}
+        if (delimiterDisposalMethod > 2) delimiterDisposalMethod = 0;
+        propertiesComponent.setValue(PROPERTY_SPLIT_WHERE, delimiterDisposalMethod.toString());
+    }
 
     /**
-     * @return  Integer QuickWrap Mode
+     * Store wrap preferences
+     *
+     * @param glue Join glue string
+     */
+    public static void saveJoinProperties(String glue) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_JOIN_GLUE, glue);
+    }
+
+    /**
+     * @param propertyName      Name of the preference property
+     * @param defaultValue      Default value to be set if null
+     * @param setDefaultIfEmpty Set default also if empty?
+     * @return String
+     */
+    private static String getProperty(String propertyName, String defaultValue, boolean setDefaultIfEmpty) {
+        String value = PropertiesComponent.getInstance().getValue(propertyName);
+        if (null == value) {
+            value = defaultValue;
+        }
+        if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
+    /**
+     * @return Integer QuickWrap Mode
      */
     public static int getMultiLineWrapMode() {
         return Integer.parseInt(getProperty(PROPERTY_MODE_WRAP_MULTILINE, "0", true));
     }
 
     /**
-     * @return  Integer QuickWrap Mode
+     * @return Integer QuickWrap Mode
      */
     public static int getQuickWrapMode() {
         return Integer.parseInt(getProperty(PROPERTY_MODE_WRAP_QUICK, "1", true));
     }
 
-	/**
-	 * @return  String  Split delimiter
-	 */
-	public static String getSplitDelimiter() {
-		return getProperty(PROPERTY_SPLIT_DELIMITER, "", true);
-	}
+    /**
+     * @return String  Split delimiter
+     */
+    public static String getSplitDelimiter() {
+        return getProperty(PROPERTY_SPLIT_DELIMITER, "", true);
+    }
 
-	/**
-	 * @return  String  Split delimiter
-	 */
-	public static boolean getIsSplitIsSelectedTrimWhitespace() {
-		return getProperty(PROPERTY_SPLIT_TRIM_WHITESPACE, "1", true).equals("1");
-	}
+    /**
+     * @return String  Split delimiter
+     */
+    public static boolean getIsSplitIsSelectedTrimWhitespace() {
+        return getProperty(PROPERTY_SPLIT_TRIM_WHITESPACE, "1", true).equals("1");
+    }
 
-	/**
-	 * Get split option: split at/before/after delimiter
-	 *
-	 * @return  String  "0" (default if not saved yet) / "1" / "2"
-	 */
-	public static String getSplitWhere() {
-		return getProperty(PROPERTY_SPLIT_WHERE, "0", true);
-	}
+    /**
+     * Get split option: split at/before/after delimiter
+     *
+     * @return String  "0" (default if not saved yet) / "1" / "2"
+     */
+    public static String getSplitWhere() {
+        return getProperty(PROPERTY_SPLIT_WHERE, "0", true);
+    }
 
-	/**
-	 * @return  String  Join glue preference
-	 */
-	public static String getJoinGlue() {
-		return getProperty(PROPERTY_JOIN_GLUE, "", false);
-	}
+    /**
+     * @return String  Join glue preference
+     */
+    public static String getJoinGlue() {
+        return getProperty(PROPERTY_JOIN_GLUE, "", false);
+    }
 
-	/**
-	 * @return  String  Wrap prefix
-	 */
-	public static String getWrapPrefix() {
-		return getProperty(PROPERTY_WRAP_PREFIX, ", ", false);
-	}
+    /**
+     * @return String  Wrap prefix
+     */
+    public static String getWrapPrefix() {
+        return getProperty(PROPERTY_WRAP_PREFIX, ", ", false);
+    }
 
-	/**
-	 * @return  String  Wrap postfix
-	 */
-	public static String getWrapPostfix() {
-		return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
-	}
+    /**
+     * @return String  Wrap postfix
+     */
+    public static String getWrapPostfix() {
+        return getProperty(PROPERTY_WRAP_POSTFIX, ", ", false);
+    }
 
     public static void saveDialogPosition(String idDialog, Integer x, Integer y) {
         PropertiesComponent.getInstance().setValue(idDialog + ".Position", x.toString() + "x" + y.toString());

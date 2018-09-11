@@ -29,7 +29,7 @@ public class StaticTexts {
 
     // Context menu items
     @NonNls
-    public static final String POPUP_QUICKWRAP_REMOVE = "Remove this Quickwrap";
+    public static final String POPUP_QUICKWRAP_REMOVE = "Remove wrap";
 
     // Notification messages
     @NonNls

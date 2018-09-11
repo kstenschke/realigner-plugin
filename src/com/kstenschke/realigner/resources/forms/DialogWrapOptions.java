@@ -31,19 +31,19 @@ import java.awt.event.*;
 
 public class DialogWrapOptions extends JDialog {
 
-	private JButton buttonCancel;
-	private JButton buttonOK;
+    private JButton buttonCancel;
+    private JButton buttonOK;
     private JButton buttonSave;
 
     private JPanel contentPane;
-	private JPanel panelWrapButtonsContainer;
+    private JPanel panelWrapButtonsContainer;
     private JPanel quickWrapButtonsPanel;
     private JPanel defaultPanel;
     private JPanel panelMainButtons;
     private JPanel panelOptions;
 
     private JTextField textFieldPostfix;
-	private JTextField textFieldPrefix;
+    private JTextField textFieldPrefix;
 
     public JRadioButton quickAutodetectRadioButton;
     public JRadioButton quickUnwrapRadioButton;
@@ -65,22 +65,22 @@ public class DialogWrapOptions extends JDialog {
 
     // Operations
     private static final int OPERATION_CANCEL    = 0;
-	public static final int OPERATION_WRAP       = 1;
-	public static final int OPERATION_UNWRAP     = 2;
-	public static final int OPERATION_AUTODETECT = 3;
+    public static final int OPERATION_WRAP       = 1;
+    public static final int OPERATION_UNWRAP     = 2;
+    public static final int OPERATION_AUTODETECT = 3;
 
-	public Integer operation = OPERATION_CANCEL;
+    public Integer operation = OPERATION_CANCEL;
 
-	/**
-	 * Constructor
-	 */
-	public DialogWrapOptions(boolean isMultiLineSelection) {
-		this.operation = OPERATION_CANCEL;
+    /**
+     * Constructor
+     */
+    public DialogWrapOptions(boolean isMultiLineSelection) {
+        this.operation = OPERATION_CANCEL;
 
-		setContentPane(contentPane);
-		setModal(true);
+        setContentPane(contentPane);
+        setModal(true);
         setResizable(false);
-		getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(buttonOK);
 
         initIcons();
 
@@ -94,15 +94,15 @@ public class DialogWrapOptions extends JDialog {
 
         panelMultiLineOptions.setVisible(isMultiLineSelection);
 
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				onCancel();
-			}
-		});
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
 
-		contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-	}
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
 
     /**
      * Add listeners to radio buttons
@@ -240,9 +240,9 @@ public class DialogWrapOptions extends JDialog {
     }
 
     /**
-	 * Handle click ok event: Un/wrap selection or caret line
-	 */
-	private void onOK() {
+     * Handle click ok event: Un/wrap selection or caret line
+     */
+    private void onOK() {
         int operation = quickAutodetectRadioButton.isSelected()
                 ? OPERATION_AUTODETECT
                 : (quickWrapRadioButton.isSelected() ? OPERATION_WRAP : OPERATION_UNWRAP);
@@ -270,58 +270,58 @@ public class DialogWrapOptions extends JDialog {
 
         this.operation = operation;
         dispose();
-	}
+    }
 
-	/**
-	 * Handle click cancel event
-	 */
-	private void onCancel() {
-		operation = OPERATION_CANCEL;
-		dispose();
-	}
+    /**
+     * Handle click cancel event
+     */
+    private void onCancel() {
+        operation = OPERATION_CANCEL;
+        dispose();
+    }
 
-	/**
-	 * Get wrap LHS
-	 *
-	 * @return String
-	 */
-	public String getPrefix() {
-		return textFieldPrefix.getText();
-	}
+    /**
+     * Get wrap LHS
+     *
+     * @return String
+     */
+    public String getPrefix() {
+        return textFieldPrefix.getText();
+    }
 
-	/**
-	 * Set wrap LHS
-	 */
-	public void setTextFieldPrefix(String prefix) {
-		textFieldPrefix.setText(prefix);
-	}
+    /**
+     * Set wrap LHS
+     */
+    public void setTextFieldPrefix(String prefix) {
+        textFieldPrefix.setText(prefix);
+    }
 
-	/**
-	 * Get wrap RHS
-	 *
-	 * @return String
-	 */
-	public String getPostfix() {
-		return textFieldPostfix.getText();
-	}
+    /**
+     * Get wrap RHS
+     *
+     * @return String
+     */
+    public String getPostfix() {
+        return textFieldPostfix.getText();
+    }
 
-	/**
-	 * Set wrap LHS
-	 */
-	public void setTextFieldPostfix(String postfix) {
-		textFieldPostfix.setText(postfix);
-	}
+    /**
+     * Set wrap LHS
+     */
+    public void setTextFieldPostfix(String postfix) {
+        textFieldPostfix.setText(postfix);
+    }
 
-	/**
-	 * @param   args   Arguments
-	 */
-	public static void main(String[] args) {
-		DialogWrapOptions dialog = new DialogWrapOptions(true);
+    /**
+     * @param   args   Arguments
+     */
+    public static void main(String[] args) {
+        DialogWrapOptions dialog = new DialogWrapOptions(true);
 
-		dialog.pack();
-		dialog.setVisible(true);
-		System.exit(0);
-	}
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
 
     /**
      * Refresh quickWrap buttons and resize the dialog to fit them in

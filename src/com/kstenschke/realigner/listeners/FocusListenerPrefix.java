@@ -38,7 +38,6 @@ public class FocusListenerPrefix implements FocusListener {
 
     @Override
     public void focusGained(FocusEvent e) {
-
     }
 
     @Override
