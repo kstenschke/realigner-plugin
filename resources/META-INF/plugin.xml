@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2012-2015 Kay Stenschke
+  ~ Copyright 2012-2018 Kay Stenschke
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -37,21 +37,23 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
-    <version>1.5.1</version>
+    <version>1.6.0</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.5.1 Changed join: parts are now trimmed from whitespace before joining
+        <li>1.6.0
+            <ul>
+                <li>Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46</li>
+            </ul>
+        <li>1.5.1 Changed join: parts are now trimmed from whitespace before joining</li>
         <li>1.5.0
             <ul>
                 <li>Improved keyboard accelerator: quick-wraps can now be applied w/ ENTER key</li>
                 <li>Improved UI: globalized mode options (instead of being quick-wrap exclusive)</li>
                 <li>Improved UI: removed explicit un/wrap buttons, renamed "Autodetect" to "Toggle"</li>
             </ul>
-        <li>1.4.2 Added undo/redo capability to all text fields of realigner dialogs</li>
-        <li>1.4.1 Compiled for JDK 1.6 (was 1.7 w/ 1.4.0), minor code optimization</li>
-        <li>1.4.0 Added multi-caret support to wrapping</li>
+        </li>
     </ul><br/>
     <a href="https://github.com/kstenschke/realigner-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
