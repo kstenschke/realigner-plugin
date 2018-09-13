@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<idea-plugin url="http://www.coexec.com/en/tools-software-development/">
+<idea-plugin url="https://github.com/kstenschke/realigner-plugin">
     <name>Realigner</name>
     <description><![CDATA[
     The Realigner plugin adds three tools for reformatting code:
