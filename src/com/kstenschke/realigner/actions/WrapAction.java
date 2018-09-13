@@ -30,9 +30,6 @@ import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
 import com.kstenschke.realigner.utils.UtilsEnvironment;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Wrap Action
- */
 class WrapAction extends AnAction {
 
     /**

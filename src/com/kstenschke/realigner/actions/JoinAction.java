@@ -32,9 +32,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-/**
- * Implode / Explode Action
- */
 class JoinAction extends AnAction {
     private Project project;
     private Editor editor;
@@ -45,25 +42,25 @@ class JoinAction extends AnAction {
      * @param   event   Action system event
      */
     public void update(@NotNull AnActionEvent event) {
-        boolean enabled = false;
         project = event.getData(PlatformDataKeys.PROJECT);
         editor  = event.getData(PlatformDataKeys.EDITOR);
 
-        if (project != null && editor != null) {
-            SelectionModel selectionModel = editor.getSelectionModel();
-            if (selectionModel.hasSelection()) {
-                final Document document = editor.getDocument();
+        boolean enabled = project != null && editor != null && canEnable();
+        event.getPresentation().setEnabled(enabled);
+    }
 
-                int lineNumberSelStart  = document.getLineNumber(selectionModel.getSelectionStart());
-                int lineNumberSelEnd    = document.getLineNumber(selectionModel.getSelectionEnd());
-
-                if (lineNumberSelEnd > lineNumberSelStart) {
-                    enabled = true;
-                }
-            }
+    private boolean canEnable() {
+        SelectionModel selectionModel = editor.getSelectionModel();
+        if (!selectionModel.hasSelection()) {
+            return false;
         }
 
-        event.getPresentation().setEnabled(enabled);
+        Document document = editor.getDocument();
+
+        int lineNumberSelStart  = document.getLineNumber(selectionModel.getSelectionStart());
+        int lineNumberSelEnd    = document.getLineNumber(selectionModel.getSelectionEnd());
+
+        return lineNumberSelEnd > lineNumberSelStart;
     }
 
     /**

@@ -53,18 +53,18 @@ public class Wrapper {
      */
     private void initSelectionProperties() {
         this.selectionModel = editor.getSelectionModel();
-
-        this.hasSelection = selectionModel.hasSelection();
-
-        if (this.hasSelection) {
-            this.offsetSelectionStart   = this.selectionModel.getSelectionStart();
-            this.offsetSelectionEnd     = this.selectionModel.getSelectionEnd();
-
-            this.lineNumberSelectionStart   = this.document.getLineNumber(this.offsetSelectionStart);
-            this.lineNumberSelectionEnd     = this.document.getLineNumber(this.offsetSelectionEnd);
-
-            this.isSelectionMultiLine = lineNumberSelectionStart < lineNumberSelectionEnd;
+        this.hasSelection   = selectionModel.hasSelection();
+        if (!this.hasSelection) {
+            return;
         }
+
+        this.offsetSelectionStart   = this.selectionModel.getSelectionStart();
+        this.offsetSelectionEnd     = this.selectionModel.getSelectionEnd();
+
+        this.lineNumberSelectionStart = this.document.getLineNumber(this.offsetSelectionStart);
+        this.lineNumberSelectionEnd   = this.document.getLineNumber(this.offsetSelectionEnd);
+
+        this.isSelectionMultiLine = lineNumberSelectionStart < lineNumberSelectionEnd;
     }
 
     private void initCaretProperties() {

@@ -166,14 +166,9 @@ public class Splitter {
 
     private String getExplodedLineText(String delimiter, boolean trimWhitespace, Integer delimiterDisposalMethod, String lineText) {
         String replacement = getSplitReplacementByDelimiterDisposalMethod(delimiter, delimiterDisposalMethod);
+        String result      = lineText.replace(delimiter, replacement);
 
-        String result = lineText.replace(delimiter, replacement);
-
-        if (trimWhitespace) {
-            result = UtilsTextual.trimLines(result);
-        }
-
-        return result;
+        return trimWhitespace ? UtilsTextual.trimLines(result) : result;
     }
 
     /**
