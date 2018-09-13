@@ -25,14 +25,14 @@ public class SettingsQuickWraps {
 
     // Wrap button items are stored custom serialized: each item as a config string
     @NonNls
-    private static final String PROPERTY_WRAPBUTTONS = "";
+    private static final String PROPERTY_WRAP_BUTTONS = "";
 
     /**
      * Store given wrap button config into wrap buttons store
      *
      * @param   label     Item label
-     * @param   prefix          Wrap LHS string
-     * @param   postfix         Wrap RHS string
+     * @param   prefix    Wrap LHS string
+     * @param   postfix   Wrap RHS string
      */
     private static void saveButton(String label, String prefix, String postfix, Boolean saveTopMost) {
         if (!label.isEmpty()) {
@@ -71,7 +71,7 @@ public class SettingsQuickWraps {
      */
     private static void saveButtonItemsConfig(String itemsConfig) {
         PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-        propertiesComponent.setValue(PROPERTY_WRAPBUTTONS, itemsConfig);
+        propertiesComponent.setValue(PROPERTY_WRAP_BUTTONS, itemsConfig);
     }
 
     /**
@@ -80,7 +80,7 @@ public class SettingsQuickWraps {
     private static String loadButtonItemsConfig() {
         PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
-        return propertiesComponent.getValue(PROPERTY_WRAPBUTTONS);
+        return propertiesComponent.getValue(PROPERTY_WRAP_BUTTONS);
     }
 
     /**
@@ -88,7 +88,7 @@ public class SettingsQuickWraps {
      *
      * @param   label     Label of button to be removed
      */
-    public static void removeWrapButton(String label) {
+    static void removeWrapButton(String label) {
         Object[] buttonLabels     = getAllButtonLabels();
         Integer deleteButtonIndex = null;
         for (int i = 0; i < buttonLabels.length; i++) {
@@ -115,9 +115,9 @@ public class SettingsQuickWraps {
 
     /**
      * @param   label     Item label
-     * @param   prefix          Wrap LHS string
-     * @param   postfix         Wrap RHS string
-     * @return  String          configuration string for given wrap button options
+     * @param   prefix    Wrap LHS string
+     * @param   postfix   Wrap RHS string
+     * @return  String    configuration string for given wrap button options
      */
     private static String renderButtonConfigStr(String label, String prefix, String postfix) {
         return  "##WBUTTON##"

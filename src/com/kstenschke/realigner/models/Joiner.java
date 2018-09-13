@@ -27,10 +27,12 @@ public class Joiner {
         int offsetStart;
         int offsetEnd;
         List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-        String linesStr = "";
         int amountLines = linesList.size();
+        String linesStr = "";
         for (int i = 0; i < amountLines; i++) {
-            linesStr = linesStr + (i > 0 ? linesList.get(i).trim() : linesList.get(i)) + (i < (amountLines - 1) ? glue : "");
+            linesStr = linesStr
+                    + (i > 0 ? linesList.get(i).trim() : linesList.get(i))
+                    + (i < (amountLines - 1) ? glue : "");
         }
 
         // Remove newlines
@@ -38,8 +40,9 @@ public class Joiner {
 
         // Replace the full lines with themselves joined
         offsetStart = document.getLineStartOffset(lineNumberSelStart);
-        offsetEnd = document.getLineEndOffset(lineNumberSelEnd);
+        offsetEnd   = document.getLineEndOffset(lineNumberSelEnd);
 
-        ApplicationManager.getApplication().runWriteAction(() -> document.replaceString(offsetStart, offsetEnd, joinedLines));
+        ApplicationManager.getApplication().runWriteAction(
+                () -> document.replaceString(offsetStart, offsetEnd, joinedLines));
     }
 }

@@ -40,16 +40,16 @@ public class UtilsTextual {
     }
 
     /**
-     * @param   doc            The full document
+     * @param   document       The full document
      * @param   startLine      Starting line number
-     * @param   endLine         Ending line number
+     * @param   endLine        Ending line number
      * @return  List<String>
      */
-    public static List<String> extractLines(Document doc, int startLine, int endLine) {
+    public static List<String> extractLines(Document document, int startLine, int endLine) {
         List<String> lines = new ArrayList<>(endLine - startLine);
 
         for (int i = startLine; i <= endLine; i++) {
-            String line = UtilsTextual.extractLine(doc, i);
+            String line = UtilsTextual.extractLine(document, i);
 
             lines.add(line);
         }
@@ -58,16 +58,16 @@ public class UtilsTextual {
     }
 
     /**
-     * @param   doc            The full document
+     * @param   document
      * @param   lineNumber     Number of line to be extracted
      * @return  String         The extracted line
      */
-    public static String extractLine(Document doc, int lineNumber) {
-        int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
-        int startOffset         = doc.getLineStartOffset(lineNumber);
-        int endOffset           = doc.getLineEndOffset(lineNumber) + lineSeparatorLength;
+    public static String extractLine(Document document, int lineNumber) {
+        int lineSeparatorLength = document.getLineSeparatorLength(lineNumber);
+        int startOffset         = document.getLineStartOffset(lineNumber);
+        int endOffset           = document.getLineEndOffset(lineNumber) + lineSeparatorLength;
 
-        String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
+        String line = document.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
         // If last line has no \n, add it one
         // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
@@ -149,9 +149,8 @@ public class UtilsTextual {
     }
 
     /**
-     *
-     * @param   strLHS      Left hand side string
-     * @return  Right hand side (counterpart) string
+     * @param   strLHS      Left-hand-side string
+     * @return  Right-hand-side (counterpart) string
      */
     public static String getWrapCounterpart(String strLHS) {
         if (strLHS.isEmpty()) {

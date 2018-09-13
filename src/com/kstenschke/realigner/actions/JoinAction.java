@@ -73,7 +73,7 @@ class JoinAction extends AnAction {
             return;
         }
 
-        boolean cannotJoin = false;
+        boolean cannotJoin = true;
 
         SelectionModel selectionModel = editor.getSelectionModel();
         boolean hasSelection = selectionModel.hasSelection();
@@ -104,12 +104,9 @@ class JoinAction extends AnAction {
                                 StaticTexts.UNDO_HISTORY_JOIN,
                                 UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
                     }
+                    cannotJoin = false;
                 }
-            } else {
-                cannotJoin = true;
             }
-        } else {
-            cannotJoin = true;
         }
 
         // No selection or only one line of selection? Display resp. message
