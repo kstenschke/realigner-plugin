@@ -89,7 +89,7 @@ class JoinAction extends AnAction {
             if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
                 lineNumberSelEnd--;
             }
-            final int lineNumberSelEndFin = lineNumberSelStart;
+            final int lineNumberSelEndFin = lineNumberSelEnd;
 
             if (lineNumberSelEnd > lineNumberSelStart) {
                 DialogJoinOptions optionsDialog = showOptionsDialog();
@@ -103,8 +103,8 @@ class JoinAction extends AnAction {
                                 () -> joiner.joinLines(document, lineNumberSelStart, lineNumberSelEndFin, glue),
                                 StaticTexts.UNDO_HISTORY_JOIN,
                                 UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                        cannotJoin = false;
                     }
-                    cannotJoin = false;
                 }
             }
         }
