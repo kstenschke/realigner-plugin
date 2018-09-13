@@ -2,7 +2,9 @@ h1. Realigner Plugin - Changelog
 
 * 1.6.0
     ** Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46
-    ** Various code cleanup/modernization (lambdas instead of anonymous callables; early returns, ternary returns, removed redundant else-branching)
+    ** Changed split action keystroke to CTRL+ALT+S</li>
+    ** Bugfix: Fixed exceptions thrown due to AWT threading within write actions
+    ** Cleanup/Modernized: Lambdas instead of anonymous callables, early returns, ternary returns, less redundant code
 * 1.5.1 Changed join: parts are now trimmed from whitespace before joining
 * 1.5.0
     ** Improved keyboard accelerator: quick-wraps can now be applied w/ ENTER key

@@ -8,10 +8,10 @@ h2. Description
 
 The Realigner plugin adds three tools for reformatting code:
 * Join (Ctrl+Shift+Alt+J) - Removes newlines from selected lines, optionally joining them using a "glue" string.
-* Split (Ctrl+Shift+Alt+L)- Replaces arbitrary strings with newlines. Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
+* Split (Ctrl+Shift+Alt+P)- Replaces arbitrary strings with newlines. Splitting with an empty delimiter and w/o selection inserts a newline at the soft-wrap boundary.
 * Wrap / Unwrap (Ctrl+Shift+Alt+W) - Adds or removes a prefix- and postfix- string to a selection, the current line or each of multiple selected lines. Frequently used wraps can be stored as quick-wrap buttons, hint: quick-wrap buttons can be selected via cursor up/down keys as well.
 
-*Mac Users:* On Macs, the keyboard shortcuts are J, L or W together with Shift+Alt+Cmd
+*Mac Users:* On Macs, the keyboard shortcuts are J, P or W together with Shift+Alt+Cmd
 
 
 Realigner is helpful e.g. for:
@@ -37,7 +37,6 @@ The retina icon variants have been adapted (combined details, changed colors, co
 h2. Changelog
 
 Read full changelog: https://github.com/kstenschke/realigner-plugin/blob/master/CHANGELOG.textile
-
 
 
 h2. License

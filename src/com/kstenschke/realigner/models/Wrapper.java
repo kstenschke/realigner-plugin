@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kstenschke.realigner.actions;
+package com.kstenschke.realigner.models;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.*;
 import com.kstenschke.realigner.*;
-import com.kstenschke.realigner.listeners.ComponentListenerDialog;
-import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogWrapOptions;
-import com.kstenschke.realigner.utils.UtilsEnvironment;
 import com.kstenschke.realigner.utils.UtilsTextual;
 
-class Wrapper {
+public class Wrapper {
 
     private final Editor editor;
     private final Document document;
@@ -92,42 +90,6 @@ class Wrapper {
     }
 
     /**
-     * Setup and display wrap options dialog
-     *
-     * @return  Wrap options dialog
-     */
-    public DialogWrapOptions getWrapOptionsDialog(boolean isMultiLineSelection) {
-        DialogWrapOptions optionsDialog = new DialogWrapOptions(isMultiLineSelection);
-
-        // Load and init from preferences
-        optionsDialog.setTextFieldPrefix(Preferences.getWrapPrefix());
-        optionsDialog.setTextFieldPostfix(Preferences.getWrapPostfix());
-
-        if (Preferences.getMultiLineWrapMode() == (DialogWrapOptions.MODE_WRAP_WHOLE)) {
-            optionsDialog.wholeSelectionRadioButton.setSelected(true);
-        } else {
-            optionsDialog.eachLineRadioButton.setSelected(true);
-        }
-
-        switch (Preferences.getQuickWrapMode()) {
-            case DialogWrapOptions.OPERATION_WRAP:
-                optionsDialog.quickWrapRadioButton.setSelected(true);
-                break;
-            case DialogWrapOptions.OPERATION_UNWRAP:
-                optionsDialog.quickUnwrapRadioButton.setSelected(true);
-                break;
-            default:
-                optionsDialog.quickAutodetectRadioButton.setSelected(true);
-                break;
-        }
-
-        optionsDialog.addComponentListener(new ComponentListenerDialog(Preferences.ID_DIALOG_WRAP));
-        UtilsEnvironment.setDialogVisible(editor, Preferences.ID_DIALOG_WRAP, optionsDialog, StaticTexts.MESSAGE_TITLE_WRAP);
-
-        return optionsDialog;
-    }
-
-    /**
      * Perform wrapping of line around caret, single- or multi-line selection
      *
      * @param   prefix
@@ -135,7 +97,7 @@ class Wrapper {
      * @param   wrapMode    If multi-line: wrap each line / whole selection
      */
     public void wrap(final String prefix, final String postfix, final Integer wrapMode) {
-        this.caretModel.runForEachCaret(caret -> {
+        ApplicationManager.getApplication().runWriteAction(() -> this.caretModel.runForEachCaret(caret -> {
             if (hasSelection) {
                 // get selection offsets and line numbers
                 updateCaretSelectionProperties(caret);
@@ -154,7 +116,7 @@ class Wrapper {
                 // No selection: wrap the line where the caret is
                 wrapCaretLine(prefix, postfix);
             }
-        });
+        }));
     }
 
     private void updateCaretSelectionProperties(Caret caret) {
@@ -172,7 +134,7 @@ class Wrapper {
      * @param   postfix
      */
     public void unwrap(final String prefix, final String postfix) {
-        this.caretModel.runForEachCaret(caret -> {
+        ApplicationManager.getApplication().runWriteAction(() -> this.caretModel.runForEachCaret(caret -> {
             updateCaretSelectionProperties(caret);
 
             if (hasSelection) {
@@ -189,7 +151,7 @@ class Wrapper {
                 // No selection: wrap the line where the caret is
                 unwrapCaretLine(prefix, postfix);
             }
-        });
+        }));
     }
 
     /**
@@ -287,6 +249,9 @@ class Wrapper {
         CharSequence editorText = document.getCharsSequence();
         String unwrappedString  = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
+        if (null == unwrappedString) {
+            return;
+        }
         unwrappedString = UtilsTextual.unwrap(unwrappedString, prefix, postfix);
 
         // Update selected text with unwrapped version, update set selection

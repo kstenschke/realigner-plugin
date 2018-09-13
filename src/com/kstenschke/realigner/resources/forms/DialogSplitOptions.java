@@ -153,16 +153,10 @@ public class DialogSplitOptions extends JDialog {
         }
     }
 
-    /**
-     * @param   selected
-     */
     public void setCheckboxTrimWhitespaceSelected(boolean selected) {
         checkboxTrimWhitespace.setSelected(selected);
     }
 
-    /**
-     * @return  boolean
-     */
     public boolean getIsSelectedTrimWhitespace() {
         return checkboxTrimWhitespace.isSelected();
     }

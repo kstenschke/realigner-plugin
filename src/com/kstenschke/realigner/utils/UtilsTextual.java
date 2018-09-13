@@ -101,6 +101,9 @@ public class UtilsTextual {
      * @return  String  Given string with prefix and postfix removed
      */
     public static String unwrap(String str, String prefix, String postfix) {
+        if (null == str) {
+            return null;
+        }
         if (str.startsWith(prefix)) {
             str = str.substring(prefix.length());
         }

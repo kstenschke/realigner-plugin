@@ -26,8 +26,8 @@ import java.awt.event.KeyListener;
  */
 public class KeyListenerCursorUpDown implements KeyListener {
 
-    private Component componentAbove = null;
-    private Component componentUnder = null;
+    private Component componentAbove;
+    private Component componentUnder;
 
     public KeyListenerCursorUpDown(@Nullable Component componentUnder, @Nullable Component componentAbove) {
         this.componentAbove = componentAbove;
@@ -54,9 +54,6 @@ public class KeyListenerCursorUpDown implements KeyListener {
         }
     }
 
-    /**
-     * @param   component
-     */
     private void focusComponent(Component component) {
         if (null != component) {
             component.requestFocusInWindow();

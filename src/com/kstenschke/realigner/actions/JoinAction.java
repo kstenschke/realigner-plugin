@@ -16,7 +16,6 @@
 package com.kstenschke.realigner.actions;
 
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.editor.Document;
@@ -25,20 +24,18 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.realigner.*;
 import com.kstenschke.realigner.listeners.ComponentListenerDialog;
+import com.kstenschke.realigner.models.Joiner;
 import com.kstenschke.realigner.resources.StaticTexts;
 import com.kstenschke.realigner.resources.forms.DialogJoinOptions;
 import com.kstenschke.realigner.utils.UtilsEnvironment;
-import com.kstenschke.realigner.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.util.List;
 
 /**
  * Implode / Explode Action
  */
 class JoinAction extends AnAction {
-
     private Project project;
     private Editor editor;
 
@@ -49,12 +46,13 @@ class JoinAction extends AnAction {
      */
     public void update(@NotNull AnActionEvent event) {
         boolean enabled = false;
-        this.project    = event.getData(PlatformDataKeys.PROJECT);
-        this.editor     = event.getData(PlatformDataKeys.EDITOR);
-        if (this.project != null && this.editor != null) {
-            SelectionModel selectionModel = this.editor.getSelectionModel();
+        project = event.getData(PlatformDataKeys.PROJECT);
+        editor  = event.getData(PlatformDataKeys.EDITOR);
+
+        if (project != null && editor != null) {
+            SelectionModel selectionModel = editor.getSelectionModel();
             if (selectionModel.hasSelection()) {
-                final Document document = this.editor.getDocument();
+                final Document document = editor.getDocument();
 
                 int lineNumberSelStart  = document.getLineNumber(selectionModel.getSelectionStart());
                 int lineNumberSelEnd    = document.getLineNumber(selectionModel.getSelectionEnd());
@@ -74,79 +72,53 @@ class JoinAction extends AnAction {
      * @param   event   Action system event
      */
     public void actionPerformed(@NotNull final AnActionEvent event) {
-        CommandProcessor.getInstance().executeCommand(project, () -> ApplicationManager.getApplication().runWriteAction(new Runnable() {
-            public void run() {
-                if (null == editor) {
-                    return;
-                }
+        if (null == editor) {
+            return;
+        }
 
-                boolean cannotJoin = false;
+        boolean cannotJoin = false;
 
-                SelectionModel selectionModel = editor.getSelectionModel();
-                boolean hasSelection = selectionModel.hasSelection();
+        SelectionModel selectionModel = editor.getSelectionModel();
+        boolean hasSelection = selectionModel.hasSelection();
 
-                if (hasSelection) {
-                    int offsetStart = selectionModel.getSelectionStart();
-                    int offsetEnd = selectionModel.getSelectionEnd();
+        if (hasSelection) {
+            int offsetStart = selectionModel.getSelectionStart();
+            int offsetEnd = selectionModel.getSelectionEnd();
 
-                    final Document document = editor.getDocument();
+            final Document document = editor.getDocument();
 
-                    int lineNumberSelStart = document.getLineNumber(offsetStart);
-                    int lineNumberSelEnd = document.getLineNumber(offsetEnd);
-
-                    if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
-                        lineNumberSelEnd--;
-                    }
-
-                    if (lineNumberSelEnd > lineNumberSelStart) {
-                        DialogJoinOptions optionsDialog = showOptionsDialog();
-
-                        if (optionsDialog.clickedOk) {
-                            String glue = optionsDialog.textFieldGlue.getText();
-                            if (null != glue) {
-                                Preferences.saveJoinProperties(glue);
-                                joinLines(document, lineNumberSelStart, lineNumberSelEnd, glue);
-                            }
-                        }
-                    } else {
-                        cannotJoin = true;
-                    }
-                } else {
-                    cannotJoin = true;
-                }
-
-                // No selection or only one line of selection? Display resp. message
-                if (cannotJoin) {
-                    JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
-                }
+            int lineNumberSelStart = document.getLineNumber(offsetStart);
+            int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+            if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+                lineNumberSelEnd--;
             }
+            final int lineNumberSelEndFin = lineNumberSelStart;
 
-            /**
-             * @param document
-             * @param lineNumberSelStart
-             * @param lineNumberSelEnd
-             * @param glue
-             */
-            private void joinLines(Document document, int lineNumberSelStart, int lineNumberSelEnd, String glue) {
-                int offsetStart;
-                int offsetEnd;
-                List<String> linesList = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-                String linesStr = "";
-                int amountLines = linesList.size();
-                for (int i = 0; i < amountLines; i++) {
-                    linesStr = linesStr + (i > 0 ? linesList.get(i).trim() : linesList.get(i)) + (i < (amountLines - 1) ? glue : "");
+            if (lineNumberSelEnd > lineNumberSelStart) {
+                DialogJoinOptions optionsDialog = showOptionsDialog();
+                if (optionsDialog.clickedOk) {
+                    String glue = optionsDialog.textFieldGlue.getText();
+                    if (null != glue) {
+                        Preferences.saveJoinProperties(glue);
+                        Joiner joiner = new Joiner();
+                        CommandProcessor.getInstance().executeCommand(
+                                project,
+                                () -> joiner.joinLines(document, lineNumberSelStart, lineNumberSelEndFin, glue),
+                                StaticTexts.UNDO_HISTORY_JOIN,
+                                UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+                    }
                 }
-
-                // Remove newlines
-                String joinedLines = linesStr.replaceAll("(\\n)+", "");
-
-                // Replace the full lines with themselves joined
-                offsetStart = document.getLineStartOffset(lineNumberSelStart);
-                offsetEnd = document.getLineEndOffset(lineNumberSelEnd);
-
-                document.replaceString(offsetStart, offsetEnd, joinedLines);
+            } else {
+                cannotJoin = true;
             }
-        }), StaticTexts.UNDO_HISTORY_JOIN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+        } else {
+            cannotJoin = true;
+        }
+
+        // No selection or only one line of selection? Display resp. message
+        if (cannotJoin) {
+            JOptionPane.showMessageDialog(editor.getComponent(), StaticTexts.NOTIFICATION_JOIN_NO_LINES_SELECTED);
+        }
     }
 
     /**

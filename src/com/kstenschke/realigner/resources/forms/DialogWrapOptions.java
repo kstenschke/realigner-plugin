@@ -174,9 +174,6 @@ public class DialogWrapOptions extends JDialog {
         }
     }
 
-    /**
-     * @return  ActionListener
-     */
     private ActionListener getActionListenerSaveQuickWrapButton() {
         final DialogWrapOptions dialog = this;
 
@@ -206,11 +203,6 @@ public class DialogWrapOptions extends JDialog {
         return e -> Preferences.saveQuickWrapMode(mode);
     }
 
-    /**
-     * @param   allButtonsLabels
-     * @param   allButtonPrefixConfigs
-     * @param   allButtonPostfixConfigs
-     */
     private void addQuickWrapButtons(Object[] allButtonsLabels, Object[] allButtonPrefixConfigs, Object[] allButtonPostfixConfigs) {
         for (int i = 0; i < allButtonsLabels.length; i++) {
             String buttonLabel = allButtonsLabels[i].toString();
@@ -312,9 +304,6 @@ public class DialogWrapOptions extends JDialog {
         textFieldPostfix.setText(postfix);
     }
 
-    /**
-     * @param   args   Arguments
-     */
     public static void main(String[] args) {
         DialogWrapOptions dialog = new DialogWrapOptions(true);
 

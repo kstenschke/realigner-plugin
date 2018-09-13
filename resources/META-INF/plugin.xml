@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<idea-plugin version="2" url="http://www.coexec.com/en/tools-software-development/">
+<idea-plugin url="http://www.coexec.com/en/tools-software-development/">
     <name>Realigner</name>
     <description><![CDATA[
     The Realigner plugin adds three tools for reformatting code:
@@ -43,6 +43,9 @@
         <li>1.6.0
             <ul>
                 <li>Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46</li>
+                <li>Bugfix: Fixed exceptions thrown due to AWT threading within write actions</li>
+                <li>Changed split action keystroke to CTRL+ALT+S</li>
+                <li>Cleanup/Modernized: lambdas instead of anonymous callables, early returns, ternary returns, less redundant code</li>
             </ul>
         <li>1.5.1 Changed join: parts are now trimmed from whitespace before joining</li>
         <li>1.5.0
@@ -67,7 +70,7 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt J"/>
             </action>
             <action id="SplitAction" class="com.kstenschke.realigner.actions.SplitAction" text="Split into Lines" description="Split into Lines">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt L"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt S"/>
             </action>
             <add-to-group group-id="EditMenu" anchor="last"/>
         </group>
