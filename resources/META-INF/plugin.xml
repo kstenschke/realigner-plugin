@@ -42,7 +42,7 @@
     <ul>
         <li>1.6.0
             <ul>
-                <li>Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46</li>
+                <li>Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46 / IDEs since build 13.7</li>
                 <li>Bugfix: Fixed exceptions thrown due to AWT threading within write actions</li>
                 <li>Changed split action keystroke to CTRL+ALT+S</li>
                 <li>Cleanup/Modernized: lambdas instead of anonymous callables, early returns, ternary returns, less redundant code</li>
