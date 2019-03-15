@@ -77,7 +77,7 @@ public class Splitter {
         }
 
         String explodedText = lineText.substring(0, wrapPosition) +
-                (wrapChar.equals(",") ? wrapChar : "") + "\n" +
+                (",".equals(wrapChar) ? wrapChar : "") + "\n" +
                 lineText.substring(wrapPosition + 1);
 
         ApplicationManager.getApplication().runWriteAction(() -> {
@@ -176,7 +176,9 @@ public class Splitter {
      * @return  Does the given character not allow splitting the line at?
      */
     private static boolean isUnsplittableChar(String charStr) {
-        return charStr.equals(" ") || charStr.equals("\t") || charStr.equals(",");
+        return " ".equals(charStr) ||
+               "\t".equals(charStr) ||
+                ",".equals(charStr);
     }
 
     /**

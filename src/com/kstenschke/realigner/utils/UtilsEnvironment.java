@@ -29,7 +29,7 @@ public class UtilsEnvironment {
 
         Point location = null;
         String[] position   = Preferences.getDialogPosition(idDialog).split("x");
-        if (!(position[0].equals("0") && position[1].equals("0"))) {
+        if (!("0".equals(position[0]) && "0".equals(position[1])) {
             location = new Point(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
         }
         if (null == location) {

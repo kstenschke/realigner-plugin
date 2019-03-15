@@ -116,7 +116,10 @@ public class Preferences {
         if (null == value) {
             value = defaultValue;
         }
-        if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
+        if ("".equals(value) &&
+            setDefaultIfEmpty &&
+            !defaultValue.equals("")
+        ) {
             value = defaultValue;
         }
 
@@ -148,7 +151,10 @@ public class Preferences {
      * @return String  Split delimiter
      */
     public static boolean getIsSplitIsSelectedTrimWhitespace() {
-        return getProperty(PROPERTY_SPLIT_TRIM_WHITESPACE, "1", true).equals("1");
+        return "1".equals(getProperty(
+                PROPERTY_SPLIT_TRIM_WHITESPACE,
+                "1",
+                true));
     }
 
     /**
